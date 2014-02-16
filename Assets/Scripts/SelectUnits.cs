@@ -20,7 +20,7 @@ public class SelectUnits : MonoBehaviour {
 			if (Physics.Raycast(ray, out hitInfo) && hitInfo.collider.tag == "Unit") {
 				GameObject obj = hitInfo.collider.gameObject;
 
-			    if (!selectedUnits.Contains(obj)) {
+				if (!selectedUnits.Contains(obj)) {
 					if (!Input.GetKey(KeyCode.LeftShift)) ClearSelectedUnits();
 					selectedUnits.Add(obj);
 					obj.renderer.material.color = Color.green;
