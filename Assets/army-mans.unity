@@ -128,7 +128,7 @@ GameObject:
   - 54: {fileID: 67072911}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -254,7 +254,7 @@ GameObject:
   - 54: {fileID: 167386307}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -344,7 +344,7 @@ GameObject:
   - 54: {fileID: 250853357}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -434,7 +434,7 @@ GameObject:
   - 54: {fileID: 447059118}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -524,7 +524,7 @@ GameObject:
   - 54: {fileID: 601646431}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -766,7 +766,7 @@ GameObject:
   - 54: {fileID: 738914781}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -872,7 +872,7 @@ GameObject:
   - 54: {fileID: 987895672}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1003,6 +1003,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1154489902}
+  - 114: {fileID: 1154489903}
   m_Layer: 0
   m_Name: PlayerHook
   m_TagString: Untagged
@@ -1021,6 +1022,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 989641821}
+--- !u!114 &1154489903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1154489901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cdf00b01b5244aa3b33300f0202813b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1171271418
 Prefab:
   m_ObjectHideFlags: 0
@@ -1215,7 +1227,7 @@ GameObject:
   - 54: {fileID: 1643217629}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1325,7 +1337,7 @@ GameObject:
   - 54: {fileID: 1722410327}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1431,7 +1443,7 @@ GameObject:
   - 54: {fileID: 1784334000}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1521,7 +1533,7 @@ GameObject:
   - 54: {fileID: 1824973269}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1627,7 +1639,7 @@ GameObject:
   - 54: {fileID: 1921357873}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
