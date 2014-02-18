@@ -24,8 +24,9 @@ public class SelectUnits : MonoBehaviour
 				GameObject obj = hitInfo.collider.gameObject;
 
 				if (!selectedUnits.Contains (obj)) {
-					if (!Input.GetKey (KeyCode.LeftShift))
+					if (!Input.GetKey (KeyCode.LeftShift)) {
 						ClearSelectedUnits ();
+					}
 					selectedUnits.Add (obj);
 					obj.renderer.material.color = Color.green;
 				}
