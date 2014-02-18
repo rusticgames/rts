@@ -85,6 +85,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e00dc6dfa628024d84bfaf918872d87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  followDistance: 5
+  maximumVelocity: 30
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
