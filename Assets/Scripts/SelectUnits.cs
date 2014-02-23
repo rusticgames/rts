@@ -37,8 +37,8 @@ public class SelectUnits : MonoBehaviour
 					if (!Input.GetKey (KeyCode.LeftShift)) {
 						ClearSelectedUnits ();
 					}
-					selectedUnits.Add(obj);
-					obj.renderer.material.color = Color.green;
+
+					AddToSelectedUnits(obj);
 				}
 			} else {
 				ClearSelectedUnits ();
@@ -67,24 +67,41 @@ public class SelectUnits : MonoBehaviour
 		}
 	}
 
-
 	void OnGUI () {
 		if (Input.GetMouseButton(0)) {
-			Vector2 selectBoxPos = new Vector2(lastClickPoint.x, Screen.height - lastClickPoint.y);
-			Vector2 selectBoxSize = new Vector2(
-				Input.mousePosition.x - selectBoxPos.x,
-				Screen.height - Input.mousePosition.y - selectBoxPos.y);
+			Vector2 selectBoxSize = new Vector2();
+			selectBoxSize.x = 200f;
+			selectBoxSize.y = 200f;
+			selectBoxSize.x = Input.mousePosition.x - lastClickPoint.x;
+			selectBoxSize.y = Input.mousePosition.y - lastClickPoint.y;
+			//print(Input.mousePosition.y + ", " + lastClickPoint.y);
+			Vector2 selectBoxPos = new Vector2(lastClickPoint.x, lastClickPoint.y - selectBoxSize.y);
+
 			Rect selectBox = new Rect(selectBoxPos.x, selectBoxPos.y, selectBoxSize.x, selectBoxSize.y);
-			GUI.Label(selectBox, GUIContent.none, selectBoxStyle);
+			Rect selectBoxGUI = new Rect(
+				selectBoxPos.x,
+				Screen.height - (selectBoxPos.y + selectBoxSize.y),
+				selectBoxSize.x,
+				selectBoxSize.y);
+			GUI.Label(selectBoxGUI, GUIContent.none, selectBoxStyle);
 
 			GameObject[] allUnits = GameObject.FindGameObjectsWithTag("Unit");
 			foreach (GameObject obj in allUnits) {
 				Vector2 pos = Camera.main.WorldToScreenPoint(obj.transform.position);
 				if (selectBox.Contains(pos)) {
-					selectedUnits.Add(obj);
+					if (!selectedUnits.Contains (obj)) AddToSelectedUnits(obj);
 				}
 			}
 		}
+	}
+
+	void AddToSelectedUnits (GameObject obj) {
+		selectedUnits.Add(obj);
+		obj.renderer.material.color = Color.green;
+	}
+
+	void RemoveFromSelectedUnits (GameObject obj) {
+
 	}
 
 	void ClearSelectedUnits ()
