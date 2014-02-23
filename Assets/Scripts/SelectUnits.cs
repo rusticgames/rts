@@ -33,13 +33,11 @@ public class SelectUnits : MonoBehaviour
 			if (Physics.Raycast (ray, out hitInfo) && hitInfo.collider.tag == "Unit") {
 				GameObject obj = hitInfo.collider.gameObject;
 
-				if (!selectedUnits.Contains (obj)) {
-					if (!Input.GetKey (KeyCode.LeftShift)) {
-						ClearSelectedUnits ();
-					}
+				if (!Input.GetKey (KeyCode.LeftShift))
+					ClearSelectedUnits ();
 
+				if (!selectedUnits.Contains (obj))
 					AddToSelectedUnits(obj);
-				}
 			} else {
 				ClearSelectedUnits ();
 			}
