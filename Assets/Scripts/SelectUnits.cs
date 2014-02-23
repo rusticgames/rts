@@ -35,9 +35,7 @@ public class SelectUnits : MonoBehaviour
 
 				if (!Input.GetKey (KeyCode.LeftShift))
 					ClearSelectedUnits ();
-
-				if (!selectedUnits.Contains (obj))
-					AddToSelectedUnits(obj);
+				AddToSelectedUnits(obj);
 			} else {
 				ClearSelectedUnits ();
 			}
@@ -94,15 +92,17 @@ public class SelectUnits : MonoBehaviour
 			foreach (GameObject obj in allUnits) {
 				Vector2 pos = Camera.main.WorldToScreenPoint(obj.transform.position);
 				if (selectBox.Contains(pos)) {
-					if (!selectedUnits.Contains (obj)) AddToSelectedUnits(obj);
+					AddToSelectedUnits(obj);
 				}
 			}
 		}
 	}
 
 	void AddToSelectedUnits (GameObject obj) {
-		selectedUnits.Add(obj);
-		obj.renderer.material.color = Color.green;
+		if (!selectedUnits.Contains (obj)) {
+			selectedUnits.Add(obj);
+			obj.renderer.material.color = Color.green;
+		}
 	}
 
 	void RemoveFromSelectedUnits (GameObject obj) {
