@@ -70,19 +70,26 @@ public class SelectUnits : MonoBehaviour
 	void OnGUI () {
 		if (Input.GetMouseButton(0)) {
 			Vector2 selectBoxSize = new Vector2();
-			selectBoxSize.x = 200f;
-			selectBoxSize.y = 200f;
 			selectBoxSize.x = Input.mousePosition.x - lastClickPoint.x;
 			selectBoxSize.y = Input.mousePosition.y - lastClickPoint.y;
-			//print(Input.mousePosition.y + ", " + lastClickPoint.y);
-			Vector2 selectBoxPos = new Vector2(lastClickPoint.x, lastClickPoint.y - selectBoxSize.y);
+			Vector2 selectBoxPos = new Vector2(lastClickPoint.x, lastClickPoint.y);
+
+			if (selectBoxSize.x < 0) {
+				selectBoxSize.x *= -1;
+				selectBoxPos.x = selectBoxPos.x - selectBoxSize.x;
+			}
+
+			if (selectBoxSize.y < 0) {
+				selectBoxSize.y *= -1;
+				selectBoxPos.y = selectBoxPos.y - selectBoxSize.y;
+			}
 
 			Rect selectBox = new Rect(selectBoxPos.x, selectBoxPos.y, selectBoxSize.x, selectBoxSize.y);
 			Rect selectBoxGUI = new Rect(
-				selectBoxPos.x,
-				Screen.height - (selectBoxPos.y + selectBoxSize.y),
-				selectBoxSize.x,
-				selectBoxSize.y);
+				selectBox.x,
+				Screen.height - (selectBox.y + selectBox.height),
+				selectBox.width,
+				selectBox.height);
 			GUI.Label(selectBoxGUI, GUIContent.none, selectBoxStyle);
 
 			GameObject[] allUnits = GameObject.FindGameObjectsWithTag("Unit");
