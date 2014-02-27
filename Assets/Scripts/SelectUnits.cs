@@ -36,7 +36,7 @@ public class SelectUnits : MonoBehaviour
 				if (!Input.GetKey (KeyCode.LeftShift))
 					ClearSelectedUnits ();
 				AddToSelectedUnits(obj);
-			} else {
+			} else if (Physics.Raycast (ray, out hitInfo) && hitInfo.collider.gameObject != null) {
 				ClearSelectedUnits ();
 			}
 
@@ -86,7 +86,7 @@ public class SelectUnits : MonoBehaviour
 				Screen.height - (selectBox.y + selectBox.height),
 				selectBox.width,
 				selectBox.height);
-			GUI.Label(selectBoxGUI, GUIContent.none, selectBoxStyle);
+			GUI.Box(selectBoxGUI, GUIContent.none, selectBoxStyle);
 
 			GameObject[] allUnits = GameObject.FindGameObjectsWithTag("Unit");
 			foreach (GameObject obj in allUnits) {
@@ -98,18 +98,18 @@ public class SelectUnits : MonoBehaviour
 		}
 	}
 
-	void AddToSelectedUnits (GameObject obj) {
+	public void AddToSelectedUnits (GameObject obj) {
 		if (!selectedUnits.Contains (obj)) {
 			selectedUnits.Add(obj);
 			obj.renderer.material.color = Color.green;
 		}
 	}
 
-	void RemoveFromSelectedUnits (GameObject obj) {
+	public void RemoveFromSelectedUnits (GameObject obj) {
 
 	}
 
-	void ClearSelectedUnits ()
+	public void ClearSelectedUnits ()
 	{
 		selectedUnits.ForEach (delegate(GameObject obj) {
 			obj.renderer.material.color = Color.white;

@@ -127,6 +127,7 @@ GameObject:
   - 23: {fileID: 67072907}
   - 54: {fileID: 67072911}
   - 114: {fileID: 67072912}
+  - 96: {fileID: 67072913}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -219,6 +220,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &67072913
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 152448100}
+  m_GameObject: {fileID: 67072906}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1001 &152448100
 Prefab:
   m_ObjectHideFlags: 0
@@ -268,6 +312,7 @@ GameObject:
   - 23: {fileID: 167386308}
   - 54: {fileID: 167386307}
   - 114: {fileID: 167386312}
+  - 96: {fileID: 167386313}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -360,6 +405,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &167386313
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1406894171}
+  m_GameObject: {fileID: 167386306}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1 &250853356
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,6 +461,7 @@ GameObject:
   - 23: {fileID: 250853358}
   - 54: {fileID: 250853357}
   - 114: {fileID: 250853362}
+  - 96: {fileID: 250853363}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -465,6 +554,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &250853363
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 157783592}
+  m_GameObject: {fileID: 250853356}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1 &447059117
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +610,7 @@ GameObject:
   - 23: {fileID: 447059119}
   - 54: {fileID: 447059118}
   - 114: {fileID: 447059123}
+  - 96: {fileID: 447059124}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -570,6 +703,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &447059124
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1714986082}
+  m_GameObject: {fileID: 447059117}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1 &601646430
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,6 +759,7 @@ GameObject:
   - 23: {fileID: 601646432}
   - 54: {fileID: 601646431}
   - 114: {fileID: 601646436}
+  - 96: {fileID: 601646437}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -675,6 +852,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &601646437
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1062784883}
+  m_GameObject: {fileID: 601646430}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1001 &656605127
 Prefab:
   m_ObjectHideFlags: 0
@@ -767,7 +987,7 @@ GameObject:
   - 23: {fileID: 738672336}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -840,6 +1060,7 @@ GameObject:
   - 23: {fileID: 738914782}
   - 54: {fileID: 738914781}
   - 114: {fileID: 738914786}
+  - 96: {fileID: 738914787}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -932,6 +1153,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &738914787
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1465803020}
+  m_GameObject: {fileID: 738914780}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1001 &939936870
 Prefab:
   m_ObjectHideFlags: 0
@@ -961,6 +1225,7 @@ GameObject:
   - 23: {fileID: 987895673}
   - 54: {fileID: 987895672}
   - 114: {fileID: 987895677}
+  - 96: {fileID: 987895678}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -1053,6 +1318,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &987895678
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1546314065}
+  m_GameObject: {fileID: 987895671}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1 &989641820
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,9 +1417,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 1154489902}
   - 114: {fileID: 1154489903}
+  - 114: {fileID: 1154489904}
   m_Layer: 0
   m_Name: PlayerHook
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1139,6 +1448,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedUnits: []
+--- !u!114 &1154489904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1154489901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64fc87682464c47a39333da512a89fb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1171271418
 Prefab:
   m_ObjectHideFlags: 0
@@ -1173,6 +1493,10 @@ Prefab:
     - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
@@ -1259,7 +1583,7 @@ Transform:
   m_PrefabInternal: {fileID: 3319372}
   m_GameObject: {fileID: 1367552613}
   m_LocalRotation: {x: .382683486, y: 0, z: 0, w: .923879564}
-  m_LocalPosition: {x: 0, y: 22.0129242, z: -34.7298927}
+  m_LocalPosition: {x: 0, y: 20, z: -34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1332,6 +1656,7 @@ GameObject:
   - 23: {fileID: 1643217630}
   - 54: {fileID: 1643217629}
   - 114: {fileID: 1643217634}
+  - 96: {fileID: 1643217635}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -1424,6 +1749,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &1643217635
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1836851308}
+  m_GameObject: {fileID: 1643217628}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1001 &1714986082
 Prefab:
   m_ObjectHideFlags: 0
@@ -1457,6 +1825,7 @@ GameObject:
   - 23: {fileID: 1722410328}
   - 54: {fileID: 1722410327}
   - 114: {fileID: 1722410332}
+  - 96: {fileID: 1722410333}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -1549,6 +1918,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &1722410333
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 656605127}
+  m_GameObject: {fileID: 1722410326}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1001 &1727718329
 Prefab:
   m_ObjectHideFlags: 0
@@ -1578,6 +1990,7 @@ GameObject:
   - 23: {fileID: 1784334001}
   - 54: {fileID: 1784334000}
   - 114: {fileID: 1784334005}
+  - 96: {fileID: 1784334006}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -1670,6 +2083,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &1784334006
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 939936870}
+  m_GameObject: {fileID: 1784333999}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1 &1824973268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1683,6 +2139,7 @@ GameObject:
   - 23: {fileID: 1824973270}
   - 54: {fileID: 1824973269}
   - 114: {fileID: 1824973274}
+  - 96: {fileID: 1824973275}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -1775,6 +2232,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &1824973275
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1727718329}
+  m_GameObject: {fileID: 1824973268}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1001 &1836851308
 Prefab:
   m_ObjectHideFlags: 0
@@ -1804,6 +2304,7 @@ GameObject:
   - 23: {fileID: 1921357874}
   - 54: {fileID: 1921357873}
   - 114: {fileID: 1921357878}
+  - 96: {fileID: 1921357879}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -1896,6 +2397,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 5
   maximumVelocity: 30
+--- !u!96 &1921357879
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1999228205}
+  m_GameObject: {fileID: 1921357872}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 2
+  m_StartWidth: 1
+  m_EndWidth: 2
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1001 &1970143731
 Prefab:
   m_ObjectHideFlags: 0
@@ -1930,6 +2474,10 @@ Prefab:
     - target: {fileID: 400002, guid: f334acf1eda6e33409c261b959231905, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: f334acf1eda6e33409c261b959231905, type: 2}
+      propertyPath: m_TagString
+      value: Terrain
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f334acf1eda6e33409c261b959231905, type: 2}
