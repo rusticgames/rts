@@ -3,23 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class HUD : MonoBehaviour {
-	
+	public Camera mainCamera;
+	public Camera insetCamera;
+	public SelectUnits selection;
 	private GameObject player;
 	private GameObject selectedUnit;
-	private Camera mainCamera = new Camera();
+
 	private CameraSettings camStart = new CameraSettings();
 	private CameraSettings camTop = new CameraSettings();
 	private CameraSettings camISO = new CameraSettings();
+	private CameraSettings camUnit = new CameraSettings();
+
+	private Rect GUIArea = new Rect(10f, 10f, 100, 200);
 
 	void Start() {
 		player = GameObject.FindGameObjectWithTag("Player");
-		mainCamera = Camera.main;
 
 		camStart.position = mainCamera.transform.position;
 		camStart.rotation = mainCamera.transform.localEulerAngles;
-
+		
 		camTop.position = new Vector3(0, 60f, 0);
 		camTop.rotation = new Vector3(90f, 0, 0);
+
+		camUnit.position = new Vector3(0, 0, 0);
+		camUnit.rotation = new Vector3(90f, 180f, 0);
 
 		camISO.position = new Vector3(0, 0, 0);
 		camISO.rotation = new Vector3(30f, 315f, -8f);
@@ -27,47 +34,78 @@ public class HUD : MonoBehaviour {
 		camISO.orthographicSize = 20f;
 		camISO.nearClipPlane = -35f;
 	}
-	
+
 	void OnGUI () {
-		GUILayout.BeginArea(new Rect(10f, 10f, 100, 200));
+		GUILayout.BeginArea(GUIArea);
 
 		GUILayout.Label("Camera");
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Top")) {
-			DetachCamera();
 			UpdateCamera(camTop);
 		}
+
 		if (GUILayout.Button("ISO")) {
-			DetachCamera();
 			UpdateCamera(camISO);
 		}
 		GUILayout.EndHorizontal();
+		
+		if (GUILayout.Button("Unit")) {
+			if (selection.selectedUnits.Count > 0) {
+				camUnit.parentTransform = selection.selectedUnits[0].transform;
+				UpdateCamera(camUnit);
+			}
+		}
 
 		if (GUILayout.Button("Reset")) {
-			DetachCamera();
 			UpdateCamera(camStart);
 		}
 
+		GUILayout.Label("Inset Camera");
+		
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Top")) {
+			insetCamera.enabled = true;
+			UpdateCamera(insetCamera, camTop);
+		}
+		
+		if (GUILayout.Button("ISO")) {
+			insetCamera.enabled = true;
+			UpdateCamera(insetCamera, camISO);
+		}
+		GUILayout.EndHorizontal();
+		
+		if (GUILayout.Button("Unit")) {
+			if (selection.selectedUnits.Count > 0) {
+				insetCamera.enabled = true;
+				camUnit.parentTransform = selection.selectedUnits[0].transform;
+				UpdateCamera(insetCamera, camUnit);
+			}
+		}
+		
+		if (GUILayout.Button("Reset")) {
+			insetCamera.enabled = false;
+		}
+		
 		GUILayout.EndArea();
 	}
-
+	
 	void UpdateCamera(CameraSettings settings) {
-		mainCamera.transform.position = settings.position;
-		mainCamera.transform.localEulerAngles = settings.rotation;
-		mainCamera.orthographic = settings.othographic;
-		mainCamera.orthographicSize = settings.orthographicSize;
-		mainCamera.nearClipPlane = settings.nearClipPlane;
+		UpdateCamera(mainCamera, settings);
+	}
+	
+	void UpdateCamera(Camera camera, CameraSettings settings) {
+		camera.transform.parent = settings.parentTransform;
+		camera.transform.localPosition = settings.position;
+		camera.transform.localEulerAngles = settings.rotation;
+		camera.orthographic = settings.othographic;
+		camera.orthographicSize = settings.orthographicSize;
+		camera.nearClipPlane = settings.nearClipPlane;
 	}
 
 	void AttachCamera() {
 		if (selectedUnit != null)
 			mainCamera.transform.parent = selectedUnit.transform;
-	}
-
-	void DetachCamera() {
-		if (mainCamera.transform.parent != null)
-			mainCamera.transform.parent = null;
 	}
 }
 
@@ -77,4 +115,5 @@ public class CameraSettings {
 	public bool othographic = false;
 	public float orthographicSize = 5f;
 	public float nearClipPlane = 0.3f;
+	public Transform parentTransform = null;
 }
