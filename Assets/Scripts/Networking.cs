@@ -4,26 +4,19 @@ using System.Collections.Generic;
 
 public class Networking : MonoBehaviour {
 
-	public string serverAddress = "127.0.0.1";
+	public string serverAddress;
 	public int port = 9090;
 	public int messageTimeout = 5;
 
 	// OnGUI is called for rendering and handling
 	// GUI events.
 	void OnGUI () {
-		GUILayout.BeginArea(new Rect(Screen.width - 160, 10, 150, 200));
+		GUILayout.BeginArea(new Rect(Screen.width - 130, 10, 120, Screen.height));
 
-		GUILayout.Label("Multiplayer");
-		if (!Network.isServer) {
-			if (GUILayout.Button("Host Game"))
-				Network.InitializeServer(4, port, false);
-
-			if (GUILayout.Button("Connect to Server"))
-				Network.Connect(serverAddress, port);
-		} else {
+		GUILayout.Label("LAN Multiplayer");
+		if (Network.isServer) {
 			GUILayout.Box("Server Running");
-			GUILayout.Label("Internal: " + Network.player.ipAddress);
-			GUILayout.Label("External: " + Network.player.externalIP);
+			GUILayout.Label("Address: " + Network.player.ipAddress);
 			GUILayout.Label("Port: " + port);
 
 			GUILayout.Box("Connected Players");
@@ -33,10 +26,24 @@ public class Networking : MonoBehaviour {
 			GUILayout.EndHorizontal();
 			foreach (NetworkPlayer player in Network.connections) {
 				GUILayout.BeginHorizontal();
-				GUILayout.Label(player.guid);
+				GUILayout.Label(player.ipAddress);
 				GUILayout.Label("" + Network.GetAveragePing(player));
 				GUILayout.EndHorizontal();
 			}
+		} else if (Network.isClient) {
+			GUILayout.Box("Connected");
+			foreach (NetworkPlayer player in Network.connections) {
+				GUILayout.BeginHorizontal();
+				GUILayout.Label(player.ipAddress);
+				GUILayout.Label("" + Network.GetAveragePing(player));
+				GUILayout.EndHorizontal();
+		      }
+		} else {
+			if (GUILayout.Button("Host Game"))
+				Network.InitializeServer(4, port, false);
+			
+			if (GUILayout.Button("Join Game"))
+				Network.Connect(serverAddress, port);
 		}
 
 		GUILayout.EndArea();
