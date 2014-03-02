@@ -6,8 +6,7 @@ public class HUD : MonoBehaviour {
 	public Camera mainCamera;
 	public Camera insetCamera;
 	public SelectUnits selection;
-	private GameObject player;
-	private GameObject selectedUnit;
+	private GameObject selectedUnit = null;
 
 	private CameraSettings camStart = new CameraSettings();
 	private CameraSettings camTop = new CameraSettings();
@@ -17,8 +16,6 @@ public class HUD : MonoBehaviour {
 	private Rect GUIArea = new Rect(10f, 10f, 100, 200);
 
 	void Start() {
-		player = GameObject.FindGameObjectWithTag("Player");
-
 		camStart.position = mainCamera.transform.position;
 		camStart.rotation = mainCamera.transform.localEulerAngles;
 		
