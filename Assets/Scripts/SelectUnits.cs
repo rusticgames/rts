@@ -35,8 +35,9 @@ public class SelectUnits : MonoBehaviour
 
 				if (!Input.GetKey (KeyCode.LeftShift))
 					ClearSelectedUnits ();
+
 				AddToSelectedUnits(obj);
-			} else if (Physics.Raycast (ray, out hitInfo) && hitInfo.collider.gameObject != null) {
+			} else {
 				ClearSelectedUnits ();
 			}
 
