@@ -27,6 +27,10 @@ public class Networking : MonoBehaviour {
 			GUILayout.Label("Port: " + port);
 
 			GUILayout.Box("Connected Players");
+			GUILayout.BeginHorizontal();
+			GUILayout.Label(Network.player.ipAddress);
+			GUILayout.Label("" + Network.GetAveragePing(Network.player));
+			GUILayout.EndHorizontal();
 			foreach (NetworkPlayer player in Network.connections) {
 				GUILayout.BeginHorizontal();
 				GUILayout.Label(player.guid);
