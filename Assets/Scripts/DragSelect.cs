@@ -30,12 +30,11 @@ public class DragSelect
 	{
 		get { return boxColor; }
 
-		set
-		{
+		set {
 			boxColor = value;
-			Texture2D texture = new Texture2D (1, 1);
-			texture.SetPixel (0, 0, value);
-			texture.Apply ();
+			Texture2D texture = new Texture2D(1, 1);
+			texture.SetPixel(0, 0, value);
+			texture.Apply();
 			style.normal.background = texture;
 		}
 	}
@@ -45,16 +44,14 @@ public class DragSelect
 		get { return style; }
 	}
 
-	public void UpdateBox (Vector2 pos, Vector2 size)
+	public void UpdateBox(Vector2 pos, Vector2 size)
 	{
-		if (size.x < 0)
-		{
+		if (size.x < 0) {
 			size.x *= -1;
 			pos.x = pos.x - size.x;
 		}
 		
-		if (size.y < 0)
-		{
+		if (size.y < 0) {
 			size.y *= -1;
 			pos.y = pos.y - size.y;
 		}
@@ -63,7 +60,7 @@ public class DragSelect
 		guiBox = new Rect(box.x, Screen.height - (box.y + box.height), box.width, box.height);
 	}
 
-	public void ClearBox ()
+	public void ClearBox()
 	{
 		UpdateBox(Vector2.zero, Vector2.zero);
 	}

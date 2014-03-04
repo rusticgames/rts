@@ -9,123 +9,103 @@ public class SelectUnits : MonoBehaviour
 	private Vector3 lastClickPoint;
 	private DragSelect dragSelect;
 
-	void Start ()
+	void Start()
 	{
-		dragSelect = new DragSelect ();
+		dragSelect = new DragSelect();
 	}
 	
-	void Update ()
+	void Update()
 	{
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit hitInfo = new RaycastHit ();
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hitInfo = new RaycastHit();
 
-		if (Input.GetMouseButtonDown (0))
-		{
-			if (Physics.Raycast (ray, out hitInfo) && hitInfo.collider.tag == "Unit")
-			{
+		if (Input.GetMouseButtonDown(0)) {
+			if (Physics.Raycast(ray, out hitInfo) && hitInfo.collider.tag == "Unit") {
 				GameObject unit = hitInfo.collider.gameObject;
 
-				if (!Input.GetKey (KeyCode.LeftShift))
-					ClearSelectedUnits ();
+				if (!Input.GetKey(KeyCode.LeftShift))
+					ClearSelectedUnits();
 
-				AddToSelectedUnits (unit);
-			}
-			else if (Physics.Raycast (ray, out hitInfo))
-			{
-				ClearSelectedUnits ();
+				AddToSelectedUnits(unit);
+			} else if (Physics.Raycast(ray, out hitInfo)) {
+				ClearSelectedUnits();
 			}
 
 			lastClickPoint = Input.mousePosition;
 		}
 
-		if (Input.GetMouseButtonDown (1) && selectedUnits.Count > 0)
-		{
-			if (Physics.Raycast (ray, out hitInfo))
-			{
+		if (Input.GetMouseButtonDown(1) && selectedUnits.Count > 0) {
+			if (Physics.Raycast(ray, out hitInfo)) {
 				Mover seeker;
-				if (hitInfo.collider.tag == "Unit")
-				{
+				if (hitInfo.collider.tag == "Unit") {
 					GameObject target = hitInfo.collider.gameObject;
-					selectedUnits.ForEach (delegate(GameObject unit)
-					{
-						seeker = (Mover)unit.GetComponent<Mover> ();
-						seeker.follow (target);
+
+					selectedUnits.ForEach(delegate(GameObject unit) {
+						seeker = (Mover)unit.GetComponent<Mover>();
+						seeker.follow(target);
 					});
-				}
-				else
-				{
-					selectedUnits.ForEach (delegate(GameObject unit)
-					{
-						seeker = (Mover)unit.GetComponent<Mover> ();
-						seeker.moveTo (hitInfo.point);
+				} else {
+					selectedUnits.ForEach(delegate(GameObject unit) {
+						seeker = (Mover)unit.GetComponent<Mover>();
+						seeker.moveTo(hitInfo.point);
 					});
 				}
 			}
 		}
 	}
 
-	void OnGUI ()
+	void OnGUI()
 	{
 		GUI.Box(dragSelect.GUIBox, GUIContent.none, dragSelect.Style);
-
-		if (Input.GetMouseButton (0))
-			DrawSelectBox ();
-
-		if (Input.GetMouseButtonUp (0))
-			StopDrawingSelectBox ();
-		
+		if (Input.GetMouseButton(0)) DrawSelectBox();
+		if (Input.GetMouseButtonUp(0)) StopDrawingSelectBox();
 	}
 
-	void DrawSelectBox ()
+	void DrawSelectBox()
 	{
-		print ("Drawing select box");
-		Vector2 pos = new Vector2 (lastClickPoint.x, lastClickPoint.y);
-		Vector2 size = new Vector2 (Input.mousePosition.x - lastClickPoint.x, Input.mousePosition.y - lastClickPoint.y);
+		Vector2 pos = new Vector2(lastClickPoint.x, lastClickPoint.y);
+		Vector2 size = new Vector2(Input.mousePosition.x - lastClickPoint.x, Input.mousePosition.y - lastClickPoint.y);
 		dragSelect.UpdateBox(pos, size);
 	}
 
-	void StopDrawingSelectBox ()
+	void StopDrawingSelectBox()
 	{
-		print ("Stopped drawing select box");
-		GameObject[] allUnits = GameObject.FindGameObjectsWithTag ("Unit");
+		GameObject[] allUnits = GameObject.FindGameObjectsWithTag("Unit");
 		Rect box = dragSelect.Box;
+
 		foreach (GameObject unit in allUnits) {
 			Vector2 pos = Camera.main.WorldToScreenPoint(unit.transform.position);
-			if (box.Contains (pos))
-				AddToSelectedUnits (unit);
+			if (box.Contains(pos)) AddToSelectedUnits(unit);
 		}
+
 		dragSelect.ClearBox();
 	}
 
-	void AddToSelectedUnits (GameObject unit)
+	void AddToSelectedUnits(GameObject unit)
 	{
-		if (!selectedUnits.Contains (unit))
-		{
-			selectedUnits.Add (unit);
-			ChangeUnitColor (unit, Color.green);
+		if (!selectedUnits.Contains(unit)) {
+			selectedUnits.Add(unit);
+			ChangeUnitColor(unit, Color.green);
 		}
 	}
 
-	void RemoveFromSelectedUnits (GameObject unit)
+	void RemoveFromSelectedUnits(GameObject unit)
 	{
-		if (selectedUnits.Contains (unit))
-		{
-			selectedUnits.Remove (unit);
-			ChangeUnitColor (unit, Color.white);
+		if (selectedUnits.Contains(unit)) {
+			selectedUnits.Remove(unit);
+			ChangeUnitColor(unit, Color.white);
 		}
 	}
 
-	void ClearSelectedUnits ()
+	void ClearSelectedUnits()
 	{
-		foreach (GameObject unit in selectedUnits)
-		{
-			ChangeUnitColor (unit, Color.white);
+		foreach (GameObject unit in selectedUnits) {
+			ChangeUnitColor(unit, Color.white);
 		}
-
-		selectedUnits.Clear ();
+		selectedUnits.Clear();
 	}
 
-	void ChangeUnitColor (GameObject unit, Color color)
+	void ChangeUnitColor(GameObject unit, Color color)
 	{
 		unit.renderer.material.color = color;
 	}
