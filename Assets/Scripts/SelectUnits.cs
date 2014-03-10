@@ -19,16 +19,13 @@ public class SelectUnits : MonoBehaviour
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hitInfo = new RaycastHit();
 
-		if (Input.GetMouseButtonDown(0)) {
-			if (Physics.Raycast(ray, out hitInfo) && hitInfo.collider.tag == "Unit") {
-				GameObject unit = hitInfo.collider.gameObject;
-
-				if (!Input.GetKey(KeyCode.LeftShift))
-					ClearSelectedUnits();
-
-				AddToSelectedUnits(unit);
-			} else if (Physics.Raycast(ray, out hitInfo)) {
+		if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hitInfo)) {
+			if (!Input.GetKey(KeyCode.LeftShift)) {
 				ClearSelectedUnits();
+			}
+
+			if(hitInfo.collider.tag == "Unit") {
+				AddToSelectedUnits(hitInfo.collider.gameObject);
 			}
 
 			lastClickPoint = Input.mousePosition;
