@@ -1,22 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("Movement/Constant Rotation")]
 public class CoRotator : MonoBehaviour {
 	public Vector3 rotationRates;
+	public float timeInterval = 0.1f;
+	public bool keepOnKeepingOn = true;
 	
-	// Use this for initialization
+
 	void Start () {
 		StartCoroutine("rotate");
+
 	}
 
+
 	IEnumerator rotate () {
-		while(true) {
+		while(keepOnKeepingOn) {
 			transform.Rotate (rotationRates);
-			yield return new WaitForSeconds(.1f);
+			yield return new WaitForSeconds(timeInterval);
 		}
-	}
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }

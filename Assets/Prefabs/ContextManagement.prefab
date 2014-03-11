@@ -28,7 +28,7 @@ GameObject:
   m_Layer: 0
   m_Name: ContextManagement
   m_TagString: Untagged
-  m_Icon: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+  m_Icon: {fileID: 2800000, guid: cb1d030700c0a5246b55c6238c6ff308, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -108,7 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cdf00b01b5244aa3b33300f0202813b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedUnits: []
+  cameraProvider: {fileID: 11400004}
+  selectBoxDelay: .100000001
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
