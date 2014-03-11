@@ -53,7 +53,7 @@ public class HUD : MonoBehaviour {
 		
 		if (GUILayout.Button("Unit")) {
 			if (selection.selectedUnits.Count > 0) {
-				camUnit.parentTransform = selection.selectedUnits.GetEnumerator().Current.transform;
+				camUnit.parentTransform = selection.LastSelected.transform;
 				UpdateCamera(camUnit);
 			}
 		}
@@ -79,7 +79,7 @@ public class HUD : MonoBehaviour {
 		if (GUILayout.Button("Unit")) {
 			if (selection.selectedUnits.Count > 0) {
 				insetCamera.enabled = true;
-				camUnit.parentTransform = selection.selectedUnits.GetEnumerator().Current.transform;
+				camUnit.parentTransform = selection.LastSelected.transform;
 				UpdateCamera(insetCamera, camUnit);
 			}
 		}

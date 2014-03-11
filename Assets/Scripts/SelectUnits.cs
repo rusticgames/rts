@@ -13,6 +13,7 @@ public class SelectUnits : MonoBehaviour
 	public HUD cameraProvider;
 	public float selectBoxDelay = 0.1f;
 	private GUIBox dragSelect;
+	private GameObject lastSelected;
 
 	void Start()
 	{
@@ -117,6 +118,7 @@ public class SelectUnits : MonoBehaviour
 	{
 		selectedUnits.Add(unit);
 		ChangeUnitColor(unit, Color.green);
+		lastSelected = unit;
 	}
 	
 	void RemoveFromSelectedUnits(GameObject unit)
@@ -147,4 +149,11 @@ public class SelectUnits : MonoBehaviour
 	{
 		unit.renderer.material.color = color;
 	}
+
+	public GameObject LastSelected {
+		get {
+			return lastSelected;
+		}
+	}
+
 }
