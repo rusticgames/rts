@@ -4,77 +4,110 @@ using System.Collections.Generic;
 
 public class SelectUnits : MonoBehaviour
 {
-	public List<GameObject> selectedUnits;
+	private const bool GAME_IS_RUNNING = true;
+	public HashSet<GameObject> selectedUnits = new HashSet<GameObject>();
 
-	private Vector3 lastClickPoint;
-	private DragSelect dragSelect;
+	//it occurs to me, maybe for the first time, that we could limit selection 
+	//to certain cameras. are there interesting possibilities with modal 
+	//interactions (spoiler: yes vi-rts)
+	public HUD cameraProvider;
+	public float selectBoxDelay = 0.1f;
+	private GUIBox dragSelect;
+	private GameObject lastSelected;
 
 	void Start()
 	{
-		dragSelect = new DragSelect();
+		dragSelect = new GUIBox();
+		StartCoroutine(CheckSelect());
+		StartCoroutine(CheckMove());
 	}
-	
-	void Update()
-	{
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		RaycastHit hitInfo = new RaycastHit();
 
-		if (Input.GetMouseButtonDown(0)) {
-			if (Physics.Raycast(ray, out hitInfo) && hitInfo.collider.tag == "Unit") {
-				GameObject unit = hitInfo.collider.gameObject;
+	private MouseToWorldMapper mouseCheck = new MouseToWorldMapper();
+	IEnumerator CheckSelect(){
+		while(GAME_IS_RUNNING){
+			while(!(Input.GetMouseButtonDown(0) && GUIUtility.hotControl == 0)) {
+				yield return null;
+			}
 
-				if (!Input.GetKey(KeyCode.LeftShift))
-					ClearSelectedUnits();
-
-				AddToSelectedUnits(unit);
-			} else if (Physics.Raycast(ray, out hitInfo)) {
+			if (!(Input.GetKey(KeyCode.LeftShift)
+			    || Input.GetKey(KeyCode.RightShift)
+			    || Input.GetKey(KeyCode.LeftControl)
+			    || Input.GetKey(KeyCode.RightControl))) {
 				ClearSelectedUnits();
 			}
 
-			lastClickPoint = Input.mousePosition;
-		}
+			Camera c = cameraProvider.getBestGuessCameraFromScreenPoint(Input.mousePosition);
+			Vector3 clickPoint = Input.mousePosition;
 
-		if (Input.GetMouseButtonDown(1) && selectedUnits.Count > 0) {
-			if (Physics.Raycast(ray, out hitInfo)) {
-				Mover seeker;
-				if (hitInfo.collider.tag == "Unit") {
-					GameObject target = hitInfo.collider.gameObject;
-
-					selectedUnits.ForEach(delegate(GameObject unit) {
-						seeker = (Mover)unit.GetComponent<Mover>();
-						seeker.follow(target);
-					});
+			if(mouseCheck.IsMouseOverObject(c) && mouseCheck.LastMouseHit.collider.tag == "Unit") {
+				if(Input.GetKey(KeyCode.LeftControl)||Input.GetKey(KeyCode.RightControl)){
+					ToggleSelectedUnit(mouseCheck.LastMouseHit.collider.gameObject);
 				} else {
-					selectedUnits.ForEach(delegate(GameObject unit) {
-						seeker = (Mover)unit.GetComponent<Mover>();
-						seeker.moveTo(hitInfo.point);
-					});
+					AddToSelectedUnits(mouseCheck.LastMouseHit.collider.gameObject);
 				}
 			}
+
+			yield return new WaitForSeconds(selectBoxDelay);
+			if(!Input.GetMouseButton(0)) { continue; }
+
+			while(Input.GetMouseButton(0)) {
+				UpdateSelectBox(clickPoint,Input.mousePosition);
+				yield return null;
+			}
+			FinishBoxSelection(c);
 		}
 	}
+
+	IEnumerator CheckMove(){
+		while(GAME_IS_RUNNING){
+			while(!(Input.GetMouseButtonDown(1) 
+		        && GUIUtility.hotControl == 0
+		        && selectedUnits.Count > 0
+			    && mouseCheck.IsMouseOverObject(cameraProvider.getBestGuessCameraFromScreenPoint(Input.mousePosition))
+	    	)) {
+				yield return null;
+			}
+			
+			foreach (GameObject unit in selectedUnits) {
+				if (mouseCheck.LastMouseHit.collider.tag == "Unit") {
+					((Mover)unit.GetComponent<Mover>()).follow(mouseCheck.LastMouseHit.collider.gameObject);
+				} else {
+					((Mover)unit.GetComponent<Mover>()).moveTo(mouseCheck.LastMouseHit.point);
+				}
+			}
+
+			yield return null;
+		}
+	}
+
+	void moveIt(GameObject unit, RaycastHit hitinfo) {
+	}
+	
+	void moveTo(GameObject unit, RaycastHit hitinfo) {
+
+	}
+
+	delegate void GameObjectDelegate(GameObject o);
 
 	void OnGUI()
 	{
-		GUI.Box(dragSelect.GUIBox, GUIContent.none, dragSelect.Style);
-		if (Input.GetMouseButton(0)) DrawSelectBox();
-		if (Input.GetMouseButtonUp(0)) StopDrawingSelectBox();
+		GUI.Box(dragSelect.ScreenRect, GUIContent.none, dragSelect.Style);
 	}
 
-	void DrawSelectBox()
+	void UpdateSelectBox(Vector3 startPoint, Vector3 endPoint)
 	{
-		Vector2 pos = new Vector2(lastClickPoint.x, lastClickPoint.y);
-		Vector2 size = new Vector2(Input.mousePosition.x - lastClickPoint.x, Input.mousePosition.y - lastClickPoint.y);
-		dragSelect.UpdateBox(pos, size);
+		Vector2 pos = new Vector2(startPoint.x, startPoint.y);
+		Vector2 size = new Vector2(endPoint.x - startPoint.x, endPoint.y - startPoint.y);
+		dragSelect.UpdateBoxFromScreen(pos, size);
 	}
 
-	void StopDrawingSelectBox()
+	void FinishBoxSelection(Camera currentCamera)
 	{
 		GameObject[] allUnits = GameObject.FindGameObjectsWithTag("Unit");
-		Rect box = dragSelect.Box;
+		Rect box = dragSelect.WorldRect;
 
 		foreach (GameObject unit in allUnits) {
-			Vector2 pos = Camera.main.WorldToScreenPoint(unit.transform.position);
+			Vector2 pos = currentCamera.WorldToScreenPoint(unit.transform.position);
 			if (box.Contains(pos)) AddToSelectedUnits(unit);
 		}
 
@@ -83,17 +116,23 @@ public class SelectUnits : MonoBehaviour
 
 	void AddToSelectedUnits(GameObject unit)
 	{
-		if (!selectedUnits.Contains(unit)) {
-			selectedUnits.Add(unit);
-			ChangeUnitColor(unit, Color.green);
-		}
+		selectedUnits.Add(unit);
+		ChangeUnitColor(unit, Color.green);
+		lastSelected = unit;
 	}
-
+	
 	void RemoveFromSelectedUnits(GameObject unit)
 	{
+		selectedUnits.Remove(unit);
+		ChangeUnitColor(unit, Color.white);
+	}
+	
+	void ToggleSelectedUnit(GameObject unit)
+	{
 		if (selectedUnits.Contains(unit)) {
-			selectedUnits.Remove(unit);
-			ChangeUnitColor(unit, Color.white);
+			RemoveFromSelectedUnits(unit);
+		} else {
+			AddToSelectedUnits(unit);
 		}
 	}
 
@@ -104,9 +143,17 @@ public class SelectUnits : MonoBehaviour
 		}
 		selectedUnits.Clear();
 	}
+	
 
 	void ChangeUnitColor(GameObject unit, Color color)
 	{
 		unit.renderer.material.color = color;
 	}
+
+	public GameObject LastSelected {
+		get {
+			return lastSelected;
+		}
+	}
+
 }

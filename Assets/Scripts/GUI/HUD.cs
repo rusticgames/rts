@@ -32,6 +32,10 @@ public class HUD : MonoBehaviour {
 		camISO.nearClipPlane = -35f;
 	}
 
+	public Camera getBestGuessCameraFromScreenPoint(Vector3 point){
+		return (insetCamera.pixelRect.Contains(point)) ? insetCamera : mainCamera;
+	}
+
 	void OnGUI () {
 		GUILayout.BeginArea(GUIArea);
 
@@ -49,7 +53,7 @@ public class HUD : MonoBehaviour {
 		
 		if (GUILayout.Button("Unit")) {
 			if (selection.selectedUnits.Count > 0) {
-				camUnit.parentTransform = selection.selectedUnits[0].transform;
+				camUnit.parentTransform = selection.LastSelected.transform;
 				UpdateCamera(camUnit);
 			}
 		}
@@ -75,7 +79,7 @@ public class HUD : MonoBehaviour {
 		if (GUILayout.Button("Unit")) {
 			if (selection.selectedUnits.Count > 0) {
 				insetCamera.enabled = true;
-				camUnit.parentTransform = selection.selectedUnits[0].transform;
+				camUnit.parentTransform = selection.LastSelected.transform;
 				UpdateCamera(insetCamera, camUnit);
 			}
 		}
@@ -113,4 +117,28 @@ public class CameraSettings {
 	public float orthographicSize = 5f;
 	public float nearClipPlane = 0.3f;
 	public Transform parentTransform = null;
+}
+
+public class MouseToWorldMapper {
+	int freshestFrame = 0;
+	bool hitThisFrame = false;
+	RaycastHit hitInfo = new RaycastHit();
+	Ray ray = new Ray();
+	
+	public bool IsMouseOverObject(Camera currentCamera) {
+		if(	UnityEngine.Time.frameCount > freshestFrame ) {
+			freshestFrame = UnityEngine.Time.frameCount;
+			
+			hitInfo = new RaycastHit();
+			ray = currentCamera.ScreenPointToRay(Input.mousePosition);
+			hitThisFrame = Physics.Raycast(ray, out hitInfo);
+		}
+		return hitThisFrame;
+	}
+	
+	public RaycastHit LastMouseHit {
+		get {
+			return hitInfo;
+		}
+	}
 }
