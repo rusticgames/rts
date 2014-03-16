@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class HUD : MonoBehaviour {
 	public Camera mainCamera;
-	public Camera insetCamera;
+	public Camera insetCamera = null;
 	public SelectUnits selection;
 	private GameObject selectedUnit = null;
 
@@ -33,7 +33,10 @@ public class HUD : MonoBehaviour {
 	}
 
 	public Camera getBestGuessCameraFromScreenPoint(Vector3 point){
-		return (insetCamera.pixelRect.Contains(point)) ? insetCamera : mainCamera;
+		if (insetCamera == null)
+			return mainCamera;
+		else
+			return (insetCamera.pixelRect.Contains(point)) ? insetCamera : mainCamera;
 	}
 
 	void OnGUI () {
@@ -62,30 +65,32 @@ public class HUD : MonoBehaviour {
 			UpdateCamera(camStart);
 		}
 
-		GUILayout.Label("Inset Camera");
-		
-		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Top")) {
-			insetCamera.enabled = true;
-			UpdateCamera(insetCamera, camTop);
-		}
-		
-		if (GUILayout.Button("ISO")) {
-			insetCamera.enabled = true;
-			UpdateCamera(insetCamera, camISO);
-		}
-		GUILayout.EndHorizontal();
-		
-		if (GUILayout.Button("Unit")) {
-			if (selection.selectedUnits.Count > 0) {
+		if (insetCamera != null) {
+			GUILayout.Label("Inset Camera");
+			
+			GUILayout.BeginHorizontal();
+			if (GUILayout.Button("Top")) {
 				insetCamera.enabled = true;
-				camUnit.parentTransform = selection.LastSelected.transform;
-				UpdateCamera(insetCamera, camUnit);
+				UpdateCamera(insetCamera, camTop);
 			}
-		}
-		
-		if (GUILayout.Button("Reset")) {
-			insetCamera.enabled = false;
+			
+			if (GUILayout.Button("ISO")) {
+				insetCamera.enabled = true;
+				UpdateCamera(insetCamera, camISO);
+			}
+			GUILayout.EndHorizontal();
+			
+			if (GUILayout.Button("Unit")) {
+				if (selection.selectedUnits.Count > 0) {
+					insetCamera.enabled = true;
+					camUnit.parentTransform = selection.LastSelected.transform;
+					UpdateCamera(insetCamera, camUnit);
+				}
+			}
+			
+			if (GUILayout.Button("Reset")) {
+				insetCamera.enabled = false;
+			}
 		}
 		
 		GUILayout.EndArea();
