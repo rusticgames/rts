@@ -130,6 +130,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 2
   maximumVelocity: 50
+  maximumAngularVelocity: 1
+  forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  stopByArrival: 0
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
