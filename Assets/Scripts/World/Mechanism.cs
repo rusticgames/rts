@@ -8,13 +8,19 @@ public class Mechanism : MonoBehaviour
 	public ForceMode forceMode;
 	public ForceMode angularForceMode;
 
-	public void applyAngularForce (Rigidbody toBody, Vector3 desiredTorque)
+	public void applyAngularForce (Rigidbody toBody, Vector3 desiredTorque, bool relative)
 	{
-		toBody.AddTorque(desiredTorque, this.angularForceMode);
+		if(relative) 
+			toBody.AddRelativeTorque(desiredTorque, this.angularForceMode);
+		else
+			toBody.AddTorque(desiredTorque, this.angularForceMode);
 	}
-	public void applyLinearForce (Rigidbody toBody, Vector3 desiredForce)
+	public void applyLinearForce (Rigidbody toBody, Vector3 desiredForce, bool relative)
 	{
-		toBody.AddForce (desiredForce, this.forceMode);
+		if(relative) 
+			toBody.AddRelativeForce (desiredForce, this.forceMode);
+		else
+			toBody.AddForce (desiredForce, this.forceMode);
 	}
 }
 

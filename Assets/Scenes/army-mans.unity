@@ -202,7 +202,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: .100000001
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -225,6 +225,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 1
+  overrideAngular: 0
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 1
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &67072913
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -299,6 +309,22 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideLinear
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: logPrints
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_AngularDrag
+      value: .100000001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 67072906}
@@ -327,6 +353,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 250853356}
@@ -352,7 +386,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &167386307
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -441,6 +475,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &167386313
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -504,7 +548,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &250853357
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -593,6 +637,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &250853363
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -656,7 +710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &447059118
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -745,6 +799,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &447059124
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -808,7 +872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &601646431
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -897,6 +961,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &601646437
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -959,6 +1033,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 1722410326}
@@ -1136,7 +1218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &738914781
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1225,6 +1307,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &738914787
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -1287,6 +1379,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 1784333999}
@@ -1312,7 +1412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &987895672
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1401,6 +1501,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &987895678
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -1551,6 +1661,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 601646430}
@@ -1768,6 +1886,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 167386306}
@@ -1796,6 +1922,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 738914780}
@@ -1820,6 +1954,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 987895671}
@@ -1845,7 +1987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1643217629
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1934,6 +2076,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &1643217635
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2000,6 +2152,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 447059117}
@@ -2025,7 +2185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1722410327
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2114,6 +2274,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &1722410333
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2176,6 +2346,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 1824973268}
@@ -2241,7 +2419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1784334000
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2330,6 +2508,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &1784334006
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2477,7 +2665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1824973269
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2566,6 +2754,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &1824973275
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2628,6 +2826,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 1643217628}
@@ -2653,7 +2859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1921357873
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2742,6 +2948,16 @@ MonoBehaviour:
   maximumAngularVelocity: 1
   forceSource: {fileID: 989641822}
   stopByArrival: 0
+  overrideLinear: 0
+  overrideAngular: 1
+  relativeLinear: 0
+  relativeAngular: 0
+  linear: {x: 0, y: 0, z: 0}
+  angular: {x: 0, y: 0, z: 0}
+  logPrints: 0
+  logClear: 0
+  lastLinearVelocity: {x: 0, y: 0, z: 0}
+  lastAngularVelocity: {x: 0, y: 0, z: 0}
 --- !u!96 &1921357879
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2864,6 +3080,14 @@ Prefab:
       propertyPath: forceSource
       value: 
       objectReference: {fileID: 989641822}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: overrideAngular
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 1921357872}
