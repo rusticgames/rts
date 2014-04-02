@@ -60,7 +60,7 @@ public class SelectUnits : MonoBehaviour
 
 	IEnumerator CheckMove(){
 		while(GAME_IS_RUNNING){
-			while(!(Input.GetMouseButtonDown(1) 
+			while(!(Input.GetMouseButton(1) 
 		        && GUIUtility.hotControl == 0
 		        && selectedUnits.Count > 0
 			    && mouseCheck.IsMouseOverObject(cameraProvider.getBestGuessCameraFromScreenPoint(Input.mousePosition))

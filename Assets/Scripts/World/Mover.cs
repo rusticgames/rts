@@ -8,6 +8,7 @@ public class Mover : MonoBehaviour
 	GameObject followTarget;
 	public float followDistance = 1.0f;
 	public float maximumVelocity = 1.0f;
+	[Range (0, 100)]
 	public float maximumAngularVelocity = 1.0f;
 	public Mechanism forceSource;
 	public bool stopByArrival = false;
@@ -21,6 +22,7 @@ public class Mover : MonoBehaviour
 	public bool logClear = false;
 	public Vector3 lastLinearVelocity;
 	public Vector3 lastAngularVelocity;
+	public bool angularViaQuaternion = false;
 	
 	// Start is called just before any of the
 	// Update methods is called the first time.
@@ -60,16 +62,15 @@ public class Mover : MonoBehaviour
 
 		return desiredVelocity - rigidbody.velocity;
 	}
-
+	
 	Vector3 GetRotationTarget (Vector2 distanceVector)
 	{
-		Quaternion q;
 		Vector3 orientationTarget = this.rigidbody.rotation.eulerAngles;
 		if(logClear) Debug.ClearDeveloperConsole();
 		string logString = "current: " + orientationTarget.ToString();
 		if(orientationTarget.sqrMagnitude > 25.0f) {
 			//orientationTarget.y = (180 - (360 * Mathf.Atan2 (distanceVector.x, distanceVector.y) / (2 * Mathf.PI)));
-			orientationTarget.y = (360 * Mathf.Atan2 (distanceVector.x, distanceVector.y) / (2 * Mathf.PI));
+			orientationTarget.z = (360 * Mathf.Atan2 (distanceVector.x, distanceVector.y) / (2 * Mathf.PI));
 		}
 		logString += ", target: " + orientationTarget.ToString();
 		orientationTarget = orientationTarget - this.rigidbody.rotation.eulerAngles;
@@ -88,13 +89,23 @@ public class Mover : MonoBehaviour
 
 	void try2DMove ()
 	{
+		Quaternion q = transform.rotation;
+		float angle;
+		Vector3 axis;
+		q.ToAngleAxis(out angle, out axis);
+		print("q.angle: " + angle);
+		print("q.axis: " + axis);
 		var distanceVector = GetDistanceToTarget ();
 		lastAngularVelocity = rigidbody.angularVelocity;
 		lastLinearVelocity = rigidbody.velocity;
 		var linearForce = overrideLinear ? linear : GetDesiredVelocity (distanceVector);
 		forceSource.applyLinearForce(this.rigidbody, linearForce, relativeLinear);
 		var torque = overrideAngular ? angular : GetRotationTarget (distanceVector);
-		forceSource.applyAngularForce(this.rigidbody, torque, relativeAngular);
+		if(angularViaQuaternion) {
+			forceSource.applyAngularForceViaQuaternion(this.rigidbody, torque);
+		} else {
+			forceSource.applyAngularForce(this.rigidbody, torque, relativeAngular);
+		}
 	}
 	
 	public void moveTo (Vector3 target)
