@@ -86,6 +86,30 @@ public class Mover : MonoBehaviour
 		}
 		return orientationTarget;
 	}
+	
+	Vector3 GetRotationTargetAlt (Vector2 distanceVector)
+	{
+		Vector3 orientationTarget = this.rigidbody.rotation.eulerAngles;
+		if(logClear) Debug.ClearDeveloperConsole();
+		string logString = "current: " + orientationTarget.ToString();
+		if(orientationTarget.sqrMagnitude > 25.0f) {
+			//orientationTarget.y = (180 - (360 * Mathf.Atan2 (distanceVector.x, distanceVector.y) / (2 * Mathf.PI)));
+			orientationTarget.z = (360 * Mathf.Atan2 (distanceVector.x, distanceVector.y) / (2 * Mathf.PI));
+		}
+		logString += ", target: " + orientationTarget.ToString();
+		orientationTarget = orientationTarget - this.rigidbody.rotation.eulerAngles;
+		logString += "\r\ndelta: " + orientationTarget.ToString();
+		//orientationTarget.y %= 360;
+		//logString += ", corrected: " + orientationTarget.ToString();
+		if(logPrints && orientationTarget.y != this.rigidbody.rotation.eulerAngles.y) {
+			if(Mathf.Abs(orientationTarget.y) > 180f){
+				Debug.LogError(logString);
+			}else {
+				Debug.LogWarning(logString);
+			}
+		}
+		return orientationTarget;
+	}
 
 	void try2DMove ()
 	{
