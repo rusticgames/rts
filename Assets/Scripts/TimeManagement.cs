@@ -17,7 +17,7 @@ public class TimeManagement : MonoBehaviour {
 		}
 	}
 
-	void Pause (bool paused) {
+	public void Pause (bool paused) {
 		Time.timeScale = paused ? 0.0f : 1.0f;
 		Rigidbody[] rigidbodies = FindObjectsOfType(typeof(Rigidbody)) as Rigidbody[];
 		foreach (Rigidbody rigidbody in rigidbodies) {
