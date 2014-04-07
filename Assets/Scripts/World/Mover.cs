@@ -18,11 +18,11 @@ public class Mover : MonoBehaviour
 	public bool relativeAngular = false;
 	public Vector3 linear;
 	public Vector3 angular;
-	public bool logPrints = false;
-	public bool logClear = false;
-	public Vector3 lastLinearVelocity;
-	public Vector3 lastAngularVelocity;
-	public bool angularViaQuaternion = false;
+	public Vector3 lastLinearForce;
+	public Vector3 lastAngularForce;
+	public float minimumAngularOffset = 5.0f;
+	private Vector3 targetOrientation;
+	private Vector3 distanceVector;
 	
 	// Start is called just before any of the
 	// Update methods is called the first time.
@@ -32,7 +32,6 @@ public class Mover : MonoBehaviour
 			this.follow (this.gameObject);
 		}
 		moveTarget = followTarget.transform.position;
-
 	}
 	
 	// Update is called every frame, if the
@@ -42,94 +41,60 @@ public class Mover : MonoBehaviour
 		try2DMove ();
 	}
 
-	Vector2 GetDistanceToTarget ()
+	void OnDrawGizmos () {
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireSphere(moveTarget, 1f);
+		Gizmos.DrawLine(this.transform.position, moveTarget);
+		Gizmos.color = Color.red;
+		Gizmos.DrawRay(this.transform.position, targetOrientation);
+		Gizmos.color = Color.blue;
+		Gizmos.DrawRay(this.transform.position, transform.up);
+		Gizmos.color = Color.white;
+		Gizmos.DrawRay(this.transform.position, transform.forward);
+	}
+
+	Vector3 GetDistanceToTarget ()
 	{
 		if (followTarget != this.gameObject) {
 			moveTarget = followTarget.transform.position;
 		}
 
-		return new Vector2(moveTarget.x - this.rigidbody.position.x, moveTarget.z - this.rigidbody.position.z);
+		return moveTarget - this.rigidbody.position;
 	}
 
-	Vector3 GetDesiredVelocity (Vector2 distanceVector)
+	Vector3 GetDesiredVelocity (Vector3 distance)
 	{		
+		if(overrideLinear) return linear;
 		Vector3 desiredVelocity = new Vector3 (0, 0, 0);
-		if (distanceVector.sqrMagnitude > (followDistance * followDistance)) {
-			Vector2 moveDirection = distanceVector.normalized;
-			desiredVelocity.x = maximumVelocity * moveDirection.x;
-			desiredVelocity.z = maximumVelocity * moveDirection.y;
+		if (distance.sqrMagnitude > (followDistance * followDistance)) {
+			desiredVelocity = distance.normalized * maximumVelocity;
 		}
 
 		return desiredVelocity - rigidbody.velocity;
 	}
 	
-	Vector3 GetRotationTarget (Vector2 distanceVector)
+	Vector3 GetRotationTarget (Vector3 distance)
 	{
-		Vector3 orientationTarget = this.rigidbody.rotation.eulerAngles;
-		if(logClear) Debug.ClearDeveloperConsole();
-		string logString = "current: " + orientationTarget.ToString();
-		if(orientationTarget.sqrMagnitude > 25.0f) {
-			//orientationTarget.y = (180 - (360 * Mathf.Atan2 (distanceVector.x, distanceVector.y) / (2 * Mathf.PI)));
-			orientationTarget.z = (360 * Mathf.Atan2 (distanceVector.x, distanceVector.y) / (2 * Mathf.PI));
+		if(overrideAngular) return angular;
+		Vector3 currentOrientation = this.rigidbody.rotation.eulerAngles;
+		Vector3 targetTorque = currentOrientation;
+		targetTorque.y = 180 * Mathf.Atan2 (distance.x, distance.z) / Mathf.PI;
+		targetTorque -= currentOrientation;
+		if(targetTorque.y > 180.0f) targetTorque.y -= 360.0f;
+		if(targetTorque.y < -180.0f) targetTorque.y += 360.0f;
+		if(Mathf.Abs(targetTorque.y) < minimumAngularOffset) {
+			targetTorque.y = 0;
 		}
-		logString += ", target: " + orientationTarget.ToString();
-		orientationTarget = orientationTarget - this.rigidbody.rotation.eulerAngles;
-		logString += "\r\ndelta: " + orientationTarget.ToString();
-		//orientationTarget.y %= 360;
-		//logString += ", corrected: " + orientationTarget.ToString();
-		if(logPrints && orientationTarget.y != this.rigidbody.rotation.eulerAngles.y) {
-			if(Mathf.Abs(orientationTarget.y) > 180f){
-				Debug.LogError(logString);
-			}else {
-				Debug.LogWarning(logString);
-			}
-		}
-		return orientationTarget;
+		return targetTorque - rigidbody.angularVelocity;
 	}
 	
-	Vector3 GetRotationTargetAlt (Vector2 distanceVector)
-	{
-		Vector3 orientationTarget = this.rigidbody.rotation.eulerAngles;
-		if(logClear) Debug.ClearDeveloperConsole();
-		string logString = "current: " + orientationTarget.ToString();
-		if(orientationTarget.sqrMagnitude > 25.0f) {
-			//orientationTarget.y = (180 - (360 * Mathf.Atan2 (distanceVector.x, distanceVector.y) / (2 * Mathf.PI)));
-			orientationTarget.z = (360 * Mathf.Atan2 (distanceVector.x, distanceVector.y) / (2 * Mathf.PI));
-		}
-		logString += ", target: " + orientationTarget.ToString();
-		orientationTarget = orientationTarget - this.rigidbody.rotation.eulerAngles;
-		logString += "\r\ndelta: " + orientationTarget.ToString();
-		//orientationTarget.y %= 360;
-		//logString += ", corrected: " + orientationTarget.ToString();
-		if(logPrints && orientationTarget.y != this.rigidbody.rotation.eulerAngles.y) {
-			if(Mathf.Abs(orientationTarget.y) > 180f){
-				Debug.LogError(logString);
-			}else {
-				Debug.LogWarning(logString);
-			}
-		}
-		return orientationTarget;
-	}
-
 	void try2DMove ()
 	{
-		Quaternion q = transform.rotation;
-		float angle;
-		Vector3 axis;
-		q.ToAngleAxis(out angle, out axis);
-		print("q.angle: " + angle);
-		print("q.axis: " + axis);
-		var distanceVector = GetDistanceToTarget ();
-		lastAngularVelocity = rigidbody.angularVelocity;
-		lastLinearVelocity = rigidbody.velocity;
-		var linearForce = overrideLinear ? linear : GetDesiredVelocity (distanceVector);
-		forceSource.applyLinearForce(this.rigidbody, linearForce, relativeLinear);
-		var torque = overrideAngular ? angular : GetRotationTarget (distanceVector);
-		if(angularViaQuaternion) {
-			forceSource.applyAngularForceViaQuaternion(this.rigidbody, torque);
-		} else {
-			forceSource.applyAngularForce(this.rigidbody, torque, relativeAngular);
-		}
+		distanceVector = GetDistanceToTarget ();
+		lastLinearForce = GetDesiredVelocity (distanceVector);
+		lastAngularForce = GetRotationTarget (distanceVector);
+		forceSource.applyLinearForce(this.rigidbody, lastLinearForce, relativeLinear);
+		forceSource.applyAngularForce(this.rigidbody, lastAngularForce, relativeAngular);
 	}
 	
 	public void moveTo (Vector3 target)

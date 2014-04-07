@@ -12,7 +12,7 @@ public class SelectUnits : MonoBehaviour
 	//interactions (spoiler: yes vi-rts)
 	public HUD cameraProvider;
 	public float selectBoxDelay = 0.1f;
-	private GUIBox dragSelect;
+	private GUIBox dragSelect = null;
 	private GameObject lastSelected;
 
 	void Start()

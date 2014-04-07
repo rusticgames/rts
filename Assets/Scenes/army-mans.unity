@@ -130,6 +130,7 @@ GameObject:
   - 54: {fileID: 67072911}
   - 114: {fileID: 67072912}
   - 96: {fileID: 67072913}
+  - 114: {fileID: 67072914}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -150,7 +151,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 0424c3705dcaf7445a24ff4388ed9f74, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -187,10 +188,13 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_PrefabInternal: {fileID: 152448100}
   m_GameObject: {fileID: 67072906}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: -5, y: .628770828, z: -18}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5, y: 1.16900778, z: -18}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1802970486}
+  - {fileID: 1210565975}
+  - {fileID: 1163300208}
   m_Father: {fileID: 0}
 --- !u!54 &67072911
 Rigidbody:
@@ -206,7 +210,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &67072912
 MonoBehaviour:
@@ -231,11 +235,9 @@ MonoBehaviour:
   relativeAngular: 1
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 1
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: .100000001
 --- !u!96 &67072913
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -279,6 +281,21 @@ TrailRenderer:
       rgba: 16777215
   m_MinVertexDistance: .100000001
   m_Autodestruct: 0
+--- !u!114 &67072914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 67072906}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d085890fbfe42245b40f88ae5a24eea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeInterval: .100000001
+  keepOnKeepingOn: 1
+  fadeTarget: .455000013
+  fadeRate: 1
 --- !u!1001 &152448100
 Prefab:
   m_ObjectHideFlags: 0
@@ -292,15 +309,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .628770828
+      value: 1.16900778
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_LocalRotation.x
-      value: .707106829
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_LocalRotation.w
-      value: .707106829
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -338,10 +355,22 @@ Prefab:
       propertyPath: angular.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 0424c3705dcaf7445a24ff4388ed9f74, type: 2}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: angularViaQuaternion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: angularDampingFactor
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: minimumAngularOffset
+      value: .100000001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 67072906}
@@ -498,11 +527,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &167386313
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -661,11 +688,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &250853363
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -824,11 +849,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &447059124
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -987,11 +1010,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &601646437
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -1060,7 +1081,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
@@ -1146,9 +1167,6 @@ MonoBehaviour:
   rotationRates: {x: 0, y: 1, z: 0}
   timeInterval: .0500000007
   keepOnKeepingOn: 1
-  fadee: {fileID: 67072906}
-  fadeTarget: 1
-  fadeRate: .0500000007
 --- !u!1 &738672335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,11 +1355,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &738914787
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -1532,11 +1548,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &987895678
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -1623,7 +1637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   context: {fileID: 989641822}
   forceMode: 0
-  angularForceMode: 0
+  angularForceMode: 5
 --- !u!1001 &1048385104
 Prefab:
   m_ObjectHideFlags: 0
@@ -1757,6 +1771,144 @@ MonoBehaviour:
   mainCamera: {fileID: 1367552617}
   insetCamera: {fileID: 1787207520}
   selection: {fileID: 1154489903}
+--- !u!1 &1163300204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1163300208}
+  - 33: {fileID: 1163300207}
+  - 135: {fileID: 1163300206}
+  - 23: {fileID: 1163300205}
+  m_Layer: 0
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &1163300205
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1163300204}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 88070fe81d0ab3d419fd94d3ac55dc48, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+--- !u!135 &1163300206
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1163300204}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1163300207
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1163300204}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1163300208
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1163300204}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.5, y: -.500000179, z: -.200000763}
+  m_LocalScale: {x: .200000003, y: .200000003, z: .200000003}
+  m_Children: []
+  m_Father: {fileID: 67072910}
+--- !u!1 &1210565974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1210565975}
+  - 33: {fileID: 1210565978}
+  - 135: {fileID: 1210565977}
+  - 23: {fileID: 1210565976}
+  m_Layer: 0
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1210565975
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210565974}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .5, y: .500000238, z: -.200000793}
+  m_LocalScale: {x: .200000003, y: .200000003, z: .200000003}
+  m_Children: []
+  m_Father: {fileID: 67072910}
+--- !u!23 &1210565976
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210565974}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 88070fe81d0ab3d419fd94d3ac55dc48, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+--- !u!135 &1210565977
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210565974}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1210565978
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210565974}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1367552613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,6 +2036,14 @@ Prefab:
       propertyPath: insetCamera
       value: 
       objectReference: {fileID: 1787207520}
+    - target: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: forceMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: angularForceMode
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   m_RootGameObject: {fileID: 989641820}
@@ -1955,6 +2115,10 @@ Prefab:
     - target: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: angularDampingFactor
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
@@ -2108,11 +2272,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &1643217635
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2212,7 +2374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1722410327
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2307,11 +2469,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &1722410333
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2542,11 +2702,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &1784334006
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2674,6 +2832,75 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
   m_OcclusionCulling: 1
+--- !u!1 &1802970485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1802970486}
+  - 33: {fileID: 1802970489}
+  - 135: {fileID: 1802970488}
+  - 23: {fileID: 1802970487}
+  m_Layer: 0
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1802970486
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1802970485}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .5, y: .5, z: .200000003}
+  m_LocalScale: {x: .200000003, y: .200000003, z: .200000003}
+  m_Children: []
+  m_Father: {fileID: 67072910}
+--- !u!23 &1802970487
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1802970485}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 88070fe81d0ab3d419fd94d3ac55dc48, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+--- !u!135 &1802970488
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1802970485}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1802970489
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1802970485}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1824973268
 GameObject:
   m_ObjectHideFlags: 0
@@ -2789,11 +3016,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &1824973275
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2984,11 +3209,9 @@ MonoBehaviour:
   relativeAngular: 0
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  logPrints: 0
-  logClear: 0
-  lastLinearVelocity: {x: 0, y: 0, z: 0}
-  lastAngularVelocity: {x: 0, y: 0, z: 0}
-  angularViaQuaternion: 0
+  lastLinearForce: {x: 0, y: 0, z: 0}
+  lastAngularForce: {x: 0, y: 0, z: 0}
+  minimumAngularOffset: 5
 --- !u!96 &1921357879
 TrailRenderer:
   m_ObjectHideFlags: 0
