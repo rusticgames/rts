@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager2P : MonoBehaviour
+public class GameManagerCollect : MonoBehaviour
 {
 	private int collectablesRemaining = 1;
 	private GameObject player1;
