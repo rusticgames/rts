@@ -1008,7 +1008,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1970143731}
   m_GameObject: {fileID: 701606668}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9694a80e3fc56ea459a197e45d86ec1c, type: 3}
   m_Name: 
@@ -1047,7 +1047,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 4e2b02445eebaa54ebbadf6772c570e5, type: 2}
+  - {fileID: 2100000, guid: e5e9bbb3c54924d3e83ca271d37445ac, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2783,7 +2783,11 @@ Prefab:
     - target: {fileID: 2300000, guid: f334acf1eda6e33409c261b959231905, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4e2b02445eebaa54ebbadf6772c570e5, type: 2}
+      objectReference: {fileID: 2100000, guid: e5e9bbb3c54924d3e83ca271d37445ac, type: 2}
+    - target: {fileID: 11400000, guid: f334acf1eda6e33409c261b959231905, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f334acf1eda6e33409c261b959231905, type: 2}
   m_RootGameObject: {fileID: 738672335}
