@@ -30,7 +30,7 @@ GameObject:
   - 23: {fileID: 2300000}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,7 +70,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4e2b02445eebaa54ebbadf6772c570e5, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -115,7 +115,7 @@ Light:
   m_Shadows:
     m_Type: 0
     m_Resolution: -1
-    m_Strength: 1
+    m_Strength: .75
     m_Bias: .0500000007
     m_Softness: 4
     m_SoftnessFade: 1
@@ -144,8 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9694a80e3fc56ea459a197e45d86ec1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationRates: {x: 0, y: 10, z: 0}
-  timeInterval: .5
+  rotationRates: {x: 0, y: .5, z: 0}
+  timeInterval: .0500000007
   keepOnKeepingOn: 1
 --- !u!1001 &100100000
 Prefab:

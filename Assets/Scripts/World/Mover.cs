@@ -11,9 +11,8 @@ public class Mover : MonoBehaviour
 	[Range (0, 100)]
 	public float maximumAngularVelocity = 1.0f;
 	public Mechanism forceSource;
-	public bool stopByArrival = false;
 	public bool overrideLinear = false;
-	public bool overrideAngular = true;
+	public bool overrideAngular = false;
 	public bool relativeLinear = false;
 	public bool relativeAngular = false;
 	public Vector3 linear;
