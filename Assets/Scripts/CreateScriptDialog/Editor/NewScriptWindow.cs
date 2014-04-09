@@ -13,8 +13,9 @@ public class NewScriptWindow : EditorWindow
 	private const int kButtonWidth = 120;
 	private const int kLabelWidth = 85;
 	private const string kLanguageEditorPrefName = "NewScriptLanguage";
-	private const string kTemplatePath = "CreateScriptDialog/SmartScriptTemplates";
-	private const string kResourcesTemplatePath = "Resources/SmartScriptTemplates";
+	private const string kBasePath = "Scripts/";
+	private const string kTemplatePath = kBasePath + "CreateScriptDialog/SmartScriptTemplates";
+	private const string kResourcesTemplatePath = kBasePath + "Resources/SmartScriptTemplates";
 	private const string kMonoBehaviourName = "MonoBehaviour";
 	private const string kPlainClassName = "Empty Class";
 	private const string kCustomEditorClassName = "Editor";

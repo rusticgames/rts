@@ -12,7 +12,7 @@ public class SelectUnits : MonoBehaviour
 	//interactions (spoiler: yes vi-rts)
 	public HUD cameraProvider;
 	public float selectBoxDelay = 0.1f;
-	private GUIBox dragSelect;
+	private GUIBox dragSelect = null;
 	private GameObject lastSelected;
 
 	void Start()
@@ -60,7 +60,7 @@ public class SelectUnits : MonoBehaviour
 
 	IEnumerator CheckMove(){
 		while(GAME_IS_RUNNING){
-			while(!(Input.GetMouseButtonDown(1) 
+			while(!(Input.GetMouseButton(1) 
 		        && GUIUtility.hotControl == 0
 		        && selectedUnits.Count > 0
 			    && mouseCheck.IsMouseOverObject(cameraProvider.getBestGuessCameraFromScreenPoint(Input.mousePosition))

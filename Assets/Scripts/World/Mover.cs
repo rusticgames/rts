@@ -8,6 +8,20 @@ public class Mover : MonoBehaviour
 	GameObject followTarget;
 	public float followDistance = 1.0f;
 	public float maximumVelocity = 1.0f;
+	[Range (0, 100)]
+	public float maximumAngularVelocity = 1.0f;
+	public Mechanism forceSource;
+	public bool overrideLinear = false;
+	public bool overrideAngular = false;
+	public bool relativeLinear = false;
+	public bool relativeAngular = false;
+	public Vector3 linear;
+	public Vector3 angular;
+	public Vector3 lastLinearForce;
+	public Vector3 lastAngularForce;
+	public float minimumAngularOffset = 5.0f;
+	private Vector3 targetOrientation;
+	private Vector3 distanceVector;
 	
 	// Start is called just before any of the
 	// Update methods is called the first time.
@@ -17,37 +31,69 @@ public class Mover : MonoBehaviour
 			this.follow (this.gameObject);
 		}
 		moveTarget = followTarget.transform.position;
-
 	}
 	
 	// Update is called every frame, if the
 	// MonoBehaviour is enabled.
-	void Update ()
+	void FixedUpdate ()
 	{
 		try2DMove ();
 	}
 
-	void try2DMove ()
-	{
-		Vector2 moveDirection;
-		Vector3 desiredVelocity = new Vector3 (0, 0, 0);
+	void OnDrawGizmos () {
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireSphere(moveTarget, 1f);
+		Gizmos.DrawLine(this.transform.position, moveTarget);
+		Gizmos.color = Color.red;
+		Gizmos.DrawRay(this.transform.position, targetOrientation);
+		Gizmos.color = Color.blue;
+		Gizmos.DrawRay(this.transform.position, transform.up);
+		Gizmos.color = Color.white;
+		Gizmos.DrawRay(this.transform.position, transform.forward);
+	}
 
+	Vector3 GetDistanceToTarget ()
+	{
 		if (followTarget != this.gameObject) {
 			moveTarget = followTarget.transform.position;
 		}
-		moveDirection.x = moveTarget.x - this.transform.position.x;
-		moveDirection.y = moveTarget.z - this.transform.position.z;
 
-		transform.eulerAngles = new Vector3 (90, 0, (180 - 360 * Mathf.Atan2 (moveDirection.x, moveDirection.y) / (2*Mathf.PI)));
-		
-		if (moveDirection.sqrMagnitude > (followDistance * followDistance)) {
-			moveDirection.Normalize ();
-			desiredVelocity.x = maximumVelocity * moveDirection.x;
-			desiredVelocity.z = maximumVelocity * moveDirection.y;
+		return moveTarget - this.rigidbody.position;
+	}
+
+	Vector3 GetDesiredVelocity (Vector3 distance)
+	{		
+		if(overrideLinear) return linear;
+		Vector3 desiredVelocity = new Vector3 (0, 0, 0);
+		if (distance.sqrMagnitude > (followDistance * followDistance)) {
+			desiredVelocity = distance.normalized * maximumVelocity;
 		}
 
-		Vector3 deltaVelocity = desiredVelocity - rigidbody.velocity;
-		rigidbody.AddForce (deltaVelocity, ForceMode.Acceleration);
+		return desiredVelocity - rigidbody.velocity;
+	}
+	
+	Vector3 GetRotationTarget (Vector3 distance)
+	{
+		if(overrideAngular) return angular;
+		Vector3 currentOrientation = this.rigidbody.rotation.eulerAngles;
+		Vector3 targetTorque = currentOrientation;
+		targetTorque.y = 180 * Mathf.Atan2 (distance.x, distance.z) / Mathf.PI;
+		targetTorque -= currentOrientation;
+		if(targetTorque.y > 180.0f) targetTorque.y -= 360.0f;
+		if(targetTorque.y < -180.0f) targetTorque.y += 360.0f;
+		if(Mathf.Abs(targetTorque.y) < minimumAngularOffset) {
+			targetTorque.y = 0;
+		}
+		return targetTorque - rigidbody.angularVelocity;
+	}
+	
+	void try2DMove ()
+	{
+		distanceVector = GetDistanceToTarget ();
+		lastLinearForce = GetDesiredVelocity (distanceVector);
+		lastAngularForce = GetRotationTarget (distanceVector);
+		forceSource.applyLinearForce(this.rigidbody, lastLinearForce, relativeLinear);
+		forceSource.applyAngularForce(this.rigidbody, lastAngularForce, relativeAngular);
 	}
 	
 	public void moveTo (Vector3 target)
