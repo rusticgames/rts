@@ -33,10 +33,11 @@ public class HUD : MonoBehaviour {
 	}
 
 	public Camera getBestGuessCameraFromScreenPoint(Vector3 point){
-		if (insetCamera == null)
-			return mainCamera;
-		else
+		if (insetCamera == null || !insetCamera.enabled) { return mainCamera; }
+		else {
+			Debug.Log("inset");
 			return (insetCamera.pixelRect.Contains(point)) ? insetCamera : mainCamera;
+    }
 	}
 
 	void OnGUI () {

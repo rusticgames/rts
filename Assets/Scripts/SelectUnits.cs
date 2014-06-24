@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -12,14 +12,21 @@ public class SelectUnits : MonoBehaviour
 	//interactions (spoiler: yes vi-rts)
 	public HUD cameraProvider;
 	public float selectBoxDelay = 0.1f;
-	private GUIBox dragSelect = null;
+	private GUIBox dragSelect = new GUIBox();
 	private GameObject lastSelected;
+	private GUIStyle boxStyle;
 
 	void Start()
 	{
-		dragSelect = new GUIBox();
+		boxStyle = new GUIStyle();
+		Texture2D texture = new Texture2D(1, 1);
+		texture.SetPixel(0, 0, new Color(0f,1f,0f,.5f));
+		texture.Apply();
+		boxStyle.normal.background = texture;
+
 		StartCoroutine(CheckSelect());
 		StartCoroutine(CheckMove());
+		StartCoroutine(CheckFight());
 	}
 
 	private MouseToWorldMapper mouseCheck = new MouseToWorldMapper();
@@ -57,41 +64,51 @@ public class SelectUnits : MonoBehaviour
 			FinishBoxSelection(c);
 		}
 	}
+	
+	IEnumerator CheckFight(){
+		while(GAME_IS_RUNNING){
+			while(! wantsMove() ) { yield return null;	}
+			
+			bool unitTarget = mouseCheck.LastMouseHit.collider.tag == "Unit";
+			foreach (GameObject unit in selectedUnits) { 
+				moveOrFollow(unit.GetComponent<Mover>(), mouseCheck.LastMouseHit, unitTarget);
+			}			
+			
+			yield return null;
+		}
+	}
+
+	bool wantsMove ()
+	{
+		return Input.GetMouseButton (1) && GUIUtility.hotControl == 0 && selectedUnits.Count > 0 && mouseCheck.IsMouseOverObject (cameraProvider.getBestGuessCameraFromScreenPoint (Input.mousePosition));
+	}
+
+	static void moveOrFollow (Mover m, RaycastHit lastHit, bool unitTarget)
+	{
+		if (unitTarget) {
+			m.follow (lastHit.collider.gameObject);
+			return;
+		}
+		m.moveTo (lastHit.point);
+	}
 
 	IEnumerator CheckMove(){
 		while(GAME_IS_RUNNING){
-			while(!(Input.GetMouseButton(1) 
-		        && GUIUtility.hotControl == 0
-		        && selectedUnits.Count > 0
-			    && mouseCheck.IsMouseOverObject(cameraProvider.getBestGuessCameraFromScreenPoint(Input.mousePosition))
-	    	)) {
-				yield return null;
-			}
-			
-			foreach (GameObject unit in selectedUnits) {
-				if (mouseCheck.LastMouseHit.collider.tag == "Unit") {
-					((Mover)unit.GetComponent<Mover>()).follow(mouseCheck.LastMouseHit.collider.gameObject);
-				} else {
-					((Mover)unit.GetComponent<Mover>()).moveTo(mouseCheck.LastMouseHit.point);
-				}
-			}
+			while(! wantsMove() ) { yield return null;	}
+
+			bool unitTarget = mouseCheck.LastMouseHit.collider.tag == "Unit";
+			foreach (GameObject unit in selectedUnits) { 
+				moveOrFollow(unit.GetComponent<Mover>(), mouseCheck.LastMouseHit, unitTarget);
+			}			
 
 			yield return null;
 		}
 	}
 
-	void moveIt(GameObject unit, RaycastHit hitinfo) {
-	}
-	
-	void moveTo(GameObject unit, RaycastHit hitinfo) {
-
-	}
-
-	delegate void GameObjectDelegate(GameObject o);
 
 	void OnGUI()
 	{
-		GUI.Box(dragSelect.ScreenRect, GUIContent.none, dragSelect.Style);
+		GUI.Box(dragSelect.ScreenRect, GUIContent.none, boxStyle);
 	}
 
 	void UpdateSelectBox(Vector3 startPoint, Vector3 endPoint)
@@ -129,21 +146,15 @@ public class SelectUnits : MonoBehaviour
 	
 	void ToggleSelectedUnit(GameObject unit)
 	{
-		if (selectedUnits.Contains(unit)) {
-			RemoveFromSelectedUnits(unit);
-		} else {
-			AddToSelectedUnits(unit);
-		}
+		if (selectedUnits.Contains(unit)) { RemoveFromSelectedUnits(unit); } 
+		else { AddToSelectedUnits(unit); }
 	}
 
 	void ClearSelectedUnits()
 	{
-		foreach (GameObject unit in selectedUnits) {
-			ChangeUnitColor(unit, Color.white);
-		}
+		foreach (GameObject unit in selectedUnits) { ChangeUnitColor(unit, Color.white);	}
 		selectedUnits.Clear();
 	}
-	
 
 	void ChangeUnitColor(GameObject unit, Color color)
 	{
@@ -151,9 +162,7 @@ public class SelectUnits : MonoBehaviour
 	}
 
 	public GameObject LastSelected {
-		get {
-			return lastSelected;
-		}
+		get {	return lastSelected;	}
 	}
 
 }

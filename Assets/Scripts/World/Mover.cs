@@ -20,7 +20,6 @@ public class Mover : MonoBehaviour
 	public Vector3 lastLinearForce;
 	public Vector3 lastAngularForce;
 	public float minimumAngularOffset = 5.0f;
-	private Vector3 targetOrientation;
 	private Vector3 distanceVector;
 	
 	// Start is called just before any of the
@@ -44,8 +43,6 @@ public class Mover : MonoBehaviour
 		Gizmos.color = Color.green;
 		Gizmos.DrawWireSphere(moveTarget, 1f);
 		Gizmos.DrawLine(this.transform.position, moveTarget);
-		Gizmos.color = Color.red;
-		Gizmos.DrawRay(this.transform.position, targetOrientation);
 		Gizmos.color = Color.blue;
 		Gizmos.DrawRay(this.transform.position, transform.up);
 		Gizmos.color = Color.white;

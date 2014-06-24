@@ -6,14 +6,10 @@ public class GUIBox
 {
 	private Rect worldRect;
 	private Rect screenRect;
-	private Color boxColor;
-	private GUIStyle style;
 
 	public GUIBox ()
 	{
 		ClearBox();
-		style = new GUIStyle();
-		BoxColor = new Color(0.0f, 1.0f, 0.0f, 0.2f);
 		worldRect = new Rect();
 		screenRect = new Rect();
 	}
@@ -26,24 +22,6 @@ public class GUIBox
 	public Rect ScreenRect
 	{
 		get { return screenRect; }
-	}
-
-	public Color BoxColor
-	{
-		get { return boxColor; }
-
-		set {
-			boxColor = value;
-			Texture2D texture = new Texture2D(1, 1);
-			texture.SetPixel(0, 0, value);
-			texture.Apply();
-			style.normal.background = texture;
-		}
-	}
-
-	public GUIStyle Style
-	{
-		get { return style; }
 	}
 
 	public void UpdateBoxFromScreen(Vector2 screenOrigin, Vector2 screenSize)
