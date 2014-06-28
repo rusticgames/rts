@@ -2,167 +2,137 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+//These are various types of controls/commands that the player might want
+//might want to break these up into nouns and verbs (so player/unit/box are nouns, select/issue-order/move are verbs, with preposition-likes or something to allow chaining)
+public enum ControllerIntent
+{
+	SPECIFY_POINT,
+	SPECIFY_BOX,
+	SPECIFY_CIRCLE,
+	SPECIFY_UNIT,
+	ORDER_MOVE,
+	ORDER_FOLLOW,
+	ORDER_ATTACK,
+	ORDER_JUMP,
+	RETAIN_SELECTION
+}
+
 public class SelectUnits : MonoBehaviour
 {
-	private const bool GAME_IS_RUNNING = true;
-	public HashSet<GameObject> selectedUnits = new HashSet<GameObject>();
-
 	//it occurs to me, maybe for the first time, that we could limit selection 
 	//to certain cameras. are there interesting possibilities with modal 
 	//interactions (spoiler: yes vi-rts)
 	public HUD cameraProvider;
-	public float selectBoxDelay = 0.1f;
-	private GUIBox dragSelect = new GUIBox();
-	private GameObject lastSelected;
-	private GUIStyle boxStyle;
+	private ScreenToWorldMapper mouseChecker = new ScreenToWorldMapper();
+	public Dictionary<KeyCode, ControllerIntent> keyMapping = new Dictionary<KeyCode, ControllerIntent>();
+	private const bool GAME_IS_RUNNING = true;
+	public HashSet<GameObject> selectedUnits = new HashSet<GameObject>();
+	public HashSet<ControllerIntent> intents = new HashSet<ControllerIntent>();
+	public MouseSelector selector;
+
+	public List<SwitchInputMapping> defaultKeymap;
+
+	public void AddInputMapping() {
+		defaultKeymap.Add(new SwitchInputMapping());
+	}
+
+	[System.Serializable]
+	public class SwitchInputMapping {
+		public KeyCode input;
+		public ControllerIntent output;
+	}
 
 	void Start()
 	{
-		boxStyle = new GUIStyle();
-		Texture2D texture = new Texture2D(1, 1);
-		texture.SetPixel(0, 0, new Color(0f,1f,0f,.5f));
-		texture.Apply();
-		boxStyle.normal.background = texture;
-
+		StartCoroutine(UpdateIntentsFromInputs());
 		StartCoroutine(CheckSelect());
 		StartCoroutine(CheckMove());
 		StartCoroutine(CheckFight());
-	}
 
-	private MouseToWorldMapper mouseCheck = new MouseToWorldMapper();
-	IEnumerator CheckSelect(){
-		while(GAME_IS_RUNNING){
-			while(!(Input.GetMouseButtonDown(0) && GUIUtility.hotControl == 0)) {
-				yield return null;
-			}
-
-			if (!(Input.GetKey(KeyCode.LeftShift)
-			    || Input.GetKey(KeyCode.RightShift)
-			    || Input.GetKey(KeyCode.LeftControl)
-			    || Input.GetKey(KeyCode.RightControl))) {
-				ClearSelectedUnits();
-			}
-
-			Camera c = cameraProvider.getBestGuessCameraFromScreenPoint(Input.mousePosition);
-			Vector3 clickPoint = Input.mousePosition;
-
-			if(mouseCheck.IsMouseOverObject(c) && mouseCheck.LastMouseHit.collider.tag == "Unit") {
-				if(Input.GetKey(KeyCode.LeftControl)||Input.GetKey(KeyCode.RightControl)){
-					ToggleSelectedUnit(mouseCheck.LastMouseHit.collider.gameObject);
-				} else {
-					AddToSelectedUnits(mouseCheck.LastMouseHit.collider.gameObject);
-				}
-			}
-
-			yield return new WaitForSeconds(selectBoxDelay);
-			if(!Input.GetMouseButton(0)) { continue; }
-
-			while(Input.GetMouseButton(0)) {
-				UpdateSelectBox(clickPoint,Input.mousePosition);
-				yield return null;
-			}
-			FinishBoxSelection(c);
+		foreach (var mapping in defaultKeymap) {
+			keyMapping.Add(mapping.input,mapping.output);
 		}
 	}
-	
-	IEnumerator CheckFight(){
-		while(GAME_IS_RUNNING){
-			while(! wantsMove() ) { yield return null;	}
-			
-			bool unitTarget = mouseCheck.LastMouseHit.collider.tag == "Unit";
-			foreach (GameObject unit in selectedUnits) { 
-				moveOrFollow(unit.GetComponent<Mover>(), mouseCheck.LastMouseHit, unitTarget);
-			}			
-			
+
+	IEnumerator UpdateIntentsFromInputs ()
+	{
+		while(GAME_IS_RUNNING) {
+			yield return new WaitForFixedUpdate();
+			HashSet<ControllerIntent> newIntents = new HashSet<ControllerIntent>();
+			foreach (var keycode in keyMapping.Keys) {
+				if(Input.GetKey(keycode) && GUIUtility.hotControl == 0) { //TODO: implement a system for differentiating controls based on down vs held vs up, and also for capturing optional relevant positional data
+					Debug.Log(keycode.ToString());
+					newIntents.Add(keyMapping[keycode]);
+				}
+			}
+			intents = newIntents;
 			yield return null;
 		}
 	}
 
-	bool wantsMove ()
-	{
-		return Input.GetMouseButton (1) && GUIUtility.hotControl == 0 && selectedUnits.Count > 0 && mouseCheck.IsMouseOverObject (cameraProvider.getBestGuessCameraFromScreenPoint (Input.mousePosition));
-	}
+	IEnumerator CheckSelect(){
+		while(GAME_IS_RUNNING){
+			while(! intents.Contains(ControllerIntent.SPECIFY_POINT)) {
+				yield return null;
+			}
+			
+			Vector3 clickPoint = Input.mousePosition; //TODO: pull out position and button into new type of intent specifier
+			SelectionType s = SelectionType.MOUSE_POINT;
 
-	static void moveOrFollow (Mover m, RaycastHit lastHit, bool unitTarget)
+			yield return new WaitForSeconds (selector.selectBoxDelay);
+
+			if(intents.Contains(ControllerIntent.SPECIFY_POINT)) {
+				s = SelectionType.MOUSE_BOX;
+			}
+			
+			yield return StartCoroutine(selector.select(clickPoint, s));
+			HashSet<GameObject> newSelection = new HashSet<GameObject>(selector.selection);
+			
+			if (intents.Contains (ControllerIntent.RETAIN_SELECTION)) {
+				newSelection.UnionWith (selectedUnits);
+			}
+
+			selectedUnits = newSelection;
+			yield return null;
+		}
+	}
+	
+	IEnumerator CheckFight(){	yield return null; }
+
+	static void moveOrFollow (Mover m, GameObject lastSelection)
 	{
-		if (unitTarget) {
-			m.follow (lastHit.collider.gameObject);
+		if (lastSelection.tag == "Unit") {
+			Debug.Log("4");
+			m.follow (lastSelection);
 			return;
 		}
-		m.moveTo (lastHit.point);
+		m.moveTo (lastSelection.transform.position);
+		Debug.Log("5");
 	}
 
 	IEnumerator CheckMove(){
 		while(GAME_IS_RUNNING){
-			while(! wantsMove() ) { yield return null;	}
+			while(! intents.Contains(ControllerIntent.ORDER_MOVE) ) { yield return null;	}
 
-			bool unitTarget = mouseCheck.LastMouseHit.collider.tag == "Unit";
-			foreach (GameObject unit in selectedUnits) { 
-				moveOrFollow(unit.GetComponent<Mover>(), mouseCheck.LastMouseHit, unitTarget);
-			}			
-
+			selector.select(Input.mousePosition, SelectionType.MOUSE_POINT);
+			Debug.Log("1");
+			if(selector.selection.Count == 1)
+			{
+				GameObject lastSelection = selector.selection[0];
+				Debug.Log("2");
+				foreach (GameObject unit in selectedUnits) { 
+					moveOrFollow(unit.GetComponent<Mover>(), lastSelection);
+				}			
+			}
+			Debug.Log("6");
 			yield return null;
 		}
 	}
-
-
-	void OnGUI()
-	{
-		GUI.Box(dragSelect.ScreenRect, GUIContent.none, boxStyle);
-	}
-
-	void UpdateSelectBox(Vector3 startPoint, Vector3 endPoint)
-	{
-		Vector2 pos = new Vector2(startPoint.x, startPoint.y);
-		Vector2 size = new Vector2(endPoint.x - startPoint.x, endPoint.y - startPoint.y);
-		dragSelect.UpdateBoxFromScreen(pos, size);
-	}
-
-	void FinishBoxSelection(Camera currentCamera)
-	{
-		GameObject[] allUnits = GameObject.FindGameObjectsWithTag("Unit");
-		Rect box = dragSelect.WorldRect;
-
-		foreach (GameObject unit in allUnits) {
-			Vector2 pos = currentCamera.WorldToScreenPoint(unit.transform.position);
-			if (box.Contains(pos)) AddToSelectedUnits(unit);
+	
+	void OnDrawGizmos () {
+		Gizmos.color = Color.green;
+		foreach (var unit in selectedUnits) {
+			Gizmos.DrawWireSphere(unit.transform.position, 2.0f);
 		}
-
-		dragSelect.ClearBox();
 	}
-
-	void AddToSelectedUnits(GameObject unit)
-	{
-		selectedUnits.Add(unit);
-		ChangeUnitColor(unit, Color.green);
-		lastSelected = unit;
-	}
-	
-	void RemoveFromSelectedUnits(GameObject unit)
-	{
-		selectedUnits.Remove(unit);
-		ChangeUnitColor(unit, Color.white);
-	}
-	
-	void ToggleSelectedUnit(GameObject unit)
-	{
-		if (selectedUnits.Contains(unit)) { RemoveFromSelectedUnits(unit); } 
-		else { AddToSelectedUnits(unit); }
-	}
-
-	void ClearSelectedUnits()
-	{
-		foreach (GameObject unit in selectedUnits) { ChangeUnitColor(unit, Color.white);	}
-		selectedUnits.Clear();
-	}
-
-	void ChangeUnitColor(GameObject unit, Color color)
-	{
-		unit.renderer.material.color = color;
-	}
-
-	public GameObject LastSelected {
-		get {	return lastSelected;	}
-	}
-
 }

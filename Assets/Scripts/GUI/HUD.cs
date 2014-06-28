@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class HUD : MonoBehaviour {
 	public Camera mainCamera;
 	public Camera insetCamera = null;
-	public SelectUnits selection;
+	public MouseSelector selection;
 	private GameObject selectedUnit = null;
 
 	private CameraSettings camStart = new CameraSettings();
@@ -56,10 +56,11 @@ public class HUD : MonoBehaviour {
 		GUILayout.EndHorizontal();
 		
 		if (GUILayout.Button("Unit")) {
-			if (selection.selectedUnits.Count > 0) {
+			Debug.LogError("unit selection not implemented for camera");
+			/*if (selection.selectedUnits.Count > 0) {
 				camUnit.parentTransform = selection.LastSelected.transform;
 				UpdateCamera(camUnit);
-			}
+			}*/
 		}
 
 		if (GUILayout.Button("Reset")) {
@@ -82,11 +83,12 @@ public class HUD : MonoBehaviour {
 			GUILayout.EndHorizontal();
 			
 			if (GUILayout.Button("Unit")) {
-				if (selection.selectedUnits.Count > 0) {
+				Debug.LogError("unit selection not implemented for camera");
+				/*if (selection.selectedUnits.Count > 0) {
 					insetCamera.enabled = true;
 					camUnit.parentTransform = selection.LastSelected.transform;
 					UpdateCamera(insetCamera, camUnit);
-				}
+				}*/
 			}
 			
 			if (GUILayout.Button("Reset")) {
@@ -125,26 +127,34 @@ public class CameraSettings {
 	public Transform parentTransform = null;
 }
 
-public class MouseToWorldMapper {
+public class ScreenToWorldMapper {
 	int freshestFrame = 0;
 	bool hitThisFrame = false;
 	RaycastHit hitInfo = new RaycastHit();
 	Ray ray = new Ray();
 	
-	public bool IsMouseOverObject(Camera currentCamera) {
+	public bool IsScreenPointOverObject(Vector3 screenPoint, HUD hud) {
+		Camera currentCamera = hud.getBestGuessCameraFromScreenPoint(screenPoint);
+
 		if(	UnityEngine.Time.frameCount > freshestFrame ) {
 			freshestFrame = UnityEngine.Time.frameCount;
 			
 			hitInfo = new RaycastHit();
-			ray = currentCamera.ScreenPointToRay(Input.mousePosition);
+			ray = currentCamera.ScreenPointToRay(screenPoint);
 			hitThisFrame = Physics.Raycast(ray, out hitInfo);
 		}
 		return hitThisFrame;
 	}
-	
-	public RaycastHit LastMouseHit {
+
+	public RaycastHit LastHitInfo {
 		get {
 			return hitInfo;
+		}
+	}
+	
+	public GameObject LastHitObject {
+		get {
+			return hitInfo.collider.gameObject;
 		}
 	}
 }
