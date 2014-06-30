@@ -11,3 +11,7 @@
 .DS_Store
 *.pidb
 *.userprefs
+
+# Non-platform (game-specific) assets
+Local/*
+!Local/README.markdown
