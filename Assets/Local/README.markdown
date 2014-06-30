@@ -1,1 +1,1 @@
-Your game-specific assets should go in here,
+Your game-specific assets should go in here.
