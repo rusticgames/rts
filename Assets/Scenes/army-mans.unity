@@ -393,7 +393,6 @@ GameObject:
   - 114: {fileID: 167386312}
   - 96: {fileID: 167386313}
   - 114: {fileID: 167386314}
-  - 114: {fileID: 167386315}
   m_Layer: 0
   m_Name: RedUnit
   m_TagString: Unit
@@ -556,34 +555,6 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 1, g: 0, b: 0, a: 1}
---- !u!114 &167386315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 167386306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94355ee3791d62c4c90b76b3f042c292, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distribution:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  maxDamage: 7.01000023
-  minDamage: 8.92000008
 --- !u!1 &250853356
 GameObject:
   m_ObjectHideFlags: 0
