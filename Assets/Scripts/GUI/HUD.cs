@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class HUD : MonoBehaviour {
 	public Camera mainCamera;
 	public Camera insetCamera = null;
-	public MouseSelector selection;
-	private GameObject selectedUnit = null;
+	public ScreenToWorldMapper mapper;
 
 	private CameraSettings camStart = new CameraSettings();
 	private CameraSettings camTop = new CameraSettings();
@@ -16,6 +16,7 @@ public class HUD : MonoBehaviour {
 	private Rect GUIArea = new Rect(10f, 10f, 100, 200);
 
 	void Start() {
+		mapper = new ScreenToWorldMapper();
 		camStart.position = mainCamera.transform.position;
 		camStart.rotation = mainCamera.transform.localEulerAngles;
 		
@@ -112,49 +113,34 @@ public class HUD : MonoBehaviour {
 		camera.nearClipPlane = settings.nearClipPlane;
 	}
 
-	void AttachCamera() {
-		if (selectedUnit != null)
-			mainCamera.transform.parent = selectedUnit.transform;
-	}
-}
-
-public class CameraSettings {
-	public Vector3 position;
-	public Vector3 rotation;
-	public bool othographic = false;
-	public float orthographicSize = 5f;
-	public float nearClipPlane = 0.3f;
-	public Transform parentTransform = null;
-}
-
-public class ScreenToWorldMapper {
-	int freshestFrame = 0;
-	bool hitThisFrame = false;
-	RaycastHit hitInfo = new RaycastHit();
-	Ray ray = new Ray();
-	
-	public bool IsScreenPointOverObject(Vector3 screenPoint, HUD hud) {
-		Camera currentCamera = hud.getBestGuessCameraFromScreenPoint(screenPoint);
-
-		if(	UnityEngine.Time.frameCount > freshestFrame ) {
-			freshestFrame = UnityEngine.Time.frameCount;
-			
-			hitInfo = new RaycastHit();
-			ray = currentCamera.ScreenPointToRay(screenPoint);
-			hitThisFrame = Physics.Raycast(ray, out hitInfo);
-		}
-		return hitThisFrame;
+	void AttachCamera(GameObject g) {
+		mainCamera.transform.parent = g.transform;
 	}
 
-	public RaycastHit LastHitInfo {
-		get {
-			return hitInfo;
-		}
+	public bool isScreenPointValid(Vector3 screenPoint) {
+		return mapper.IsScreenPointOverObject(screenPoint, getBestGuessCameraFromScreenPoint(screenPoint));
 	}
 	
-	public GameObject LastHitObject {
-		get {
-			return hitInfo.collider.gameObject;
+	public GameObject getObjectAtScreenPoint ()
+	{
+		return mapper.LastHitObject;
+	}
+	
+	public Vector3 getWorldPointAtScreenPoint ()
+	{
+		return mapper.LastHitInfo.point;
+	}
+
+	public List<GameObject> getAllObjectsInScreenBox (Rect box, Vector3 startPoint)
+	{
+		List<GameObject> boxContained = new List<GameObject>();
+		GameObject[] allObjects = GameObject. FindGameObjectsWithTag("Unit"); //TODO: re-evaluate where this tag should go
+		Camera currentCamera = getBestGuessCameraFromScreenPoint(startPoint);
+
+		foreach (GameObject o in allObjects) {
+			Vector2 pos = currentCamera.WorldToScreenPoint(o.transform.position);
+			if (box.Contains(pos)) boxContained.Add(o);
 		}
+		return boxContained;
 	}
 }

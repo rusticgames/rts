@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MouseSelector : MonoBehaviour {
-	public float selectBoxDelay = 0.1f;
-	public HUD cameraProvider;
+	public float selectBoxDelay = 0.2f; //TODO: add distance delay as well
+	public HUD controllingHUD;
 	public SelectUnits controller;
-	private ScreenToWorldMapper mouseChecker = new ScreenToWorldMapper();
 	private GUIBox dragSelect = new GUIBox();
 	private GUIStyle boxStyle;
-	public List<GameObject> selection = new List<GameObject>();
 	public GameObject selectedObject;
+
 	
 	void Start() {
 		boxStyle = new GUIStyle();
@@ -19,61 +18,35 @@ public class MouseSelector : MonoBehaviour {
 		texture.Apply();
 		boxStyle.normal.background = texture;
 	}
-
-	public IEnumerator select (Vector3 startPoint, SelectionType type){
+	
+	public List<GameObject> selectPoint (Vector3 point){
 		List<GameObject> newSelection = new List<GameObject>();
-		if(type == SelectionType.MOUSE_POINT)
+		
+		if(controllingHUD.isScreenPointValid(point))
 		{
-			if (mouseChecker.IsScreenPointOverObject (startPoint, cameraProvider)) {
-				newSelection.Add(mouseChecker.LastHitObject);
-			}
+			newSelection.Add(controllingHUD.getObjectAtScreenPoint());
 		}
 		
-		if(type == SelectionType.MOUSE_BOX)
-		{
-			while (controller.intents.Contains (ControllerIntent.SPECIFY_POINT)) {
-				UpdateSelectBox (startPoint, Input.mousePosition);
-				yield return null;
-			}
-
-			FinishBoxSelection (cameraProvider.getBestGuessCameraFromScreenPoint(startPoint), newSelection);
-		}
-		selection = newSelection;
-
-		yield return null;
-}	
+		return newSelection;
+	}	
+	
+	public List<GameObject> selectBox (Vector3 startPoint, Vector3 endPoint){
+		UpdateSelectBox(startPoint, endPoint);
+		List<GameObject> newSelection = controllingHUD.getAllObjectsInScreenBox(dragSelect.WorldRect, startPoint);
+		dragSelect.ClearBox();
+		
+		return newSelection;
+	}
 	
 	void OnGUI()
 	{
 		GUI.Box(dragSelect.ScreenRect, GUIContent.none, boxStyle);
 	}
 	
-	void UpdateSelectBox(Vector3 startPoint, Vector3 endPoint)
+	public void UpdateSelectBox(Vector3 startPoint, Vector3 endPoint)
 	{
 		Vector2 pos = new Vector2(startPoint.x, startPoint.y);
 		Vector2 size = new Vector2(endPoint.x - startPoint.x, endPoint.y - startPoint.y);
 		dragSelect.UpdateBoxFromScreen(pos, size);
 	}
-
-
-	
-	void FinishBoxSelection(Camera currentCamera, List<GameObject> boxSelected)
-	{
-		GameObject[] allObjects = GameObject. FindGameObjectsWithTag("Unit"); //TODO: re-evaluate where this tag should go
-		Rect box = dragSelect.WorldRect;
-		
-		foreach (GameObject o in allObjects) {
-			Vector2 pos = currentCamera.WorldToScreenPoint(o.transform.position);
-			if (box.Contains(pos)) boxSelected.Add(o);
-		}
-		dragSelect.ClearBox();
-	}
-}
-
-
-
-public enum SelectionType
-{
-	MOUSE_POINT,
-	MOUSE_BOX
 }

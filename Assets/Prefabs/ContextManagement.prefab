@@ -143,7 +143,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraProvider: {fileID: 11400004}
+  selectedUnits: []
+  intents: 
   selector: {fileID: 11400008}
+  tagFilter: Unit
+  followFilter: Unit
   defaultKeymap:
   - input: 304
     output: 8
@@ -164,7 +168,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   insetCamera: {fileID: 0}
-  selection: {fileID: 11400008}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,8 +194,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectBoxDelay: .100000001
-  cameraProvider: {fileID: 11400004}
+  controllingHUD: {fileID: 11400004}
   controller: {fileID: 11400002}
+  selectedObject: {fileID: 0}
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1

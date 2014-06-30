@@ -23,12 +23,13 @@ public class SelectUnits : MonoBehaviour
 	//to certain cameras. are there interesting possibilities with modal 
 	//interactions (spoiler: yes vi-rts)
 	public HUD cameraProvider;
-	private ScreenToWorldMapper mouseChecker = new ScreenToWorldMapper();
 	public Dictionary<KeyCode, ControllerIntent> keyMapping = new Dictionary<KeyCode, ControllerIntent>();
 	private const bool GAME_IS_RUNNING = true;
-	public HashSet<GameObject> selectedUnits = new HashSet<GameObject>();
-	public HashSet<ControllerIntent> intents = new HashSet<ControllerIntent>();
+	public List<GameObject> selectedUnits = new List<GameObject>();
+	public List<ControllerIntent> intents = new List<ControllerIntent>();
 	public MouseSelector selector;
+	public string tagFilter = "Unit";
+	public string followFilter = "Unit";
 
 	public List<SwitchInputMapping> defaultKeymap;
 
@@ -58,7 +59,7 @@ public class SelectUnits : MonoBehaviour
 	{
 		while(GAME_IS_RUNNING) {
 			yield return new WaitForFixedUpdate();
-			HashSet<ControllerIntent> newIntents = new HashSet<ControllerIntent>();
+			List<ControllerIntent> newIntents = new List<ControllerIntent>();
 			foreach (var keycode in keyMapping.Keys) {
 				if(Input.GetKey(keycode) && GUIUtility.hotControl == 0) { //TODO: implement a system for differentiating controls based on down vs held vs up, and also for capturing optional relevant positional data
 					Debug.Log(keycode.ToString());
@@ -77,54 +78,58 @@ public class SelectUnits : MonoBehaviour
 			}
 			
 			Vector3 clickPoint = Input.mousePosition; //TODO: pull out position and button into new type of intent specifier
-			SelectionType s = SelectionType.MOUSE_POINT;
+			List<GameObject> lo;
 
 			yield return new WaitForSeconds (selector.selectBoxDelay);
 
-			if(intents.Contains(ControllerIntent.SPECIFY_POINT)) {
-				s = SelectionType.MOUSE_BOX;
+			if(!intents.Contains(ControllerIntent.SPECIFY_POINT)) {
+				lo = selector.selectPoint(clickPoint);
+			}else{
+				while(intents.Contains(ControllerIntent.SPECIFY_POINT)) {
+					selector.UpdateSelectBox(clickPoint, Input.mousePosition);
+					yield return null;
+				}
+				lo = selector.selectBox(clickPoint, Input.mousePosition);
 			}
-			
-			yield return StartCoroutine(selector.select(clickPoint, s));
-			HashSet<GameObject> newSelection = new HashSet<GameObject>(selector.selection);
+			if(tagFilter.Length > 0 ) { lo.RemoveAll(x => !x.CompareTag(tagFilter)); }
 			
 			if (intents.Contains (ControllerIntent.RETAIN_SELECTION)) {
-				newSelection.UnionWith (selectedUnits);
+				lo.AddRange(selectedUnits);
 			}
 
-			selectedUnits = newSelection;
+			selectedUnits = lo;
 			yield return null;
 		}
 	}
 	
-	IEnumerator CheckFight(){	yield return null; }
+	IEnumerator CheckFight()
+	{
+		yield return null;
+	}
 
 	static void moveOrFollow (Mover m, GameObject lastSelection)
 	{
 		if (lastSelection.tag == "Unit") {
-			Debug.Log("4");
 			m.follow (lastSelection);
 			return;
 		}
 		m.moveTo (lastSelection.transform.position);
-		Debug.Log("5");
 	}
 
 	IEnumerator CheckMove(){
 		while(GAME_IS_RUNNING){
 			while(! intents.Contains(ControllerIntent.ORDER_MOVE) ) { yield return null;	}
 
-			selector.select(Input.mousePosition, SelectionType.MOUSE_POINT);
-			Debug.Log("1");
-			if(selector.selection.Count == 1)
+			if(cameraProvider.isScreenPointValid(Input.mousePosition))
 			{
-				GameObject lastSelection = selector.selection[0];
-				Debug.Log("2");
-				foreach (GameObject unit in selectedUnits) { 
-					moveOrFollow(unit.GetComponent<Mover>(), lastSelection);
-				}			
-			}
-			Debug.Log("6");
+				if(followFilter.Length == 0 || cameraProvider.getObjectAtScreenPoint().CompareTag(followFilter))
+				{
+					selectedUnits.ForEach(x => x.GetComponent<Mover>().follow(cameraProvider.getObjectAtScreenPoint()));
+				} else {
+					selectedUnits.ForEach(x => x.GetComponent<Mover>().moveTo(cameraProvider.getWorldPointAtScreenPoint()));
+				}
+			}			
+
 			yield return null;
 		}
 	}
