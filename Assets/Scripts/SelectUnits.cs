@@ -120,13 +120,14 @@ public class SelectUnits : MonoBehaviour
 		while(GAME_IS_RUNNING){
 			while(! intents.Contains(ControllerIntent.ORDER_MOVE) ) { yield return null;	}
 
-			if(cameraProvider.isScreenPointValid(Input.mousePosition))
+			HUD.ScreenPointToWorldInfo i = cameraProvider.getWorldInfoAtScreenPoint(Input.mousePosition);
+			if(i.isValid)
 			{
-				if(followFilter.Length == 0 || cameraProvider.getObjectAtScreenPoint().CompareTag(followFilter))
+				if(followFilter.Length == 0 || i.objectAtPoint.CompareTag(followFilter))
 				{
-					selectedUnits.ForEach(x => x.GetComponent<Mover>().follow(cameraProvider.getObjectAtScreenPoint()));
+					selectedUnits.ForEach(x => x.GetComponent<Mover>().follow(i.objectAtPoint));
 				} else {
-					selectedUnits.ForEach(x => x.GetComponent<Mover>().moveTo(cameraProvider.getWorldPointAtScreenPoint()));
+					selectedUnits.ForEach(x => x.GetComponent<Mover>().moveTo(i.worldPoint));
 				}
 			}			
 

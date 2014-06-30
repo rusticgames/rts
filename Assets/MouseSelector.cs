@@ -22,9 +22,10 @@ public class MouseSelector : MonoBehaviour {
 	public List<GameObject> selectPoint (Vector3 point){
 		List<GameObject> newSelection = new List<GameObject>();
 		
-		if(controllingHUD.isScreenPointValid(point))
+		HUD.ScreenPointToWorldInfo i = controllingHUD.getWorldInfoAtScreenPoint(point);
+		if(i.isValid)
 		{
-			newSelection.Add(controllingHUD.getObjectAtScreenPoint());
+			newSelection.Add(i.objectAtPoint);
 		}
 		
 		return newSelection;

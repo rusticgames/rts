@@ -6,7 +6,6 @@ using System.Linq;
 public class HUD : MonoBehaviour {
 	public Camera mainCamera;
 	public Camera insetCamera = null;
-	public ScreenToWorldMapper mapper;
 
 	private CameraSettings camStart = new CameraSettings();
 	private CameraSettings camTop = new CameraSettings();
@@ -16,7 +15,6 @@ public class HUD : MonoBehaviour {
 	private Rect GUIArea = new Rect(10f, 10f, 100, 200);
 
 	void Start() {
-		mapper = new ScreenToWorldMapper();
 		camStart.position = mainCamera.transform.position;
 		camStart.rotation = mainCamera.transform.localEulerAngles;
 		
@@ -117,18 +115,8 @@ public class HUD : MonoBehaviour {
 		mainCamera.transform.parent = g.transform;
 	}
 
-	public bool isScreenPointValid(Vector3 screenPoint) {
-		return mapper.IsScreenPointOverObject(screenPoint, getBestGuessCameraFromScreenPoint(screenPoint));
-	}
-	
-	public GameObject getObjectAtScreenPoint ()
-	{
-		return mapper.LastHitObject;
-	}
-	
-	public Vector3 getWorldPointAtScreenPoint ()
-	{
-		return mapper.LastHitInfo.point;
+	public ScreenPointToWorldInfo getWorldInfoAtScreenPoint(Vector3 screenPoint) {
+		return this.GetWorldInfoAtScreenPoint(screenPoint, getBestGuessCameraFromScreenPoint(screenPoint));
 	}
 
 	public List<GameObject> getAllObjectsInScreenBox (Rect box, Vector3 startPoint)
@@ -142,5 +130,32 @@ public class HUD : MonoBehaviour {
 			if (box.Contains(pos)) boxContained.Add(o);
 		}
 		return boxContained;
+	}
+	
+	int freshestFrame = 0;
+	ScreenPointToWorldInfo infoThisFrame;
+	RaycastHit hitInfo = new RaycastHit();
+	Ray ray = new Ray();
+	
+	public ScreenPointToWorldInfo GetWorldInfoAtScreenPoint(Vector3 screenPoint, Camera perspective) {
+		if(	UnityEngine.Time.frameCount > freshestFrame ) {
+			freshestFrame = UnityEngine.Time.frameCount;
+			
+			hitInfo = new RaycastHit();
+			ray = perspective.ScreenPointToRay(screenPoint);
+			infoThisFrame = new ScreenPointToWorldInfo();
+			if(Physics.Raycast(ray, out hitInfo)) {
+				infoThisFrame.isValid = true;
+				infoThisFrame.worldPoint = hitInfo.point;
+				infoThisFrame.objectAtPoint = hitInfo.collider.gameObject;
+			}
+		}
+		return infoThisFrame;
+	}
+
+	public class ScreenPointToWorldInfo {
+		public bool isValid = false;
+		public Vector3 worldPoint;
+		public GameObject objectAtPoint;
 	}
 }
