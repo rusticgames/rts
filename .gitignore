@@ -13,5 +13,5 @@
 *.userprefs
 
 # Non-platform (game-specific) assets
-Local/*
-!Local/README.markdown
+_Local/*
+!_Local/README.markdown
