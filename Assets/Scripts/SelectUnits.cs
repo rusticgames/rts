@@ -14,7 +14,8 @@ public enum ControllerIntent
 	ORDER_FOLLOW,
 	ORDER_ATTACK,
 	ORDER_JUMP,
-	RETAIN_SELECTION
+	RETAIN_SELECTION,
+	ORDER_STOP
 }
 
 public class SelectUnits : MonoBehaviour
@@ -30,6 +31,7 @@ public class SelectUnits : MonoBehaviour
 	public MouseSelector selector;
 	public string tagFilter = "Unit";
 	public string followFilter = "Unit";
+	public string attackFilter = "Unit";
 
 	public List<SwitchInputMapping> defaultKeymap;
 
@@ -49,6 +51,8 @@ public class SelectUnits : MonoBehaviour
 		StartCoroutine(CheckSelect());
 		StartCoroutine(CheckMove());
 		StartCoroutine(CheckFight());
+		StartCoroutine(CheckStop());
+		StartCoroutine(CheckJump());
 
 		foreach (var mapping in defaultKeymap) {
 			keyMapping.Add(mapping.input,mapping.output);
@@ -62,7 +66,8 @@ public class SelectUnits : MonoBehaviour
 			List<ControllerIntent> newIntents = new List<ControllerIntent>();
 			foreach (var keycode in keyMapping.Keys) {
 				if(Input.GetKey(keycode) && GUIUtility.hotControl == 0) { //TODO: implement a system for differentiating controls based on down vs held vs up, and also for capturing optional relevant positional data
-					Debug.Log(keycode.ToString());
+					Debug.Log(keycode);
+					Debug.Log(keyMapping[keycode]);
 					newIntents.Add(keyMapping[keycode]);
 				}
 			}
@@ -104,16 +109,37 @@ public class SelectUnits : MonoBehaviour
 	
 	IEnumerator CheckFight()
 	{
-		yield return null;
-	}
-
-	static void moveOrFollow (Mover m, GameObject lastSelection)
-	{
-		if (lastSelection.tag == "Unit") {
-			m.follow (lastSelection);
-			return;
+		while(GAME_IS_RUNNING){
+			while(! intents.Contains(ControllerIntent.ORDER_ATTACK) ) { yield return null;	}
+			
+			HUD.ScreenPointToWorldInfo i = cameraProvider.getWorldInfoAtScreenPoint(Input.mousePosition);
+			if(i.isValid)
+			{
+				if(attackFilter.Length == 0 || i.objectAtPoint.CompareTag(attackFilter))
+				{
+					selectedUnits.ForEach(x => x.GetComponent<Mover>().attack(i.objectAtPoint));
+				}
+			}
+			yield return null;
 		}
-		m.moveTo (lastSelection.transform.position);
+	}
+	
+	IEnumerator CheckStop()
+	{
+		while(GAME_IS_RUNNING){
+			while(! intents.Contains(ControllerIntent.ORDER_STOP) ) { yield return null;	}
+			selectedUnits.ForEach(x => x.GetComponent<Mover>().stop());
+			yield return null;
+		}
+	}
+	
+	IEnumerator CheckJump()
+	{
+		while(GAME_IS_RUNNING){
+			while(! intents.Contains(ControllerIntent.ORDER_JUMP) ) { yield return null;	}
+			selectedUnits.ForEach(x => x.GetComponent<Mover>().jump());
+			yield return null;
+		}
 	}
 
 	IEnumerator CheckMove(){
@@ -129,8 +155,7 @@ public class SelectUnits : MonoBehaviour
 				} else {
 					selectedUnits.ForEach(x => x.GetComponent<Mover>().moveTo(i.worldPoint));
 				}
-			}			
-
+			}
 			yield return null;
 		}
 	}

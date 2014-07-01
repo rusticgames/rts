@@ -78,7 +78,7 @@ NavMeshSettings:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100004, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 11876625}
@@ -94,7 +94,7 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400004, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   m_GameObject: {fileID: 11876624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400000, guid: b3f80fb4cb8bf7547ba233de93bb6c65,
     type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   m_GameObject: {fileID: 11876624}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -132,6 +132,7 @@ GameObject:
   - 114: {fileID: 67072912}
   - 96: {fileID: 67072913}
   - 114: {fileID: 67072914}
+  - 114: {fileID: 67072915}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -223,9 +224,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followDistance: 2
+  attackRange: 10
   maximumVelocity: 50
   maximumAngularVelocity: 1
   forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  projectileForceSource: {fileID: 67072915}
   overrideLinear: 0
   overrideAngular: 0
   relativeLinear: 0
@@ -235,6 +238,8 @@ MonoBehaviour:
   lastLinearForce: {x: 0, y: 0, z: 0}
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
+  projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  jumpForce: {x: 0, y: 30, z: 0}
 --- !u!96 &67072913
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -294,6 +299,21 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &67072915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 152448100}
+  m_GameObject: {fileID: 67072906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1d975dc7f21ef4e9239f8c23cde527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  forceMode: 1
+  angularForceMode: 0
 --- !u!1001 &152448100
 Prefab:
   m_ObjectHideFlags: 0
@@ -323,7 +343,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
-      value: 16
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: teamLeader
@@ -363,7 +383,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: teamLeader
@@ -393,6 +413,7 @@ GameObject:
   - 114: {fileID: 167386312}
   - 96: {fileID: 167386313}
   - 114: {fileID: 167386314}
+  - 114: {fileID: 167386315}
   m_Layer: 0
   m_Name: RedUnit
   m_TagString: Unit
@@ -484,9 +505,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followDistance: 2
+  attackRange: 10
   maximumVelocity: 50
   maximumAngularVelocity: 1
   forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  projectileForceSource: {fileID: 167386315}
   overrideLinear: 0
   overrideAngular: 0
   relativeLinear: 0
@@ -496,6 +519,8 @@ MonoBehaviour:
   lastLinearForce: {x: 0, y: 0, z: 0}
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
+  projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  jumpForce: {x: 0, y: 30, z: 0}
 --- !u!96 &167386313
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -555,6 +580,21 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &167386315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1406894171}
+  m_GameObject: {fileID: 167386306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1d975dc7f21ef4e9239f8c23cde527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  forceMode: 1
+  angularForceMode: 0
 --- !u!1 &250853356
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,6 +610,7 @@ GameObject:
   - 114: {fileID: 250853362}
   - 96: {fileID: 250853363}
   - 114: {fileID: 250853364}
+  - 114: {fileID: 250853365}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -661,9 +702,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followDistance: 2
+  attackRange: 10
   maximumVelocity: 50
   maximumAngularVelocity: 1
   forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  projectileForceSource: {fileID: 250853365}
   overrideLinear: 0
   overrideAngular: 0
   relativeLinear: 0
@@ -673,6 +716,8 @@ MonoBehaviour:
   lastLinearForce: {x: 0, y: 0, z: 0}
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
+  projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  jumpForce: {x: 0, y: 30, z: 0}
 --- !u!96 &250853363
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -732,6 +777,73 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &250853365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 157783592}
+  m_GameObject: {fileID: 250853356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1d975dc7f21ef4e9239f8c23cde527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  forceMode: 1
+  angularForceMode: 0
+--- !u!1001 &341841924
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: .628770828
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: .707106829
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: .707106829
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_RootMapOrder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+      propertyPath: teamLeader
+      value: 
+      objectReference: {fileID: 1643217636}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
+  m_RootGameObject: {fileID: 1921357872}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &447059117
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,6 +859,7 @@ GameObject:
   - 114: {fileID: 447059123}
   - 96: {fileID: 447059124}
   - 114: {fileID: 447059125}
+  - 114: {fileID: 447059126}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -838,9 +951,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followDistance: 2
+  attackRange: 10
   maximumVelocity: 50
   maximumAngularVelocity: 1
   forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  projectileForceSource: {fileID: 447059126}
   overrideLinear: 0
   overrideAngular: 0
   relativeLinear: 0
@@ -850,6 +965,8 @@ MonoBehaviour:
   lastLinearForce: {x: 0, y: 0, z: 0}
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
+  projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  jumpForce: {x: 0, y: 30, z: 0}
 --- !u!96 &447059124
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -909,6 +1026,21 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &447059126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1714986082}
+  m_GameObject: {fileID: 447059117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1d975dc7f21ef4e9239f8c23cde527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  forceMode: 1
+  angularForceMode: 0
 --- !u!1 &601646430
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,6 +1056,7 @@ GameObject:
   - 114: {fileID: 601646436}
   - 96: {fileID: 601646437}
   - 114: {fileID: 601646438}
+  - 114: {fileID: 601646439}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -1015,9 +1148,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followDistance: 2
+  attackRange: 10
   maximumVelocity: 50
   maximumAngularVelocity: 1
   forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  projectileForceSource: {fileID: 601646439}
   overrideLinear: 0
   overrideAngular: 0
   relativeLinear: 0
@@ -1027,6 +1162,8 @@ MonoBehaviour:
   lastLinearForce: {x: 0, y: 0, z: 0}
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
+  projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  jumpForce: {x: 0, y: 30, z: 0}
 --- !u!96 &601646437
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -1086,6 +1223,21 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &601646439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1062784883}
+  m_GameObject: {fileID: 601646430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1d975dc7f21ef4e9239f8c23cde527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  forceMode: 1
+  angularForceMode: 0
 --- !u!1 &701606668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,7 +1395,7 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 841437335}
@@ -1259,7 +1411,7 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   m_GameObject: {fileID: 841437334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -.827758789, y: 2.06945801, z: .572021484}
@@ -1272,7 +1424,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400010, guid: b3f80fb4cb8bf7547ba233de93bb6c65,
     type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   m_GameObject: {fileID: 841437334}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1297,7 +1449,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: teamLeader
@@ -1347,6 +1499,7 @@ GameObject:
   - 114: {fileID: 987895677}
   - 96: {fileID: 987895678}
   - 114: {fileID: 987895679}
+  - 114: {fileID: 987895680}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -1438,9 +1591,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followDistance: 2
+  attackRange: 10
   maximumVelocity: 50
   maximumAngularVelocity: 1
   forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  projectileForceSource: {fileID: 987895680}
   overrideLinear: 0
   overrideAngular: 0
   relativeLinear: 0
@@ -1450,6 +1605,8 @@ MonoBehaviour:
   lastLinearForce: {x: 0, y: 0, z: 0}
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
+  projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  jumpForce: {x: 0, y: 30, z: 0}
 --- !u!96 &987895678
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -1509,11 +1666,26 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &987895680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1546314065}
+  m_GameObject: {fileID: 987895671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1d975dc7f21ef4e9239f8c23cde527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  forceMode: 1
+  angularForceMode: 0
 --- !u!1 &989641820
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 989641821}
@@ -1529,7 +1701,7 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   m_GameObject: {fileID: 989641820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1545,7 +1717,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65,
     type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   m_GameObject: {fileID: 989641820}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1616,7 +1788,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: teamLeader
@@ -1635,7 +1807,7 @@ Prefab:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1154489902}
@@ -1653,7 +1825,7 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   m_GameObject: {fileID: 1154489901}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1666,7 +1838,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65,
     type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   m_GameObject: {fileID: 1154489901}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1679,6 +1851,7 @@ MonoBehaviour:
   selector: {fileID: 1154489905}
   tagFilter: Unit
   followFilter: Unit
+  attackFilter: Unit
   defaultKeymap:
   - input: 304
     output: 8
@@ -1686,12 +1859,18 @@ MonoBehaviour:
     output: 0
   - input: 324
     output: 4
+  - input: 32
+    output: 7
+  - input: 97
+    output: 6
+  - input: 115
+    output: 9
 --- !u!114 &1154489904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400004, guid: b3f80fb4cb8bf7547ba233de93bb6c65,
     type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   m_GameObject: {fileID: 1154489901}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1705,7 +1884,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400008, guid: b3f80fb4cb8bf7547ba233de93bb6c65,
     type: 2}
-  m_PrefabInternal: {fileID: 1645350079}
+  m_PrefabInternal: {fileID: 1242583380}
   m_GameObject: {fileID: 1154489901}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1716,6 +1895,62 @@ MonoBehaviour:
   controllingHUD: {fileID: 1154489904}
   controller: {fileID: 1154489903}
   selectedObject: {fileID: 0}
+--- !u!1001 &1242583380
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: m_RootMapOrder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1367552617}
+    - target: {fileID: 11400004, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+      propertyPath: insetCamera
+      value: 
+      objectReference: {fileID: 1787207520}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  m_RootGameObject: {fileID: 989641820}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &1367552613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,7 +2060,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: teamLeader
@@ -1877,7 +2112,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: teamLeader
@@ -1931,6 +2166,7 @@ GameObject:
   - 114: {fileID: 1643217634}
   - 96: {fileID: 1643217635}
   - 114: {fileID: 1643217636}
+  - 114: {fileID: 1643217637}
   m_Layer: 0
   m_Name: GreenUnit
   m_TagString: Unit
@@ -2022,9 +2258,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followDistance: 2
+  attackRange: 10
   maximumVelocity: 50
   maximumAngularVelocity: 1
   forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  projectileForceSource: {fileID: 1643217637}
   overrideLinear: 0
   overrideAngular: 0
   relativeLinear: 0
@@ -2034,6 +2272,8 @@ MonoBehaviour:
   lastLinearForce: {x: 0, y: 0, z: 0}
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
+  projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  jumpForce: {x: 0, y: 30, z: 0}
 --- !u!96 &1643217635
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2093,70 +2333,21 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 0, g: 1, b: 0, a: 1}
---- !u!1001 &1645350079
-Prefab:
+--- !u!114 &1643217637
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: m_RootMapOrder
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400004, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 1367552617}
-    - target: {fileID: 11400004, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: insetCamera
-      value: 
-      objectReference: {fileID: 1787207520}
-    - target: {fileID: 11400008, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: tagFilter
-      value: Unit
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400008, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-      propertyPath: selectBoxDelay
-      value: .200000003
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
-  m_RootGameObject: {fileID: 989641820}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
+  m_PrefabParentObject: {fileID: 11400004, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1836851308}
+  m_GameObject: {fileID: 1643217628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1d975dc7f21ef4e9239f8c23cde527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  forceMode: 1
+  angularForceMode: 0
 --- !u!1001 &1714986082
 Prefab:
   m_ObjectHideFlags: 0
@@ -2178,7 +2369,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
-      value: 17
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: teamLeader
@@ -2210,7 +2401,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: teamLeader
@@ -2300,6 +2491,7 @@ GameObject:
   - 114: {fileID: 1784334005}
   - 96: {fileID: 1784334006}
   - 114: {fileID: 1784334007}
+  - 114: {fileID: 1784334008}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -2391,9 +2583,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followDistance: 2
+  attackRange: 10
   maximumVelocity: 50
   maximumAngularVelocity: 1
   forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  projectileForceSource: {fileID: 1784334008}
   overrideLinear: 0
   overrideAngular: 0
   relativeLinear: 0
@@ -2403,6 +2597,8 @@ MonoBehaviour:
   lastLinearForce: {x: 0, y: 0, z: 0}
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
+  projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  jumpForce: {x: 0, y: 30, z: 0}
 --- !u!96 &1784334006
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2462,6 +2658,21 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &1784334008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 939936870}
+  m_GameObject: {fileID: 1784333999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1d975dc7f21ef4e9239f8c23cde527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  forceMode: 1
+  angularForceMode: 0
 --- !u!1 &1787207515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,6 +2776,7 @@ GameObject:
   - 114: {fileID: 1824973274}
   - 96: {fileID: 1824973275}
   - 114: {fileID: 1824973276}
+  - 114: {fileID: 1824973277}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -2656,9 +2868,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followDistance: 2
+  attackRange: 10
   maximumVelocity: 50
   maximumAngularVelocity: 1
   forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  projectileForceSource: {fileID: 1824973277}
   overrideLinear: 0
   overrideAngular: 0
   relativeLinear: 0
@@ -2668,6 +2882,8 @@ MonoBehaviour:
   lastLinearForce: {x: 0, y: 0, z: 0}
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
+  projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  jumpForce: {x: 0, y: 30, z: 0}
 --- !u!96 &1824973275
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2727,6 +2943,21 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &1824973277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1727718329}
+  m_GameObject: {fileID: 1824973268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1d975dc7f21ef4e9239f8c23cde527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  forceMode: 1
+  angularForceMode: 0
 --- !u!1001 &1836851308
 Prefab:
   m_ObjectHideFlags: 0
@@ -2744,7 +2975,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: teamLeader
@@ -2799,7 +3030,7 @@ Prefab:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-  m_PrefabInternal: {fileID: 1999228205}
+  m_PrefabInternal: {fileID: 341841924}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1921357877}
@@ -2810,6 +3041,7 @@ GameObject:
   - 114: {fileID: 1921357878}
   - 96: {fileID: 1921357879}
   - 114: {fileID: 1921357880}
+  - 114: {fileID: 1921357881}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -2822,7 +3054,7 @@ Rigidbody:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 5400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
     type: 2}
-  m_PrefabInternal: {fileID: 1999228205}
+  m_PrefabInternal: {fileID: 341841924}
   m_GameObject: {fileID: 1921357872}
   serializedVersion: 2
   m_Mass: 1
@@ -2838,7 +3070,7 @@ Renderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 2300000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
     type: 2}
-  m_PrefabInternal: {fileID: 1999228205}
+  m_PrefabInternal: {fileID: 341841924}
   m_GameObject: {fileID: 1921357872}
   m_Enabled: 1
   m_CastShadows: 1
@@ -2859,7 +3091,7 @@ CapsuleCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 13600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
     type: 2}
-  m_PrefabInternal: {fileID: 1999228205}
+  m_PrefabInternal: {fileID: 341841924}
   m_GameObject: {fileID: 1921357872}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -2873,14 +3105,14 @@ MeshFilter:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 3300000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
     type: 2}
-  m_PrefabInternal: {fileID: 1999228205}
+  m_PrefabInternal: {fileID: 341841924}
   m_GameObject: {fileID: 1921357872}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1921357877
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-  m_PrefabInternal: {fileID: 1999228205}
+  m_PrefabInternal: {fileID: 341841924}
   m_GameObject: {fileID: 1921357872}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
   m_LocalPosition: {x: -5, y: .628770828, z: 18}
@@ -2893,7 +3125,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
     type: 2}
-  m_PrefabInternal: {fileID: 1999228205}
+  m_PrefabInternal: {fileID: 341841924}
   m_GameObject: {fileID: 1921357872}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2901,9 +3133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followDistance: 2
+  attackRange: 10
   maximumVelocity: 50
   maximumAngularVelocity: 1
   forceSource: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  projectileForceSource: {fileID: 1921357881}
   overrideLinear: 0
   overrideAngular: 0
   relativeLinear: 0
@@ -2913,12 +3147,14 @@ MonoBehaviour:
   lastLinearForce: {x: 0, y: 0, z: 0}
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
+  projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  jumpForce: {x: 0, y: 30, z: 0}
 --- !u!96 &1921357879
 TrailRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 9600000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
     type: 2}
-  m_PrefabInternal: {fileID: 1999228205}
+  m_PrefabInternal: {fileID: 341841924}
   m_GameObject: {fileID: 1921357872}
   m_Enabled: 1
   m_CastShadows: 1
@@ -2960,7 +3196,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
     type: 2}
-  m_PrefabInternal: {fileID: 1999228205}
+  m_PrefabInternal: {fileID: 341841924}
   m_GameObject: {fileID: 1921357872}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2972,6 +3208,21 @@ MonoBehaviour:
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
   color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &1921357881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 341841924}
+  m_GameObject: {fileID: 1921357872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1d975dc7f21ef4e9239f8c23cde527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
+  forceMode: 1
+  angularForceMode: 0
 --- !u!1001 &1970143731
 Prefab:
   m_ObjectHideFlags: 0
@@ -3030,61 +3281,5 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f334acf1eda6e33409c261b959231905, type: 2}
   m_RootGameObject: {fileID: 738672335}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
---- !u!1001 &1999228205
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: .628770828
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: teamLeader
-      value: 
-      objectReference: {fileID: 1643217636}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: useLeaderColor
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: useMyColor
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: mycolor.r
-      value: .733333349
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: mycolor.g
-      value: .196078435
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: mycolor.b
-      value: .0980392173
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: mycolor.a
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-  m_RootGameObject: {fileID: 1921357872}
   m_IsPrefabParent: 0
   m_IsExploded: 1

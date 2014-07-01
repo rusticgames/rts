@@ -148,6 +148,7 @@ MonoBehaviour:
   selector: {fileID: 11400008}
   tagFilter: Unit
   followFilter: Unit
+  attackFilter: Unit
   defaultKeymap:
   - input: 304
     output: 8
@@ -155,6 +156,12 @@ MonoBehaviour:
     output: 0
   - input: 324
     output: 4
+  - input: 32
+    output: 7
+  - input: 97
+    output: 6
+  - input: 115
+    output: 9
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4d75099f43c4344ac8a668c070bb44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectBoxDelay: .100000001
+  selectBoxDelay: .200000003
   controllingHUD: {fileID: 11400004}
   controller: {fileID: 11400002}
   selectedObject: {fileID: 0}

@@ -6,11 +6,14 @@ public class Mover : MonoBehaviour
 {
 	Vector3 moveTarget;
 	GameObject followTarget;
-	public float followDistance = 1.0f;
+	GameObject attackTarget;
+	public float followDistance = 1.0f;	
+	public float attackRange = 10f;
 	public float maximumVelocity = 1.0f;
 	[Range (0, 100)]
 	public float maximumAngularVelocity = 1.0f;
 	public Mechanism forceSource;
+	public Mechanism projectileForceSource;
 	public bool overrideLinear = false;
 	public bool overrideAngular = false;
 	public bool relativeLinear = false;
@@ -21,6 +24,7 @@ public class Mover : MonoBehaviour
 	public Vector3 lastAngularForce;
 	public float minimumAngularOffset = 5.0f;
 	private Vector3 distanceVector;
+	public GameObject projectilePrefab;
 	
 	// Start is called just before any of the
 	// Update methods is called the first time.
@@ -30,13 +34,8 @@ public class Mover : MonoBehaviour
 			this.follow (this.gameObject);
 		}
 		moveTarget = followTarget.transform.position;
-	}
-	
-	// Update is called every frame, if the
-	// MonoBehaviour is enabled.
-	void FixedUpdate ()
-	{
-		try2DMove ();
+		StartCoroutine(attackRoutine());
+		StartCoroutine(moveRoutine());
 	}
 
 	void OnDrawGizmos () {
@@ -49,13 +48,9 @@ public class Mover : MonoBehaviour
 		Gizmos.DrawRay(this.transform.position, transform.forward);
 	}
 
-	Vector3 GetDistanceToTarget ()
+	Vector3 GetDistanceToTarget (Vector3 target)
 	{
-		if (followTarget != this.gameObject) {
-			moveTarget = followTarget.transform.position;
-		}
-
-		return moveTarget - this.rigidbody.position;
+		return target - this.rigidbody.position;
 	}
 
 	Vector3 GetDesiredVelocity (Vector3 distance)
@@ -83,24 +78,82 @@ public class Mover : MonoBehaviour
 		}
 		return targetTorque - rigidbody.angularVelocity;
 	}
-	
-	void try2DMove ()
-	{
-		distanceVector = GetDistanceToTarget ();
-		lastLinearForce = GetDesiredVelocity (distanceVector);
-		lastAngularForce = GetRotationTarget (distanceVector);
-		forceSource.applyLinearForce(this.rigidbody, lastLinearForce, relativeLinear);
-		forceSource.applyAngularForce(this.rigidbody, lastAngularForce, relativeAngular);
+		
+	IEnumerator moveRoutine() {
+		while(GAME_IS_RUNNING) {
+			if (followTarget != this.gameObject) {
+				moveTarget = followTarget.transform.position;
+			}
+			
+			distanceVector = GetDistanceToTarget (moveTarget);
+			lastLinearForce = GetDesiredVelocity (distanceVector);
+			lastAngularForce = GetRotationTarget (distanceVector);
+			forceSource.applyLinearForce(this.rigidbody, lastLinearForce, relativeLinear);
+			forceSource.applyAngularForce(this.rigidbody, lastAngularForce, relativeAngular);
+			if(isJumping && Physics.Raycast(this.transform.position, Vector3.down, 1.1f)){
+				isJumping = false;
+				projectileForceSource.applyLinearForce(this.rigidbody, jumpForce, relativeLinear);
+				yield return new WaitForSeconds(jumpDelay);
+			}
+			yield return new WaitForFixedUpdate();
+		}
 	}
+	public Vector3 jumpForce = new Vector3(0.0f, 3f, 0f);
+	bool isJumping = false;
+	float attackPeriodSeconds = 1f;
+	public float jumpDelay = 1f;
+	const bool GAME_IS_RUNNING = true;
+
+	float projectileSpeed = 20f;
 	
+	IEnumerator attackRoutine() {
+		while(GAME_IS_RUNNING) {
+			while(attackTarget != null && attackTarget.activeInHierarchy) {
+				Vector3 distance = GetDistanceToTarget(attackTarget.transform.position);
+				if(distanceVector.magnitude < attackRange) {
+					Vector3 startPosition = this.transform.position;
+					startPosition.y = startPosition.y + 3;
+					
+					GameObject o = (GameObject)Instantiate(projectilePrefab, startPosition, this.transform.rotation);
+					
+					projectileForceSource.applyLinearForce(o.rigidbody, distance.normalized * projectileSpeed, relativeLinear);
+					yield return new WaitForSeconds(attackPeriodSeconds);
+				}
+				yield return new WaitForFixedUpdate();
+			}
+			yield return new WaitForFixedUpdate();
+		}
+	}
+
 	public void moveTo (Vector3 target)
 	{
+		Debug.Log("moveto");
 		this.follow (this.gameObject);
 		this.moveTarget = target;
 	}
 	
 	public void follow (GameObject target)
 	{
+		Debug.Log("follow");
 		this.followTarget = target;
+	}
+	
+	public void attack (GameObject target)
+	{
+		Debug.Log("attack");
+		this.follow(target);
+		this.attackTarget = target;
+	}
+	
+	public void stop ()
+	{
+		Debug.Log("stop");
+		this.moveTo(this.transform.position);
+		this.attackTarget = null;
+	}
+
+	public void jump () {		
+		Debug.Log("stop");
+		this.isJumping = true;
 	}
 }
