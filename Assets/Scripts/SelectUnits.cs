@@ -25,13 +25,14 @@ public class SelectUnits : MonoBehaviour
 	//interactions (spoiler: yes vi-rts)
 	public HUD cameraProvider;
 	public Dictionary<KeyCode, ControllerIntent> keyMapping = new Dictionary<KeyCode, ControllerIntent>();
-	private const bool GAME_IS_RUNNING = true;
+	public const bool GAME_IS_RUNNING = true;
 	public List<GameObject> selectedUnits = new List<GameObject>();
 	public List<ControllerIntent> intents = new List<ControllerIntent>();
 	public MouseSelector selector;
 	public string tagFilter = "Unit";
 	public string followFilter = "Unit";
 	public string attackFilter = "Unit";
+	public bool DEBUG_MODE = false;
 
 	public List<SwitchInputMapping> defaultKeymap;
 
@@ -54,9 +55,7 @@ public class SelectUnits : MonoBehaviour
 		StartCoroutine(CheckStop());
 		StartCoroutine(CheckJump());
 
-		foreach (var mapping in defaultKeymap) {
-			keyMapping.Add(mapping.input,mapping.output);
-		}
+		defaultKeymap.ForEach(mapping => keyMapping.Add(mapping.input,mapping.output));
 	}
 
 	IEnumerator UpdateIntentsFromInputs ()
@@ -64,10 +63,13 @@ public class SelectUnits : MonoBehaviour
 		while(GAME_IS_RUNNING) {
 			yield return new WaitForFixedUpdate();
 			List<ControllerIntent> newIntents = new List<ControllerIntent>();
+
 			foreach (var keycode in keyMapping.Keys) {
 				if(Input.GetKey(keycode) && GUIUtility.hotControl == 0) { //TODO: implement a system for differentiating controls based on down vs held vs up, and also for capturing optional relevant positional data
-					Debug.Log(keycode);
-					Debug.Log(keyMapping[keycode]);
+					if(DEBUG_MODE) {
+						Debug.Log(keycode);
+						Debug.Log(keyMapping[keycode]);
+					}
 					newIntents.Add(keyMapping[keycode]);
 				}
 			}

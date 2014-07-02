@@ -25,6 +25,7 @@ public class Mover : MonoBehaviour
 	public float minimumAngularOffset = 5.0f;
 	private Vector3 distanceVector;
 	public GameObject projectilePrefab;
+	public bool DEBUG_MODE = false;
 	
 	// Start is called just before any of the
 	// Update methods is called the first time.
@@ -80,7 +81,7 @@ public class Mover : MonoBehaviour
 	}
 		
 	IEnumerator moveRoutine() {
-		while(GAME_IS_RUNNING) {
+		while(SelectUnits.GAME_IS_RUNNING) {
 			if (followTarget != this.gameObject) {
 				moveTarget = followTarget.transform.position;
 			}
@@ -102,12 +103,11 @@ public class Mover : MonoBehaviour
 	bool isJumping = false;
 	float attackPeriodSeconds = 1f;
 	public float jumpDelay = 1f;
-	const bool GAME_IS_RUNNING = true;
 
 	float projectileSpeed = 20f;
 	
 	IEnumerator attackRoutine() {
-		while(GAME_IS_RUNNING) {
+		while(SelectUnits.GAME_IS_RUNNING) {
 			while(attackTarget != null && attackTarget.activeInHierarchy) {
 				Vector3 distance = GetDistanceToTarget(attackTarget.transform.position);
 				if(distanceVector.magnitude < attackRange) {
@@ -127,33 +127,32 @@ public class Mover : MonoBehaviour
 
 	public void moveTo (Vector3 target)
 	{
-		Debug.Log("moveto");
+		if(DEBUG_MODE) Debug.Log("moveto");
 		this.follow (this.gameObject);
 		this.moveTarget = target;
 	}
 	
 	public void follow (GameObject target)
 	{
-		Debug.Log("follow");
+		if(DEBUG_MODE) Debug.Log("follow");
 		this.followTarget = target;
 	}
 	
 	public void attack (GameObject target)
 	{
-		Debug.Log("attack");
-		this.follow(target);
+		if(DEBUG_MODE) Debug.Log("attack");
 		this.attackTarget = target;
 	}
 	
 	public void stop ()
 	{
-		Debug.Log("stop");
+		if(DEBUG_MODE) Debug.Log("stop");
 		this.moveTo(this.transform.position);
 		this.attackTarget = null;
 	}
 
 	public void jump () {		
-		Debug.Log("stop");
+		if(DEBUG_MODE) Debug.Log("stop");
 		this.isJumping = true;
 	}
 }

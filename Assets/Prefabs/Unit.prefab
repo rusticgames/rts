@@ -16,6 +16,7 @@ GameObject:
   - 96: {fileID: 9600000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
+  - 114: {fileID: 11400006}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -145,6 +146,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -175,6 +179,24 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -133,6 +133,7 @@ GameObject:
   - 96: {fileID: 67072913}
   - 114: {fileID: 67072914}
   - 114: {fileID: 67072915}
+  - 114: {fileID: 67072916}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -239,7 +240,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
-  jumpForce: {x: 0, y: 30, z: 0}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!96 &67072913
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -314,6 +317,25 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &67072916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 152448100}
+  m_GameObject: {fileID: 67072906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!1001 &152448100
 Prefab:
   m_ObjectHideFlags: 0
@@ -414,6 +436,7 @@ GameObject:
   - 96: {fileID: 167386313}
   - 114: {fileID: 167386314}
   - 114: {fileID: 167386315}
+  - 114: {fileID: 167386316}
   m_Layer: 0
   m_Name: RedUnit
   m_TagString: Unit
@@ -520,7 +543,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
-  jumpForce: {x: 0, y: 30, z: 0}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!96 &167386313
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -595,6 +620,25 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &167386316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1406894171}
+  m_GameObject: {fileID: 167386306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!1 &250853356
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,6 +655,7 @@ GameObject:
   - 96: {fileID: 250853363}
   - 114: {fileID: 250853364}
   - 114: {fileID: 250853365}
+  - 114: {fileID: 250853366}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -717,7 +762,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
-  jumpForce: {x: 0, y: 30, z: 0}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!96 &250853363
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -792,6 +839,25 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &250853366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 157783592}
+  m_GameObject: {fileID: 250853356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!1001 &341841924
 Prefab:
   m_ObjectHideFlags: 0
@@ -860,6 +926,7 @@ GameObject:
   - 96: {fileID: 447059124}
   - 114: {fileID: 447059125}
   - 114: {fileID: 447059126}
+  - 114: {fileID: 447059127}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -966,7 +1033,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
-  jumpForce: {x: 0, y: 30, z: 0}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!96 &447059124
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -1041,6 +1110,25 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &447059127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1714986082}
+  m_GameObject: {fileID: 447059117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!1 &601646430
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,6 +1145,7 @@ GameObject:
   - 96: {fileID: 601646437}
   - 114: {fileID: 601646438}
   - 114: {fileID: 601646439}
+  - 114: {fileID: 601646440}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -1163,7 +1252,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
-  jumpForce: {x: 0, y: 30, z: 0}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!96 &601646437
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -1238,6 +1329,25 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &601646440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1062784883}
+  m_GameObject: {fileID: 601646430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!1 &701606668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,6 +1439,7 @@ GameObject:
   - 33: {fileID: 738672338}
   - 65: {fileID: 738672337}
   - 23: {fileID: 738672336}
+  - 114: {fileID: 738672340}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Terrain
@@ -1391,6 +1502,21 @@ Transform:
   - {fileID: 701606670}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &738672340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: f334acf1eda6e33409c261b959231905,
+    type: 2}
+  m_PrefabInternal: {fileID: 1970143731}
+  m_GameObject: {fileID: 738672335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 01000000
+  reactions: []
+  pendingChanges: 
 --- !u!1 &841437334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,6 +1626,7 @@ GameObject:
   - 96: {fileID: 987895678}
   - 114: {fileID: 987895679}
   - 114: {fileID: 987895680}
+  - 114: {fileID: 987895681}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -1606,7 +1733,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
-  jumpForce: {x: 0, y: 30, z: 0}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!96 &987895678
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -1681,6 +1810,25 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &987895681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1546314065}
+  m_GameObject: {fileID: 987895671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!1 &989641820
 GameObject:
   m_ObjectHideFlags: 0
@@ -1852,6 +2000,7 @@ MonoBehaviour:
   tagFilter: Unit
   followFilter: Unit
   attackFilter: Unit
+  DEBUG_MODE: 0
   defaultKeymap:
   - input: 304
     output: 8
@@ -2167,6 +2316,7 @@ GameObject:
   - 96: {fileID: 1643217635}
   - 114: {fileID: 1643217636}
   - 114: {fileID: 1643217637}
+  - 114: {fileID: 1643217638}
   m_Layer: 0
   m_Name: GreenUnit
   m_TagString: Unit
@@ -2273,7 +2423,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
-  jumpForce: {x: 0, y: 30, z: 0}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!96 &1643217635
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2348,6 +2500,25 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &1643217638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1836851308}
+  m_GameObject: {fileID: 1643217628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!1001 &1714986082
 Prefab:
   m_ObjectHideFlags: 0
@@ -2492,6 +2663,7 @@ GameObject:
   - 96: {fileID: 1784334006}
   - 114: {fileID: 1784334007}
   - 114: {fileID: 1784334008}
+  - 114: {fileID: 1784334009}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -2598,7 +2770,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
-  jumpForce: {x: 0, y: 30, z: 0}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!96 &1784334006
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2673,6 +2847,25 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &1784334009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 939936870}
+  m_GameObject: {fileID: 1784333999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!1 &1787207515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2777,6 +2970,7 @@ GameObject:
   - 96: {fileID: 1824973275}
   - 114: {fileID: 1824973276}
   - 114: {fileID: 1824973277}
+  - 114: {fileID: 1824973278}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -2883,7 +3077,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
-  jumpForce: {x: 0, y: 30, z: 0}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!96 &1824973275
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -2958,6 +3154,25 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &1824973278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1727718329}
+  m_GameObject: {fileID: 1824973268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!1001 &1836851308
 Prefab:
   m_ObjectHideFlags: 0
@@ -3042,6 +3257,7 @@ GameObject:
   - 96: {fileID: 1921357879}
   - 114: {fileID: 1921357880}
   - 114: {fileID: 1921357881}
+  - 114: {fileID: 1921357882}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -3148,7 +3364,9 @@ MonoBehaviour:
   lastAngularForce: {x: 0, y: 0, z: 0}
   minimumAngularOffset: 5
   projectilePrefab: {fileID: 100000, guid: 673bdd97090df7a40ba389c83e72abfa, type: 2}
-  jumpForce: {x: 0, y: 30, z: 0}
+  DEBUG_MODE: 0
+  jumpForce: {x: 0, y: 3, z: 0}
+  jumpDelay: 1
 --- !u!96 &1921357879
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -3223,6 +3441,25 @@ MonoBehaviour:
   context: {fileID: 11400006, guid: b3f80fb4cb8bf7547ba233de93bb6c65, type: 2}
   forceMode: 1
   angularForceMode: 0
+--- !u!114 &1921357882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 341841924}
+  m_GameObject: {fileID: 1921357872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f8829add15b40bbd03f3ef937ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 02000000
+  reactions:
+  - e: 0
+    r: 0
+  - e: 2
+    r: 2
+  pendingChanges: 
 --- !u!1001 &1970143731
 Prefab:
   m_ObjectHideFlags: 0
