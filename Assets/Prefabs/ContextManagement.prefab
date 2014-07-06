@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400008}
+  - 114: {fileID: 11400012}
   m_Layer: 0
   m_Name: PlayerHook
   m_TagString: Player
@@ -143,25 +144,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraProvider: {fileID: 11400004}
+  gatherer: {fileID: 11400012}
   selectedUnits: []
   intents: 
   selector: {fileID: 11400008}
   tagFilter: Unit
   followFilter: Unit
   attackFilter: Unit
-  defaultKeymap:
-  - input: 304
-    output: 8
-  - input: 323
-    output: 0
-  - input: 324
-    output: 4
-  - input: 32
-    output: 7
-  - input: 97
-    output: 6
-  - input: 115
-    output: 9
+  DEBUG_MODE: 0
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -202,7 +192,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectBoxDelay: .200000003
   controllingHUD: {fileID: 11400004}
-  controller: {fileID: 11400002}
   selectedObject: {fileID: 0}
 --- !u!114 &11400010
 MonoBehaviour:
@@ -216,6 +205,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paused: 0
+--- !u!114 &11400012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23405c5e05442674d8f75c8006f67e6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultKeymap:
+  - input: 323
+    output: 0
+  - input: 324
+    output: 4
+  - input: 0
+    output: 0
+  - input: 0
+    output: 0
+  - input: 0
+    output: 0
+  - input: 0
+    output: 0
+  DEBUG_MODE: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

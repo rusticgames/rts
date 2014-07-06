@@ -18,14 +18,21 @@ public enum ControllerIntent
 	ORDER_STOP
 }
 
+public enum SelectionType 
+{
+	MOUSE_CLICK_OR_DRAG,
+	MANUAL,
+	TAG
+}
+
 public class SelectUnits : MonoBehaviour
 {
 	//it occurs to me, maybe for the first time, that we could limit selection 
 	//to certain cameras. are there interesting possibilities with modal 
 	//interactions (spoiler: yes vi-rts)
 	public HUD cameraProvider;
-	public Dictionary<KeyCode, ControllerIntent> keyMapping = new Dictionary<KeyCode, ControllerIntent>();
-	public const bool GAME_IS_RUNNING = true;
+	public static bool GAME_IS_RUNNING = true;
+	public InputInterpreter intentGatherer;
 	public List<GameObject> selectedUnits = new List<GameObject>();
 	public List<ControllerIntent> intents = new List<ControllerIntent>();
 	public MouseSelector selector;
@@ -33,18 +40,6 @@ public class SelectUnits : MonoBehaviour
 	public string followFilter = "Unit";
 	public string attackFilter = "Unit";
 	public bool DEBUG_MODE = false;
-
-	public List<SwitchInputMapping> defaultKeymap;
-
-	public void AddInputMapping() {
-		defaultKeymap.Add(new SwitchInputMapping());
-	}
-
-	[System.Serializable]
-	public class SwitchInputMapping {
-		public KeyCode input;
-		public ControllerIntent output;
-	}
 
 	void Start()
 	{
@@ -54,26 +49,13 @@ public class SelectUnits : MonoBehaviour
 		StartCoroutine(CheckFight());
 		StartCoroutine(CheckStop());
 		StartCoroutine(CheckJump());
-
-		defaultKeymap.ForEach(mapping => keyMapping.Add(mapping.input,mapping.output));
 	}
 
 	IEnumerator UpdateIntentsFromInputs ()
 	{
 		while(GAME_IS_RUNNING) {
 			yield return new WaitForFixedUpdate();
-			List<ControllerIntent> newIntents = new List<ControllerIntent>();
-
-			foreach (var keycode in keyMapping.Keys) {
-				if(Input.GetKey(keycode) && GUIUtility.hotControl == 0) { //TODO: implement a system for differentiating controls based on down vs held vs up, and also for capturing optional relevant positional data
-					if(DEBUG_MODE) {
-						Debug.Log(keycode);
-						Debug.Log(keyMapping[keycode]);
-					}
-					newIntents.Add(keyMapping[keycode]);
-				}
-			}
-			intents = newIntents;
+			intents = intentGatherer.getCurrentIntents();
 			yield return null;
 		}
 	}

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class MouseSelector : MonoBehaviour {
 	public float selectBoxDelay = 0.2f; //TODO: add distance delay as well
 	public HUD controllingHUD;
-	public SelectUnits controller;
 	private GUIBox dragSelect = new GUIBox();
 	private GUIStyle boxStyle;
 	public GameObject selectedObject;
