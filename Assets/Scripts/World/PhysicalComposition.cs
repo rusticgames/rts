@@ -26,6 +26,7 @@ public class PhysicalComposition : MonoBehaviour {
 	public List<Element> elements = new List<Element>();
 	public List<ElementResultMapping> reactions = new List<ElementResultMapping>();
 	public Dictionary<Element, InteractionResult> a = new Dictionary<Element, InteractionResult>();
+	public bool DEBUG_MODE = false;
 	
 	// Start is called just before any of the
 	// Update methods is called the first time.
@@ -43,27 +44,27 @@ public class PhysicalComposition : MonoBehaviour {
 
 	void processCollision (Element x, Collision collision)
 	{
-		Debug.Log("Result of: [" + this.gameObject.name + "] hit by [" + collision.collider.gameObject.name + "]");
+		if(DEBUG_MODE) Debug.Log("Result of: [" + this.gameObject.name + "] hit by [" + collision.collider.gameObject.name + "]");
 		if(! a.ContainsKey(x)) {return;}
 
 		switch (a[x]) {
 		case InteractionResult.DIE:
 			GameObject.Destroy(this.gameObject);
-			Debug.Log("Die");
+			if(DEBUG_MODE) Debug.Log("Die");
 			break;
 		case InteractionResult.BOUNCE:
-			Debug.Log("Bounce");
+			if(DEBUG_MODE) Debug.Log("Bounce");
 			break;
 		case InteractionResult.ATTACH:
 			if(collision.collider.rigidbody != null && this.transform != collision.collider.transform.parent) 
 			{
-				Debug.Log("Attach");
+				if(DEBUG_MODE) Debug.Log("Attach");
 				GameObject.Destroy(this.rigidbody);
 				this.transform.parent = collision.collider.transform;
 			}
 			break;
 		default:
-			Debug.Log("nah");
+			if(DEBUG_MODE) Debug.Log("nah");
 			break;
 		}
 	}

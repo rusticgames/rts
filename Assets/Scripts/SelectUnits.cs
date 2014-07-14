@@ -32,116 +32,101 @@ public class SelectUnits : MonoBehaviour
 	//interactions (spoiler: yes vi-rts)
 	public HUD cameraProvider;
 	public static bool GAME_IS_RUNNING = true;
-	public InputInterpreter intentGatherer;
+	public IntentPipe intentProvider;
 	public List<GameObject> selectedUnits = new List<GameObject>();
-	public List<ControllerIntent> intents = new List<ControllerIntent>();
 	public MouseSelector selector;
 	public string tagFilter = "Unit";
 	public string followFilter = "Unit";
 	public string attackFilter = "Unit";
 	public bool DEBUG_MODE = false;
+ public delegate IEnumerator InterpretationDelegate();
+ public Dictionary<ControllerIntent, InterpretationDelegate> interpretationMap = new Dictionary<ControllerIntent, InterpretationDelegate>();
 
 	void Start()
 	{
-		StartCoroutine(UpdateIntentsFromInputs());
-		StartCoroutine(CheckSelect());
-		StartCoroutine(CheckMove());
-		StartCoroutine(CheckFight());
-		StartCoroutine(CheckStop());
-		StartCoroutine(CheckJump());
+    interpretationMap.Add(ControllerIntent.SPECIFY_POINT, CheckSelect);
+    interpretationMap.Add(ControllerIntent.ORDER_MOVE, CheckMove);
+    interpretationMap.Add(ControllerIntent.ORDER_ATTACK, CheckFight);
+    interpretationMap.Add(ControllerIntent.ORDER_STOP, CheckStop);
+    interpretationMap.Add(ControllerIntent.ORDER_JUMP, CheckJump);
+
+    foreach (var intent in interpretationMap.Keys) {
+      StartCoroutine(CheckInterpretation(intent));
+    }
 	}
 
-	IEnumerator UpdateIntentsFromInputs ()
+	IEnumerator CheckInterpretation(ControllerIntent i)
 	{
-		while(GAME_IS_RUNNING) {
-			yield return new WaitForFixedUpdate();
-			intents = intentGatherer.getCurrentIntents();
-			yield return null;
+		while(GAME_IS_RUNNING){
+			while(! intentProvider.intents.Contains(i) ) { yield return null;	}
+			if(DEBUG_MODE) Debug.Log(i);
+   yield return StartCoroutine(interpretationMap[i]());
 		}
+		yield return null;
 	}
 
 	IEnumerator CheckSelect(){
-		while(GAME_IS_RUNNING){
-			while(! intents.Contains(ControllerIntent.SPECIFY_POINT)) {
-				yield return null;
-			}
-			
-			Vector3 clickPoint = Input.mousePosition; //TODO: pull out position and button into new type of intent specifier
-			List<GameObject> lo;
+  Vector3 clickPoint = Input.mousePosition; //TODO: pull out position and button into new type of intent specifier
+  List<GameObject> lo;
 
-			yield return new WaitForSeconds (selector.selectBoxDelay);
+  yield return new WaitForSeconds (selector.selectBoxDelay);
 
-			if(!intents.Contains(ControllerIntent.SPECIFY_POINT)) {
-				lo = selector.selectPoint(clickPoint);
-			}else{
-				while(intents.Contains(ControllerIntent.SPECIFY_POINT)) {
-					selector.UpdateSelectBox(clickPoint, Input.mousePosition);
-					yield return null;
-				}
-				lo = selector.selectBox(clickPoint, Input.mousePosition);
-			}
-			if(tagFilter.Length > 0 ) { lo.RemoveAll(x => !x.CompareTag(tagFilter)); }
-			
-			if (intents.Contains (ControllerIntent.RETAIN_SELECTION)) {
-				lo.AddRange(selectedUnits);
-			}
+		if(!intentProvider.intents.Contains(ControllerIntent.SPECIFY_POINT)) {
+    lo = selector.selectPoint(clickPoint);
+  }else{
+			while(intentProvider.intents.Contains(ControllerIntent.SPECIFY_POINT)) {
+      selector.UpdateSelectBox(clickPoint, Input.mousePosition);
+      yield return null;
+    }
+    lo = selector.selectBox(clickPoint, Input.mousePosition);
+  }
+  if(tagFilter.Length > 0 ) { lo.RemoveAll(x => !x.CompareTag(tagFilter)); }
 
-			selectedUnits = lo;
-			yield return null;
-		}
-	}
+		if (intentProvider.intents.Contains (ControllerIntent.RETAIN_SELECTION)) {
+    lo.AddRange(selectedUnits);
+  }
+
+  selectedUnits = lo;
+  yield return null;
+  }
 	
 	IEnumerator CheckFight()
 	{
-		while(GAME_IS_RUNNING){
-			while(! intents.Contains(ControllerIntent.ORDER_ATTACK) ) { yield return null;	}
-			
-			HUD.ScreenPointToWorldInfo i = cameraProvider.getWorldInfoAtScreenPoint(Input.mousePosition);
-			if(i.isValid)
-			{
-				if(attackFilter.Length == 0 || i.objectAtPoint.CompareTag(attackFilter))
-				{
-					selectedUnits.ForEach(x => x.GetComponent<Mover>().attack(i.objectAtPoint));
-				}
-			}
-			yield return null;
-		}
+    HUD.ScreenPointToWorldInfo i = cameraProvider.getWorldInfoAtScreenPoint(Input.mousePosition);
+    if(i.isValid)
+    {
+      if(attackFilter.Length == 0 || i.objectAtPoint.CompareTag(attackFilter))
+      {
+        selectedUnits.ForEach(x => x.GetComponent<Mover>().attack(i.objectAtPoint));
+      }
+    }
+    yield return null;
 	}
 	
 	IEnumerator CheckStop()
 	{
-		while(GAME_IS_RUNNING){
-			while(! intents.Contains(ControllerIntent.ORDER_STOP) ) { yield return null;	}
-			selectedUnits.ForEach(x => x.GetComponent<Mover>().stop());
-			yield return null;
-		}
+    selectedUnits.ForEach(x => x.GetComponent<Mover>().stop());
+    yield return null;
 	}
 	
 	IEnumerator CheckJump()
 	{
-		while(GAME_IS_RUNNING){
-			while(! intents.Contains(ControllerIntent.ORDER_JUMP) ) { yield return null;	}
-			selectedUnits.ForEach(x => x.GetComponent<Mover>().jump());
-			yield return null;
-		}
+    selectedUnits.ForEach(x => x.GetComponent<Mover>().jump());
+    yield return null;
 	}
 
 	IEnumerator CheckMove(){
-		while(GAME_IS_RUNNING){
-			while(! intents.Contains(ControllerIntent.ORDER_MOVE) ) { yield return null;	}
-
-			HUD.ScreenPointToWorldInfo i = cameraProvider.getWorldInfoAtScreenPoint(Input.mousePosition);
-			if(i.isValid)
-			{
-				if(followFilter.Length == 0 || i.objectAtPoint.CompareTag(followFilter))
-				{
-					selectedUnits.ForEach(x => x.GetComponent<Mover>().follow(i.objectAtPoint));
-				} else {
-					selectedUnits.ForEach(x => x.GetComponent<Mover>().moveTo(i.worldPoint));
-				}
-			}
-			yield return null;
-		}
+    HUD.ScreenPointToWorldInfo i = cameraProvider.getWorldInfoAtScreenPoint(Input.mousePosition);
+    if(i.isValid)
+    {
+      if(followFilter.Length == 0 || i.objectAtPoint.CompareTag(followFilter))
+      {
+        selectedUnits.ForEach(x => x.GetComponent<Mover>().follow(i.objectAtPoint));
+      } else {
+        selectedUnits.ForEach(x => x.GetComponent<Mover>().moveTo(i.worldPoint));
+      }
+    }
+    yield return null;
 	}
 	
 	void OnDrawGizmos () {
