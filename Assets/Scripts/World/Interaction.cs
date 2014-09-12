@@ -1,31 +1,37 @@
 using UnityEngine;
+using RusticGames.Act;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum Interactor
+public enum InteractorType
 {
 	PROJECTILE,
 	TERRAIN,
 	UNIT,
 	GOOMBA,
+	SIDE,
 	MUSHROOM,
 	BRICK,
 	PRIZE,
 	ONEUP,
 	MARIO,
 	MARIO_HEAD,
-	MARIO_BOOTS
+	MARIO_BOOTS,
+	DEFAULT
 }
 
 public enum InteractionResult {
 	DIE,
 	ATTACH,
-	BOUNCE
+	BOUNCE,
+	TURN,
+	NONE,
+	GROW
 }
 
 [System.Serializable]
 public class InteractionResultMapping {
-	public Interactor e;
+	public InteractorType e;
 	public InteractionResult r;
 }
 
@@ -38,39 +44,51 @@ public class GeneralCollider {
 }
 
 public class Interaction : MonoBehaviour {
-	public List<Interactor> elements = new List<Interactor>();
+	private static List<InteractorType> defaultElement = new List<InteractorType>(){InteractorType.DEFAULT};
+	public List<InteractorType> elements = new List<InteractorType>();
 	public List<InteractionResultMapping> reactions = new List<InteractionResultMapping>();
-	public Dictionary<Interactor, InteractionResult> a = new Dictionary<Interactor, InteractionResult>();
+	public Dictionary<InteractorType, InteractionResult> a = new Dictionary<InteractorType, InteractionResult>();
 	public Dictionary<InteractionResult, InteractionLogic> b = new Dictionary<InteractionResult, InteractionLogic>();
 	public GameObject me;
-	public bool DEBUG_MODE = false;
 	
+	public void logInteraction(InteractionResult r, GameObject g) {
+		Debug.Log ("<" + me + "> performing <" + r + "> because of <" + g + ">");
+	}
+	
+	public void logInteractionCheck(InteractorType t) {
+		Debug.Log ("<" + me + "> checking interaction between my <" + this + "> and <" + t + ">");
+	}
+
 	public delegate void InteractionLogic(GeneralCollider c);
 	void Start () {
 		if (me == null) {
 						me = gameObject;
 				}
 		reactions.ForEach(m => a.Add(m.e, m.r));
-		b.Add(InteractionResult.DIE, delegate(GeneralCollider c) { 
-			Debug.Log ("DIE!");
-			GameObject.Destroy(me, 0.01f); });
+
+		b.Add(InteractionResult.DIE, delegate(GeneralCollider c) {
+			logInteraction(InteractionResult.DIE, c.collider2d.gameObject);
+			GameObject.Destroy(me, 0.001f); 
+		});
+
 		b.Add(InteractionResult.BOUNCE, delegate(GeneralCollider c) { 
-			Debug.Log ("BOUNCE!");
+			logInteraction(InteractionResult.BOUNCE, c.collider2d.gameObject);
 			if(c.is3d) {
 				Vector3 v = me.rigidbody.velocity;
 				v.y = 0f;
 				me.rigidbody.velocity = v;
-				me.rigidbody.AddForce(Vector2.up * 10.0f, ForceMode.Impulse);
+				me.rigidbody.AddForce(Vector2.up * 2.5f, ForceMode.Impulse);
 			} else 
 			{
 				Vector2 v = me.rigidbody2D.velocity;
 				v.y = 0f;
 				me.rigidbody2D.velocity = v;
-				me.rigidbody2D.AddForce(Vector2.up * 10.0f, ForceMode2D.Impulse);
+				me.rigidbody2D.AddForce(Vector2.up * 2.5f, ForceMode2D.Impulse);
 			}
 		});
+
 		b.Add (InteractionResult.ATTACH, delegate(GeneralCollider c) {
-			Debug.Log ("ATTACH!");
+			logInteraction(InteractionResult.ATTACH, c.collider2d.gameObject);
 			if(c.is3d) {
 				if(c.collider3d.rigidbody != null && me.transform != c.collider3d.transform.parent) 
 				{
@@ -85,44 +103,52 @@ public class Interaction : MonoBehaviour {
 				}
 			}
 		});
+		
+		b.Add(InteractionResult.TURN, delegate(GeneralCollider c) {
+			logInteraction(InteractionResult.TURN, c.collider2d.gameObject);
+			me.GetComponent<Move>().moveDirection.x = -me.GetComponent<Move>().moveDirection.x;
+		});
+		
+		b.Add(InteractionResult.GROW, delegate(GeneralCollider c) {
+			logInteraction(InteractionResult.GROW, c.collider2d.gameObject);
+			Vector3 scale = me.transform.localScale;
+			scale.y *=2;
+			me.transform.localScale = scale;
+		});
+		
+		b.Add(InteractionResult.NONE, delegate(GeneralCollider c) { return;	});
 	}
-
-
-	void processCollision (Interactor x, GeneralCollider c)
+	
+	void processCollisions (Interaction i, GeneralCollider c)
 	{
-		Debug.Log (this + " CHECKING INTERACTION! x: " + x + ", c:" + c);
-		if(! a.ContainsKey(x)) {return;}
-		Debug.Log (this + " INTERACTION! x: " + x + ", c:" + c);
-		b [a [x]] (c);
+		List<InteractorType> iList;
+		if(i == null) { iList = defaultElement; } else {iList = i.elements;}
+		iList.ForEach(x => this.processCollision(x, c));
+	}
+	
+	void processCollision (InteractorType x, GeneralCollider c)
+	{
+		logInteractionCheck(x);
+		if(a.ContainsKey(x)) {
+			b [a [x]] (c);
+			return;
+		}
+
+		if(a.ContainsKey(InteractorType.DEFAULT)) {
+			b[a[InteractorType.DEFAULT]](c);
+		}
 	}
 
 	void OnCollisionEnter (Collision collision) {
-		Interaction pc = collision.collider.GetComponent<Interaction>();
-		if(pc == null) {return;}
-
-		GeneralCollider gc = new GeneralCollider (collision.collider);
-		pc.elements.ForEach(x => this.processCollision(x, gc));
+		processCollisions(collision.collider.GetComponent<Interaction>(), new GeneralCollider (collision.collider));
 	}
-
 	void OnCollisionEnter2D (Collision2D collision) {
-		Interaction pc = collision.collider.GetComponent<Interaction>();
-		if(pc == null) {return;}
-
-		GeneralCollider gc = new GeneralCollider (collision.collider);
-		pc.elements.ForEach(x => this.processCollision(x, gc));
+		processCollisions(collision.collider.GetComponent<Interaction>(), new GeneralCollider (collision.collider));
 	}
 	void OnTriggerEnter2D(Collider2D collider) {
-		Interaction pc = collider.GetComponent<Interaction>();
-		if(pc == null) {return;}
-		
-		GeneralCollider gc = new GeneralCollider (collider);
-		pc.elements.ForEach(x => this.processCollision(x, gc));
+		processCollisions(collider.GetComponent<Interaction>(), new GeneralCollider (collider));
 	}
-	void OnTriggerEnter(Collider collision) {
-		Interaction pc = collider.GetComponent<Interaction>();
-		if(pc == null) {return;}
-		
-		GeneralCollider gc = new GeneralCollider (collider);
-		pc.elements.ForEach(x => this.processCollision(x, gc));
+	void OnTriggerEnter(Collider collider) {
+		processCollisions(collider.GetComponent<Interaction>(), new GeneralCollider (collider));
 	}
 }
