@@ -894,17 +894,9 @@ Prefab:
       value: .707106829
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: m_RootMapOrder
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: teamLeader
-      value: 
-      objectReference: {fileID: 1643217636}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
   m_RootGameObject: {fileID: 1921357872}
@@ -1790,7 +1782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f160b626aea55e45a37c7d85a9a5fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamLeader: {fileID: 1643217636}
+  teamLeader: {fileID: 0}
   drawRadius: .5
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0
@@ -2235,34 +2227,6 @@ Prefab:
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_RootOrder
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: teamLeader
-      value: 
-      objectReference: {fileID: 1643217636}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: useLeaderColor
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: useMyColor
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: mycolor.r
-      value: .733333349
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: mycolor.g
-      value: .196078435
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: mycolor.b
-      value: .0980392173
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
-      propertyPath: mycolor.a
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 746d9f399f7ca0c4eb036a91c4cd8e2e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3450,7 +3414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f160b626aea55e45a37c7d85a9a5fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamLeader: {fileID: 1643217636}
+  teamLeader: {fileID: 0}
   drawRadius: .5
   drawOffset: {x: 0, y: 1, z: 0}
   useMyColor: 0

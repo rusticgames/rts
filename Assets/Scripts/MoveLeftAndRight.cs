@@ -9,7 +9,7 @@ public class MoveLeftAndRight : MonoBehaviour
 
 	void Update()
 	{
-		Vector3 newPosition = transform.position;
+        Vector3 newPosition = transform.position;
 		newPosition.x += Input.GetAxis("Horizontal") * speed * Time.deltaTime;
 		transform.position = newPosition;
 	}
