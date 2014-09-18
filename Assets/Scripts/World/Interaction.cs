@@ -26,7 +26,8 @@ public enum InteractionResult {
 	BOUNCE,
 	TURN,
 	NONE,
-	GROW
+	GROW,
+	SPAWN_MUSHROOM
 }
 
 [System.Serializable]
@@ -115,10 +116,22 @@ public class Interaction : MonoBehaviour {
 			scale.y *=2;
 			me.transform.localScale = scale;
 		});
-		
+
+		b.Add(InteractionResult.SPAWN_MUSHROOM, delegate(GeneralCollider c) {
+			logInteraction(InteractionResult.SPAWN_MUSHROOM, c.collider2d.gameObject);
+			spawn("Mushroom");
+		});
+
 		b.Add(InteractionResult.NONE, delegate(GeneralCollider c) { return;	});
 	}
-	
+
+	void spawn (string resource) {
+		GameObject spawned = Instantiate(Resources.Load<GameObject>(resource)) as GameObject;
+		Vector3 pos = me.transform.position;
+		pos.y = pos.y + 1.0f;
+		spawned.transform.position = pos;
+	}
+
 	void processCollisions (Interaction i, GeneralCollider c)
 	{
 		List<InteractorType> iList;
