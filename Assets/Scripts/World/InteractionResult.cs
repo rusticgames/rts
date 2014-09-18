@@ -10,5 +10,5 @@ public enum InteractionResult {
 	TURN,
 	NONE,
 	GROW,
-	SPAWN_MUSHROOM
+	SPAWN
 }

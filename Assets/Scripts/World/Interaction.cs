@@ -3,6 +3,7 @@ using RusticGames.Act;
 using System.Collections;
 using System.Collections.Generic;
 
+[System.Serializable]
 public class InteractionResultMapping {
 	public InteractorType e;
 	public InteractionResult r;
