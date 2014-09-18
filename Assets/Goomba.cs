@@ -5,7 +5,8 @@ using System.Collections;
 public class Goomba : MonoBehaviour
 {	
 	public Move moveAction;
-
+	
+	public delegate void InteractionLogic(GeneralCollider c);
 	// Use this for initialization
 	void Start ()
 	{
