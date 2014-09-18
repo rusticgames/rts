@@ -3,7 +3,6 @@ using RusticGames.Act;
 using System.Collections;
 using System.Collections.Generic;
 
-[System.Serializable]
 public class InteractionResultMapping {
 	public InteractorType e;
 	public InteractionResult r;
@@ -47,7 +46,7 @@ public class Interaction : MonoBehaviour {
 		}
 		reactions.ForEach(m => a.Add(m.e, m.r));
 	}
-	
+
 	void processCollisions (Interaction i, GeneralCollider c)
 	{
 		logCollision(c.go);

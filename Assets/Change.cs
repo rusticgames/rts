@@ -33,6 +33,13 @@ public class Change : MonoBehaviour {
 			me.transform.localScale = scale;
 		});
 		
+		b.Add(InteractionResult.SPAWN_MUSHROOM, delegate() {
+			GameObject spawned = Instantiate(Resources.Load<GameObject>("mushroom")) as GameObject;
+			Vector3 pos = me.transform.position;
+			pos.y = pos.y + 1.0f;
+			spawned.transform.position = pos;
+		});
+		
 		b.Add(InteractionResult.NONE, delegate() { return;	});
 		StartCoroutine (processChanges ());
 	}
