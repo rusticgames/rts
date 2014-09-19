@@ -10,5 +10,6 @@ public enum InteractionResult {
 	TURN,
 	NONE,
 	GROW,
-	SPAWN
+	SPAWN,
+	SHRINK
 }

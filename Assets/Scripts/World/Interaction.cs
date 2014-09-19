@@ -50,7 +50,7 @@ public class Interaction : MonoBehaviour {
 
 	void processCollisions (Composition c, GeneralCollider gc)
 	{
-		logCollision(gc.go);
+		//logCollision(gc.go);
 		if(c == null) { return; };
 		c.elements.ForEach(x => this.processCollision(x, gc));
 	}
@@ -58,7 +58,7 @@ public class Interaction : MonoBehaviour {
 	void processCollision (InteractorType x, GeneralCollider gc)
 	{
 		if(a.ContainsKey(x)) {
-			logInteraction(a[x], gc.go);
+			//logInteraction(a[x], gc.go);
 			changeTarget.addChange(a [x]);
 			return;
 		}
