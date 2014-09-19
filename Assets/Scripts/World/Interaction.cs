@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 [System.Serializable]
 public class InteractionResultMapping {
-	public InteractorType e;
-	public InteractionResult r;
+	public InteractorType element;
+	public InteractionResult reaction;
 }
 
 public class GeneralCollider {
@@ -19,68 +19,65 @@ public class GeneralCollider {
 }
 
 public class Interaction : MonoBehaviour {
-	private static List<InteractorType> defaultElement = new List<InteractorType>(){InteractorType.DEFAULT};
-	public List<InteractorType> elements = new List<InteractorType>();
 	public List<InteractionResultMapping> reactions = new List<InteractionResultMapping>();
 	public Dictionary<InteractorType, InteractionResult> a = new Dictionary<InteractorType, InteractionResult>();
-	public GameObject me;
 	public Change changeTarget;
 	
 	public void logInteraction(InteractionResult r, GameObject g) {
-		Debug.LogWarning ("<" + me + "> performing <" + r + "> because of <" + g + ">");
+		Debug.LogWarning ("<" + this + "> performing <" + r + "> because of <" + g + ">");
 	}
 	
 	public void logInteractionCheck(InteractorType t) {
-		Debug.Log ("<" + me + "> checking interaction between my <" + this + "> and <" + t + ">");
+		Debug.Log ("<" + this + "> checking interaction with <" + t + "> on behalf of <" + changeTarget + ">");
 	}
 	
 	public void logCollision(GameObject go) {
-		Debug.Log ("<" + this + "> (me: <" + me + ">) collided with <" + go + ">");
+		Debug.Log ("<" + changeTarget + "> (me: <" + this + ">) collided with <" + go + ">");
+	}
+
+	void Reset () {
+		a[InteractorType.DEFAULT] = InteractionResult.NONE;
+		changeTarget = this.GetComponent<Change>();
+		if(changeTarget == null) {
+			changeTarget = this.GetComponentInParent<Change>();
+		}
 	}
 
 	void Start () {
-		if (me == null) {
-						me = gameObject;
-				}
-		if(changeTarget == null) {
-			changeTarget = me.GetComponent<Change>();
-		}
-		reactions.ForEach(m => a.Add(m.e, m.r));
+		a[InteractorType.DEFAULT] = InteractionResult.NONE;
+		reactions.ForEach(m => a[m.element] = m.reaction);
 	}
 
-	void processCollisions (Interaction i, GeneralCollider c)
+	void processCollisions (Composition c, GeneralCollider gc)
 	{
-		logCollision(c.go);
-		List<InteractorType> iList;
-		if(i == null) { iList = defaultElement; } else {iList = i.elements;}
-		iList.ForEach(x => this.processCollision(x, c));
+		logCollision(gc.go);
+		if(c == null) { return; };
+		c.elements.ForEach(x => this.processCollision(x, gc));
 	}
 	
-	void processCollision (InteractorType x, GeneralCollider c)
+	void processCollision (InteractorType x, GeneralCollider gc)
 	{
-		logInteractionCheck(x);
 		if(a.ContainsKey(x)) {
-			logInteraction(a[x], c.go);
+			logInteraction(a[x], gc.go);
 			changeTarget.addChange(a [x]);
 			return;
 		}
-
+		
 		if(a.ContainsKey(InteractorType.DEFAULT)) {
-			Debug.Log(changeTarget);
 			changeTarget.addChange(a [InteractorType.DEFAULT]);
 		}
 	}
 
 	void OnCollisionEnter (Collision collision) {
-		processCollisions(collision.collider.GetComponent<Interaction>(), new GeneralCollider (collision.collider));
+		processCollisions(collision.collider.GetComponent<Composition>(), new GeneralCollider (collision.collider));
 	}
 	void OnCollisionEnter2D (Collision2D collision) {
-		processCollisions(collision.collider.GetComponent<Interaction>(), new GeneralCollider (collision.collider));
+		processCollisions(collision.collider.GetComponent<Composition>(), new GeneralCollider (collision.collider));
 	}
 	void OnTriggerEnter2D(Collider2D collider) {
-		processCollisions(collider.GetComponent<Interaction>(), new GeneralCollider (collider));
+		processCollisions(collider.GetComponent<Composition>(), new GeneralCollider (collider));
 	}
 	void OnTriggerEnter(Collider collider) {
-		processCollisions(collider.GetComponent<Interaction>(), new GeneralCollider (collider));
+		processCollisions(collider.GetComponent<Composition>(), new GeneralCollider (collider));
 	}
 }

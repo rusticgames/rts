@@ -4,14 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Change : MonoBehaviour {
-	private HashSet<InteractionResult> results;
+	private HashSet<InteractionResult> results = new HashSet<InteractionResult>();
 	public Dictionary<InteractionResult, InteractionLogic> b = new Dictionary<InteractionResult, InteractionLogic>();
 	public GameObject me;
 
 	public delegate void InteractionLogic();
-	void Start ()
+	void Reset ()
 	{
 		results = new HashSet<InteractionResult>();
+		me = this.gameObject;
+	}
+	void Start ()
+	{
 		b.Add(InteractionResult.DIE, delegate() {
 			GameObject.Destroy(me);
 		});
@@ -49,16 +53,12 @@ public class Change : MonoBehaviour {
 	{
 		while(true) {
 			if(results.Count > 0) {
-				Debug.LogWarning("<" + me + "> starting result processing");
 				foreach (var result in results) {
-					Debug.LogWarning("<" + me + "> starting <" + result + ">");
 					if(b.ContainsKey(result)) {					
 						b[result]();
-						Debug.LogWarning("<" + me + "> done <" + result + ">");
 					}
 				}
 				results.Clear();
-				Debug.LogWarning("<" + me + "> done result processing");
 			}
 			yield return new WaitForEndOfFrame();
 		}
