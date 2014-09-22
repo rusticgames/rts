@@ -1,8 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace RusticGames.Act
 {
+	[System.Serializable]
+	public class LegController {
+		public HingeJoint2D knee;
+		public HingeJoint2D foot;
+		public JointAngleLimits2D walkAngleKnee;
+		public JointAngleLimits2D walkAngleFoot;
+		public float desiredWalkPower;
+		public float maxWalkForce;
+	}
+
 	public class Move : MonoBehaviour
 	{
 		public Vector2 moveDirection;
@@ -10,6 +21,8 @@ namespace RusticGames.Act
 		public Vector2 velocity;
 		public ForceMode2D forceMode;
 		public bool moving = false;
+		public bool biped = false;
+		public List<LegController> legs;
 
 		void Start ()
 		{
@@ -19,6 +32,10 @@ namespace RusticGames.Act
 		{
 			while (true) {
 				if(moving) {
+					if(biped) {
+						if(leg.
+					}
+
 					mover.rigidbody2D.AddForce (moveDirection * moveForce, forceMode);
 				}
 				yield return new WaitForFixedUpdate ();

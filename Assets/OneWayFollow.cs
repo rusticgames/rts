@@ -6,6 +6,9 @@ public class OneWayFollow : MonoBehaviour {
 	public Vector3 followDirection = new Vector3(1,0,0);
 	public Vector3 positionDifference;
 	public Vector3 newLocation;
+	public string targetName = "Mario(Clone)";
+
+	GameObject newTarget;
 
 	void Reset () {
 		target = this.gameObject;
@@ -26,7 +29,7 @@ public class OneWayFollow : MonoBehaviour {
 	}
 	
 	public void tryFindTarget() {
-		GameObject newTarget = GameObject.Find("Mario(Clone)");
+		newTarget = GameObject.Find (targetName);
 		if(newTarget != null) target = newTarget;
 	}
 	
