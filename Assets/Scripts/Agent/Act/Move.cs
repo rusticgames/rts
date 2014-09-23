@@ -25,7 +25,7 @@ namespace RusticGames.Act
 		
 		public static void moveBack(LegController leg) {
 			leg.hipToKnee.motor = leg.opposedMotor;
-			leg.kneeToFoot.motor = leg.walkMotor;
+			leg.kneeToFoot.motor = leg.setMotor;
 			leg.state = "moveBack";
 		}
 		
@@ -66,7 +66,7 @@ namespace RusticGames.Act
 				while (leg1.hipToKnee.jointAngle > leg1.hipToKnee.limits.min) {
 					yield return new WaitForFixedUpdate ();
 				}
-				//LegController.moveBack(leg2);
+				LegController.moveBack(leg2);
 				LegController.advanceShin (leg1);
 				while (leg1.kneeToFoot.jointAngle > leg1.kneeToFoot.limits.min) {
 					yield return new WaitForFixedUpdate ();
