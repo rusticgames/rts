@@ -12,56 +12,36 @@ namespace RusticGames.Act
 		public Vector2 velocity;
 		public ForceMode2D forceMode;
 		public bool moving = false;
-		public bool biped = false;
-		public LegController leftLeg;
-		public LegController rightLeg;
+		public LegController walker;
+		public Girdle pelvis;
+		public Girdle clavicle;
 		public LegsState legsPattern1;
 		public LegsState legsPattern2;
-		private float startingX;
-		public float displacement;
-
-		void Start ()
-		{
-			startingX = this.transform.position.x;
-		}
-
-		void Update() {		if(biped) {
-				leftLeg.updateAngles();
-				rightLeg.updateAngles();
-			}
-			displacement = startingX - this.transform.position.x;
-		}
+		public LegsUse currentGoal;
 
 		public IEnumerator moveRoutine (GameObject mover)
 		{
 			while (true) {
 				if(moving) {
-					if(biped) {
-						yield return StartCoroutine(LegController.walkRoutine(rightLeg, leftLeg));
-					} else {
-						mover.rigidbody2D.AddForce (moveDirection * moveForce, forceMode);
-					}
+					currentGoal = LegsUse.ADVANCE;
+				} else {
+					currentGoal = LegsUse.BALANCE;
 				}
-				yield return new WaitForFixedUpdate ();
+				yield return StartCoroutine(LegController.walkRoutine(walker, pelvis.limbOne, pelvis.limbTwo));
 			}
 		}
 		
 		void OnDrawGizmos ()
 		{
-			if(biped) {
-				LegController.drawLegGizmo (leftLeg);
-				LegController.drawLegGizmo (rightLeg);
-				Gizmos.color = Color.red;
-				if(displacement < 0) Gizmos.color = Color.green;
-				Gizmos.DrawWireSphere(this.transform.position, this.displacement / 10f);
-			}
-			else {
-				velocity = this.rigidbody2D.velocity;
-				Gizmos.color = Color.red;
-				Gizmos.DrawRay (this.rigidbody2D.position, moveDirection);
-				Gizmos.color = Color.green;
-				Gizmos.DrawRay (this.rigidbody2D.position, velocity);
-			}
+			LegController.drawLegGizmo (pelvis.limbOne);
+			LegController.drawLegGizmo (pelvis.limbTwo);
+			LegController.drawLegGizmo (clavicle.limbOne);
+			LegController.drawLegGizmo (clavicle.limbTwo);
+			/*velocity = this.rigidbody2D.velocity;
+			Gizmos.color = Color.red;
+			Gizmos.DrawRay (this.rigidbody2D.position, moveDirection);
+			Gizmos.color = Color.green;
+			Gizmos.DrawRay (this.rigidbody2D.position, velocity);*/
 		}
 	}
 }
