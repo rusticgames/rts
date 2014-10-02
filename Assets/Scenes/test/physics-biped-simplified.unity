@@ -140,11 +140,11 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 515687440}
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
-  m_UseLimits: 0
+    m_MaximumMotorForce: 10000
+  m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 0
@@ -476,8 +476,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 139273923}
   - 50: {fileID: 139273924}
-  - 233: {fileID: 139273925}
   - 61: {fileID: 139273926}
+  - 233: {fileID: 139273925}
   m_Layer: 8
   m_Name: Left KneeToFoot
   m_TagString: Untagged
@@ -526,10 +526,10 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 1298686706}
   m_Anchor: {x: 0, y: .5}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
@@ -589,11 +589,11 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 423630280}
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
-  m_UseLimits: 0
+    m_MaximumMotorForce: 10000
+  m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 0
@@ -1160,8 +1160,8 @@ HingeJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_UseMotor: 1
   m_Motor:
-    m_MotorSpeed: 25
-    m_MaximumMotorForce: 100
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: -90
@@ -1575,7 +1575,7 @@ SliderJoint2D:
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 0
   m_UseLimits: 1
   m_TranslationLimits:
     m_LowerTranslation: 0
@@ -1730,10 +1730,10 @@ SliderJoint2D:
   m_ConnectedAnchor: {x: .0500000007, y: 0}
   serializedVersion: 2
   m_Angle: 90
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 0
   m_UseLimits: 1
   m_TranslationLimits:
     m_LowerTranslation: 0
@@ -2183,8 +2183,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 423630277}
   - 50: {fileID: 423630280}
-  - 233: {fileID: 423630279}
   - 61: {fileID: 423630278}
+  - 233: {fileID: 423630279}
   m_Layer: 8
   m_Name: Right ElbowToHand
   m_TagString: Untagged
@@ -2229,10 +2229,10 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 586148240}
   m_Anchor: {x: 0, y: .5}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: -90
@@ -2632,7 +2632,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: cbd9bfb6222cae549821171447c8a8af, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 467276606}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: .0222511105, w: .999752402}
   m_LocalPosition: {x: 0, y: .25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2652,7 +2652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089c8b59e7f6c83459308ff56380506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 467276609}
+  root: {fileID: 467276606}
   limbOne:
     root: {fileID: 1519114853}
     rootJoint: {fileID: 1519114856}
@@ -2669,6 +2669,16 @@ MonoBehaviour:
     end: {fileID: 37913496}
     gizmoColor: {r: 0, g: 1, b: 1, a: 1}
     state: Precreation
+  directHingeControl: 0
+  rootUpDown:
+    targetSpeed: 0
+    maxTorque: 10
+  rootToBendHinge:
+    targetSpeed: 0
+    maxTorque: 10
+  bendToEndHinge:
+    targetSpeed: 0
+    maxTorque: 10
 --- !u!234 &467276609
 SliderJoint2D:
   m_ObjectHideFlags: 0
@@ -2686,7 +2696,7 @@ SliderJoint2D:
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 0
   m_UseLimits: 1
   m_TranslationLimits:
     m_LowerTranslation: -.0500000007
@@ -2809,8 +2819,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 515687439}
   - 50: {fileID: 515687440}
-  - 233: {fileID: 515687441}
   - 61: {fileID: 515687442}
+  - 233: {fileID: 515687441}
   m_Layer: 8
   m_Name: Left ElbowToHand
   m_TagString: Untagged
@@ -2859,10 +2869,10 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 254115904}
   m_Anchor: {x: 0, y: .5}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: -90
@@ -3118,8 +3128,8 @@ HingeJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_UseMotor: 1
   m_Motor:
-    m_MotorSpeed: -25
-    m_MaximumMotorForce: 100
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: -90
@@ -4790,6 +4800,7 @@ GameObject:
   - 61: {fileID: 887123041}
   - 233: {fileID: 887123039}
   - 212: {fileID: 887123040}
+  - 114: {fileID: 887123042}
   m_Layer: 8
   m_Name: Right HipToKnee
   m_TagString: Untagged
@@ -4840,8 +4851,8 @@ HingeJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_UseMotor: 1
   m_Motor:
-    m_MotorSpeed: 25
-    m_MaximumMotorForce: 100
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: -45
@@ -4881,6 +4892,27 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .100000001, y: .100000001}
   m_Center: {x: 0, y: 0}
+--- !u!114 &887123042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 887123036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051d3e7997619aa478c111dab5f6ea09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hinge: {fileID: 887123039}
+  hingeState:
+    referenceAngle: 0
+    limitState: 0
+    jointSpeed: 0
+    jointAngle: 0
+    reactionTorqueForNextTenthOfASecond: 0
+    reactionForceForNextTenthOfASecond: {x: 0, y: 0}
+    torqueForNextTenthOfASecond: 0
+    summary: 
 --- !u!1 &892620706
 GameObject:
   m_ObjectHideFlags: 0
@@ -5700,6 +5732,7 @@ GameObject:
   - 114: {fileID: 1050742432}
   - 114: {fileID: 1050742431}
   - 61: {fileID: 1050742430}
+  - 114: {fileID: 1050742436}
   m_Layer: 8
   m_Name: Crazyio
   m_TagString: Untagged
@@ -5714,7 +5747,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1050742427}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.97000027, y: -.875, z: 0}
+  m_LocalPosition: {x: -10.5369997, y: -.875, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 467276607}
@@ -5731,9 +5764,9 @@ Rigidbody2D:
   m_Mass: .100000001
   m_LinearDrag: 1
   m_AngularDrag: .0500000007
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_FixedAngle: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -5862,6 +5895,24 @@ MonoBehaviour:
   moveAction: {fileID: 1050742432}
   speed: 6
   maxSpeed: 12
+--- !u!114 &1050742436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1050742427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5122442531af5904e9466cd45be17b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {x: 0, y: 0}
+  linearForceMode: 0
+  linearApplicationInterval: 1
+  torque: 0
+  angularForceMode: 1
+  angularApplicationInterval: 1
+  clearForcesWhenApplied: 1
 --- !u!1001 &1063511622
 Prefab:
   m_ObjectHideFlags: 0
@@ -5953,10 +6004,10 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 1340675991}
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
@@ -7264,8 +7315,9 @@ GameObject:
   - 4: {fileID: 1277152663}
   - 50: {fileID: 1277152662}
   - 58: {fileID: 1277152665}
-  - 234: {fileID: 1277152664}
   - 114: {fileID: 1277152666}
+  - 233: {fileID: 1277152667}
+  - 114: {fileID: 1277152664}
   m_Layer: 8
   m_Name: Pelvis
   m_TagString: Untagged
@@ -7303,28 +7355,27 @@ Transform:
   - {fileID: 1384826691}
   m_Father: {fileID: 1050742428}
   m_RootOrder: 1
---- !u!234 &1277152664
-SliderJoint2D:
+--- !u!114 &1277152664
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 23400000, guid: cbd9bfb6222cae549821171447c8a8af,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1277152661}
   m_Enabled: 1
-  m_CollideConnected: 0
-  m_ConnectedRigidBody: {fileID: 1050742429}
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -.5}
-  serializedVersion: 2
-  m_Angle: 0
-  m_UseMotor: 0
-  m_Motor:
-    m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
-  m_UseLimits: 1
-  m_TranslationLimits:
-    m_LowerTranslation: -.0500000007
-    m_UpperTranslation: .0500000007
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051d3e7997619aa478c111dab5f6ea09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hinge: {fileID: 1277152667}
+  hingeState:
+    referenceAngle: 0
+    limitState: 0
+    jointSpeed: 0
+    jointAngle: 0
+    reactionTorqueForNextTenthOfASecond: 0
+    reactionForceForNextTenthOfASecond: {x: 0, y: 0}
+    torqueForNextTenthOfASecond: 0
+    summary: 
 --- !u!58 &1277152665
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7349,7 +7400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089c8b59e7f6c83459308ff56380506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 1277152664}
+  root: {fileID: 1277152661}
   limbOne:
     root: {fileID: 320477211}
     rootJoint: {fileID: 320477214}
@@ -7366,6 +7417,35 @@ MonoBehaviour:
     end: {fileID: 2141402611}
     gizmoColor: {r: 1, g: 0, b: 1, a: 1}
     state: Precreation
+  directHingeControl: 0
+  rootUpDown:
+    targetSpeed: 0
+    maxTorque: 10
+  rootToBendHinge:
+    targetSpeed: 0
+    maxTorque: 10
+  bendToEndHinge:
+    targetSpeed: 0
+    maxTorque: 10
+--- !u!233 &1277152667
+HingeJoint2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1277152661}
+  m_Enabled: 1
+  m_CollideConnected: 0
+  m_ConnectedRigidBody: {fileID: 1050742429}
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: -.5}
+  m_UseMotor: 1
+  m_Motor:
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 10000
+  m_UseLimits: 1
+  m_AngleLimits:
+    m_LowerAngle: -30
+    m_UpperAngle: 30
 --- !u!1001 &1279539721
 Prefab:
   m_ObjectHideFlags: 0
@@ -7566,8 +7646,8 @@ HingeJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_UseMotor: 1
   m_Motor:
-    m_MotorSpeed: -25
-    m_MaximumMotorForce: 100
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: -45
@@ -7784,8 +7864,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1340675990}
   - 50: {fileID: 1340675991}
-  - 233: {fileID: 1340675992}
   - 61: {fileID: 1340675993}
+  - 233: {fileID: 1340675992}
+  - 114: {fileID: 1340675994}
   m_Layer: 8
   m_Name: Right KneeToFoot
   m_TagString: Untagged
@@ -7834,10 +7915,10 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 887123038}
   m_Anchor: {x: 0, y: .5}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
@@ -7854,6 +7935,27 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .400000006, y: .200000003}
   m_Center: {x: 0, y: 0}
+--- !u!114 &1340675994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1340675989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051d3e7997619aa478c111dab5f6ea09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hinge: {fileID: 1340675992}
+  hingeState:
+    referenceAngle: 0
+    limitState: 0
+    jointSpeed: 0
+    jointAngle: 0
+    reactionTorqueForNextTenthOfASecond: 0
+    reactionForceForNextTenthOfASecond: {x: 0, y: 0}
+    torqueForNextTenthOfASecond: 0
+    summary: 
 --- !u!1 &1344093268
 GameObject:
   m_ObjectHideFlags: 0
@@ -8170,10 +8272,10 @@ SliderJoint2D:
   m_ConnectedAnchor: {x: -.0500000007, y: 0}
   serializedVersion: 2
   m_Angle: 90
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 0
   m_UseLimits: 1
   m_TranslationLimits:
     m_LowerTranslation: 0
@@ -8887,7 +8989,7 @@ SliderJoint2D:
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 0
   m_UseLimits: 1
   m_TranslationLimits:
     m_LowerTranslation: 0
@@ -11624,10 +11726,10 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 139273924}
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 100
+    m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
