@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+public enum LEG_STATE { DEFAULT, LIFTING, LOWERING }
 public class SimpleLeg : MonoBehaviour {
+
 	public SliderJoint2D thigh;
 	public SliderJoint2D foot;
 	public float maxLiftForce;
@@ -12,6 +13,7 @@ public class SimpleLeg : MonoBehaviour {
 	public float desiredAdvanceSpeed;
 	JointMotor2D advanceMotor;
 	JointMotor2D retractMotor;
+	public LEG_STATE legState = LEG_STATE.DEFAULT;
 	public bool isFullyLifted() {
 		return (thigh.limitState == JointLimitState2D.LowerLimit);
 	}
@@ -45,11 +47,13 @@ public class SimpleLeg : MonoBehaviour {
 	}
 
 	public void lift() {
+		legState = LEG_STATE.LIFTING;
 		thigh.motor = liftMotor;
 		thigh.useMotor = true;
 	}
 	
 	public void lower() {
+		legState = LEG_STATE.LOWERING;
 		thigh.motor = lowerMotor;
 		thigh.useMotor = true;
 	}
@@ -57,6 +61,14 @@ public class SimpleLeg : MonoBehaviour {
 	public void advance () {
 		foot.motor = advanceMotor;
 		foot.useMotor = true;
+	}
+
+	//TODO: this will likely go all screwy on inclines
+	public static SimpleLeg getHigher(SimpleLeg first, SimpleLeg other) {
+		if(first.thigh.transform.localPosition.y > other.thigh.transform.localPosition.y) {
+			return first;
+		}
+		return other;
 	}
 	
 	public void advanceOpposed () {

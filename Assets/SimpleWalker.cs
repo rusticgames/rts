@@ -10,7 +10,7 @@ public class SimpleWalker : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Debug.LogWarning("NEED TO DEFINE REST STATE AND HOW TO CHECK DEVIATION THEREFROM");
-		StartCoroutine(walk());
+		StartCoroutine(doLegs());
 		if(tryInputs) {
 		StartCoroutine(checkInputs());
 		}
@@ -19,7 +19,6 @@ public class SimpleWalker : MonoBehaviour {
 	public IEnumerator checkInputs ()
 	{
 		while(true) {
-			left = false;
 			walking = false;
 			if(Input.GetKey(KeyCode.LeftArrow)) {
 				left = true;
@@ -32,54 +31,74 @@ public class SimpleWalker : MonoBehaviour {
 			yield return new WaitForEndOfFrame();
 		}
 	}
-	
-	delegate void walkFunction();
-	delegate bool checkFunction();
-	public IEnumerator walk ()
+
+	delegate void WalkFunction();
+	delegate bool CheckFunction();
+	public delegate IEnumerator LegsFunction(SimpleLeg legOne, SimpleLeg legTwo);
+	public LegsFunction currentLegs;
+	public IEnumerator stand (SimpleLeg legOne, SimpleLeg legTwo)
+	{
+		legOne.lower();
+		legTwo.lower();
+		yield return new WaitForFixedUpdate();
+	}
+	public IEnumerator doLegs ()
 	{
 		while(true) {
+			currentLegs = stand;
 			if(walking) {
-				yield return StartCoroutine(walkOneLeg(legOne, legTwo));
+				currentLegs = walkOneLeg;
 			}
+			yield return StartCoroutine(currentLegs(legOne, legTwo));
 			if(walking) {
-				yield return StartCoroutine(walkOneLeg(legTwo, legOne));
+				currentLegs = walkOneLeg;
 			}
-			yield return new WaitForFixedUpdate();
+			yield return StartCoroutine(currentLegs(legTwo, legOne));
 		}
 	}
 
+	//TODO: This should probably account for inclines at some point, but right now assuming no rotation
+	public float getSpeedRatio(float desiredSpeed) {
+		float currentSpeed = this.rigidbody2D.velocity.x;
+		float difference = desiredSpeed - currentSpeed;
+		return difference / desiredSpeed;
+	}
 	
+		/* 
+		 * if we are standing still
+		 * * lift one leg (Lf)
+		 * * apply forward motion to foot on Lf
+		 * * lower other leg (Ls)
+		 * * apply backwards motion to foot on Ls
+		 * 
+		 * 
+		 * 
+		 */
+
+	public void checkFeet() {
+		SimpleLeg highLeg = SimpleLeg.getHigher(legOne, legTwo);
+		SimpleLeg lowLeg = legOne;
+
+		if(highLeg == lowLeg) {
+			lowLeg = legTwo;
+		}
+		if(left) {
+			SimpleLeg temp = highLeg;
+			highLeg = lowLeg;
+			lowLeg = temp;
+		}
+		highLeg.advanceOpposed();
+		lowLeg.advance();
+	}
+
 	public IEnumerator walkOneLeg (SimpleLeg leg1, SimpleLeg leg2) {
-		Debug.LogWarning("Leg <" + leg1 +"> lowering, Leg <" + leg2 +"> rising");
+		checkFeet();
 		leg1.lower();
 		leg2.lift();
 		while(!leg1.isFullyLowered()) {
-			yield return new WaitForEndOfFrame();
+			checkFeet();
+			yield return new WaitForFixedUpdate();
 		}
-		if(!walking) yield return null;
-		
-		walkFunction advance = leg1.advance;
-		checkFunction check = leg1.isPastCenterOfMass;
-		checkFunction checkTwo = leg1.isAdvanced;
-		if(left) {
-			advance = leg1.advanceOpposed;
-			check = leg1.isPastCenterOfMassOpposed;
-			checkTwo = leg1.isAdvancedOpposed;
-		}
-		
-		Debug.LogWarning("Leg <" + leg1 +"> advancing, Leg <" + leg2 +"> relaxing");
-		advance();
-		leg2.relax();
-		while(!check()) {
-			yield return new WaitForEndOfFrame();
-		}
-		leg2.lift ();
-		leg1.lower();
-		Debug.LogWarning("Midpoint early: Leg <" + leg1 +"> advancing, Leg <" + leg2 +"> relaxing");
-		while(!checkTwo()) {
-			yield return new WaitForEndOfFrame();
-		}
-		Debug.LogWarning("walk cycle complete");
 		yield return null;
 	}
 }
