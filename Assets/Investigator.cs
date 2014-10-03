@@ -13,6 +13,17 @@ public struct HingeData {
 }
 
 [System.Serializable]
+public struct SliderData {
+	public float referenceAngle;
+	public JointLimitState2D limitState;
+	public float jointSpeed;
+	public float jointTranslation;
+	public float reactionTorqueForNextTenthOfASecond;
+	public Vector2 reactionForceForNextTenthOfASecond;
+	public float forceForNextTenthOfASecond;
+}
+
+[System.Serializable]
 public struct BodyData {
 	public Vector2 worldCenterOfMass;
 	public Vector2 centerOfMass;
@@ -29,15 +40,19 @@ public class Investigator : MonoBehaviour {
 	public BodyData bodyState;
 	public HingeJoint2D hinge;
 	public HingeData hingeState;
+	public SliderJoint2D slider;
+	public SliderData sliderState;
 	// Use this for initialization
 	void Reset () {
 		hinge = this.GetComponent<HingeJoint2D>();
+		slider = this.GetComponent<SliderJoint2D>();
 		body = this.GetComponent<Rigidbody2D>();
 	}
 
 	void Start () {
 		if(hinge != null) {StartCoroutine(HingeUpdate());}
 		if(body != null) {StartCoroutine(BodyUpdate());}
+		if(slider != null) {StartCoroutine(SliderUpdate());}
 	}
 	
 	public IEnumerator BodyUpdate() {
@@ -53,7 +68,7 @@ public class Investigator : MonoBehaviour {
 			yield return new WaitForSeconds(0.1f);
 		}
 	}
-
+	
 	public IEnumerator HingeUpdate() {
 		while (true) {
 			hingeState.torqueForNextTenthOfASecond =  hinge.GetMotorTorque(0.1f);
@@ -63,6 +78,17 @@ public class Investigator : MonoBehaviour {
 			hingeState.jointSpeed = hinge.jointSpeed;
 			hingeState.limitState = hinge.limitState;
 			hingeState.referenceAngle = hinge.referenceAngle;
+			yield return new WaitForSeconds(0.1f);
+		}
+	}
+	
+	public IEnumerator SliderUpdate() {
+		while (true) {
+			sliderState.forceForNextTenthOfASecond =  slider.GetMotorForce(0.1f);
+			sliderState.jointTranslation = slider.jointTranslation;
+			sliderState.jointSpeed = slider.jointSpeed;
+			sliderState.limitState = slider.limitState;
+			sliderState.referenceAngle = slider.referenceAngle;
 			yield return new WaitForSeconds(0.1f);
 		}
 	}

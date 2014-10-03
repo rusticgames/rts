@@ -8,10 +8,13 @@ public class Shover : MonoBehaviour {
 	public float torque;
 	public ForceMode2D angularForceMode;
 	public Vector2 desiredPosition;
+	public bool useDesiredPosition = false;
 	public float desiredRotation;
+	public bool useDesiredRotation = false;
 	public float applicationInterval = 1f;
-	public bool clearForcesWhenApplied = true;
+	public bool clearWhenApplied = true;
 	public bool apply = false;
+	public bool continuousApply = false;
 	
 	void Start () {
 		StartCoroutine(checkApply());
@@ -19,20 +22,21 @@ public class Shover : MonoBehaviour {
 	
 	IEnumerator checkApply () {
 		while(true) {
-			if(apply) {
+			if(apply || continuousApply) {
 				this.rigidbody2D.AddForce(force, linearForceMode);
 				this.rigidbody2D.AddTorque(torque, angularForceMode);
-				this.rigidbody2D.MovePosition(desiredPosition);
-				this.rigidbody2D.MoveRotation(desiredRotation);
-				if (clearForcesWhenApplied) {
+				if(useDesiredPosition) this.rigidbody2D.MovePosition(desiredPosition);
+				if(useDesiredRotation) this.rigidbody2D.MoveRotation(desiredRotation);
+				if (clearWhenApplied) {
 					force = Vector2.zero;
 					torque = 0f;
+					useDesiredPosition = false;
+					useDesiredRotation = false;
 				}
-				desiredPosition = Vector2.zero;
-				desiredRotation = 0f;
+				apply = false;
 			}
-			if (applicationInterval < 0.1f) {
-				applicationInterval = 0.1f;
+			if (applicationInterval < 0.01f) {
+				applicationInterval = 0.01f;
 			}
 			yield return new WaitForSeconds(applicationInterval);
 		}
