@@ -1,16 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
-public enum LEG_STATE { DEFAULT, LIFTING, LOWERING }
+public enum LEG_STATE { DEFAULT, LIFTING, LOWERING, JUMPING }
+[System.Serializable]
+public struct LegData {
+	public float maxJumpSpeed;
+	public float maxJumpForce;
+	public float maxLiftSpeed;
+	public float maxLiftForce;
+	public float maxFootAdvanceSpeed;
+	public float maxFootAdvanceForce;
+}
 public class SimpleLeg : MonoBehaviour {
-
 	public SliderJoint2D thigh;
 	public SliderJoint2D foot;
-	public float maxLiftForce;
-	public float desiredLiftSpeed;
+	public float jumpFactor;
+	public float liftFactor;
+	public float footAdvanceFactor;
+	public LegData legData;
 	JointMotor2D liftMotor;
+	JointMotor2D jumpMotor;
 	JointMotor2D lowerMotor;
-	public float maxAdvanceForce;
-	public float desiredAdvanceSpeed;
 	JointMotor2D advanceMotor;
 	JointMotor2D retractMotor;
 	public LEG_STATE legState = LEG_STATE.DEFAULT;
@@ -36,19 +45,30 @@ public class SimpleLeg : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		liftMotor.maxMotorTorque = maxLiftForce;
-		liftMotor.motorSpeed = -desiredLiftSpeed;
-		lowerMotor.maxMotorTorque = maxLiftForce;
-		lowerMotor.motorSpeed = desiredLiftSpeed;
-		advanceMotor.maxMotorTorque = maxAdvanceForce;
-		advanceMotor.motorSpeed = desiredAdvanceSpeed;
-		retractMotor.maxMotorTorque = maxAdvanceForce;
-		retractMotor.motorSpeed = -desiredAdvanceSpeed;
+		liftMotor.maxMotorTorque = legData.maxLiftForce;
+		liftMotor.motorSpeed = -legData.maxLiftSpeed;
+		lowerMotor.maxMotorTorque = legData.maxLiftForce;
+		lowerMotor.motorSpeed = legData.maxLiftSpeed;
+		jumpMotor.maxMotorTorque = legData.maxJumpForce;
+		jumpMotor.motorSpeed = legData.maxJumpSpeed;
+		advanceMotor.maxMotorTorque = legData.maxFootAdvanceForce;
+		advanceMotor.motorSpeed = legData.maxFootAdvanceSpeed;
+		retractMotor.maxMotorTorque = legData.maxFootAdvanceForce;
+		retractMotor.motorSpeed = -legData.maxFootAdvanceSpeed;
+		jumpFactor = 1.0f;
+		liftFactor = 1.0f;
+		footAdvanceFactor = 1.0f;
 	}
-
+	
 	public void lift() {
 		legState = LEG_STATE.LIFTING;
 		thigh.motor = liftMotor;
+		thigh.useMotor = true;
+	}
+	
+	public void jump() {
+		legState = LEG_STATE.JUMPING;
+		thigh.motor = jumpMotor;
 		thigh.useMotor = true;
 	}
 	
@@ -64,11 +84,8 @@ public class SimpleLeg : MonoBehaviour {
 	}
 
 	//TODO: this will likely go all screwy on inclines
-	public static SimpleLeg getHigher(SimpleLeg first, SimpleLeg other) {
-		if(first.thigh.transform.localPosition.y > other.thigh.transform.localPosition.y) {
-			return first;
-		}
-		return other;
+	public static float getHigher(SimpleLeg first, SimpleLeg other) {
+		return first.thigh.transform.localPosition.y - other.thigh.transform.localPosition.y;
 	}
 	
 	public void advanceOpposed () {
@@ -76,19 +93,25 @@ public class SimpleLeg : MonoBehaviour {
 		foot.useMotor = true;
 	}
 	
-	public void relax () {
+	public void relaxFoot () {
 		foot.useMotor = false;
+	}
+	
+	public void relaxThigh () {
+		thigh.useMotor = false;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		liftMotor.maxMotorTorque = maxLiftForce;
-		liftMotor.motorSpeed = -desiredLiftSpeed;
-		lowerMotor.maxMotorTorque = maxLiftForce;
-		lowerMotor.motorSpeed = desiredLiftSpeed;
-		advanceMotor.maxMotorTorque = maxAdvanceForce;
-		advanceMotor.motorSpeed = desiredAdvanceSpeed;
-		retractMotor.maxMotorTorque = maxAdvanceForce;
-		retractMotor.motorSpeed = -desiredAdvanceSpeed;
+		liftMotor.maxMotorTorque = legData.maxLiftForce;
+		liftMotor.motorSpeed = -legData.maxLiftSpeed * liftFactor;
+		lowerMotor.maxMotorTorque = legData.maxLiftForce;
+		lowerMotor.motorSpeed = legData.maxLiftSpeed * liftFactor;
+		jumpMotor.maxMotorTorque = legData.maxJumpForce;
+		jumpMotor.motorSpeed = legData.maxJumpSpeed * jumpFactor;
+		advanceMotor.maxMotorTorque = legData.maxFootAdvanceForce;
+		advanceMotor.motorSpeed = legData.maxFootAdvanceSpeed * footAdvanceFactor;
+		retractMotor.maxMotorTorque = legData.maxFootAdvanceForce;
+		retractMotor.motorSpeed = -legData.maxFootAdvanceSpeed * footAdvanceFactor;
 	}
 }
