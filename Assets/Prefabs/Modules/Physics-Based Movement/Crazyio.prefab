@@ -85,11 +85,11 @@ MonoBehaviour:
   legTwo: {fileID: 0}
   walking: 0
   jumping: 0
-  delayJump: 1
+  delayJump: 0
   crouching: 0
   left: 0
-  tryInputs: 0
-  fullManual: 1
+  tryInputs: 1
+  fullManual: 0
   currentLegsIntent: 1
 --- !u!114 &11400002
 MonoBehaviour:
