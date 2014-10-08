@@ -66,7 +66,6 @@ public class Change : MonoBehaviour {
 			Vector3 scale = me.transform.localScale;
 			scale.y = 2f;
 			me.transform.localScale = scale;
-			me.GetComponent<Move> ().moveForce *= 2f;
 		}
 	}
 
@@ -76,7 +75,6 @@ public class Change : MonoBehaviour {
 			Vector3 scale = me.transform.localScale;
 			scale.y = 1;
 			me.transform.localScale = scale;
-			me.GetComponent<Move> ().moveForce *= 0.5f;
 		}
 	}
 
