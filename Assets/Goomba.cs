@@ -2,26 +2,27 @@
 using RusticGames.Act;
 using System.Collections;
 
-public class MoveLeftAndRight : MonoBehaviour
-{
+public class Goomba : MonoBehaviour
+{	
 	public Move moveAction;
 	
+	public delegate void InteractionLogic(GeneralCollider c);
 	// Use this for initialization
 	void Start ()
 	{
 		StartCoroutine (thinkRoutine ());
 		StartCoroutine (moveAction.moveRoutine(this.gameObject));
 	}
-	
+
 	IEnumerator thinkRoutine ()
 	{
 		while (true) {
-			moveAction.moveDirection.x = Input.GetAxis("Horizontal");
+			if (this.transform.position.x > 30) {
+				Vector3 newPosition = this.transform.position;
+				newPosition.x -= 20;
+				this.transform.position = newPosition;
+			}
 			yield return new WaitForFixedUpdate ();
 		}
 	}
-
-	public float speed = 6.0f;
-	public float maxSpeed = 12.0f;
-
 }
