@@ -9,20 +9,18 @@ public class CollectAll : MonoBehaviour, IGoalCondition {
 
 	void Start () {
 		collectables = GameObject.FindGameObjectsWithTag("Collectable");
-		StartCoroutine(CheckForConditionMet());
+		StartCoroutine(CheckCondition());
 	}
 	
-	IEnumerator CheckForConditionMet () {
+	IEnumerator CheckCondition () {
 		while (!ConditionMet) {
+			bool _conditionMet = true;
 			foreach (var c in collectables) {
-				Transform cParent = c.transform.parent;
-				if (cParent == null || cParent.tag != "Player") {
-					ConditionMet = false;
-					yield return null;
-				} else {
-					ConditionMet = true;
-				}
+				Transform parent = c.transform.parent;
+				if (parent == null || parent.tag != "Player") _conditionMet = false;
 			}
+			ConditionMet = _conditionMet;
+			yield return null;
 		}
 	}
 }

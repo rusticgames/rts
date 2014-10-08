@@ -15,16 +15,13 @@ public class Goal : MonoBehaviour {
 
 	IEnumerator Check () {
 		while (!allConditionsMet) {
+			bool _allConditionsMet = true;
 			for (var i = 0; i < conditions.Length; i++) {
-				if (!((IGoalCondition)conditions[i]).ConditionMet) {
-					allConditionsMet = false;
-					yield return null;
-				} else {
-					allConditionsMet = true;
-				}
+				if (!((IGoalCondition)conditions[i]).ConditionMet) _allConditionsMet = false;
 			}
+			allConditionsMet = _allConditionsMet;
+			yield return null;
 		}
-
 		Debug.Log("Ya fuckin' won!");
 	}
 }
