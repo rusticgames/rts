@@ -18,12 +18,13 @@ public class SimpleWalker : MonoBehaviour {
 	public bool fullManual;
 	public LEGS_INTENT currentLegsIntent = LEGS_INTENT.STAND;
 
-	SimpleLeg spawnLeg(float footXOffset) {
+	SimpleLeg spawnLeg(float footXOffset, string nameDecorator) {
 		Vector3 spawnPoint = this.transform.position;
 		Quaternion rotation = this.transform.rotation;
 		SimpleLeg newLeg;
 		spawnPoint.y = spawnPoint.y - 0.5f;
 		newLeg = ((GameObject)GameObject.Instantiate(legPrefab, spawnPoint, rotation)).GetComponent<SimpleLeg>();
+		newLeg.name = legPrefab.name + " " + nameDecorator + " -- (" + this.name + ")";
 		newLeg.legData = legData;
 		newLeg.thigh = newLeg.GetComponent<SliderJoint2D>();
 		newLeg.thigh.connectedBody = this.rigidbody2D;
@@ -31,15 +32,16 @@ public class SimpleWalker : MonoBehaviour {
 		spawnPoint.y = spawnPoint.y - .25f;
 		newLeg.foot = ((GameObject)GameObject.Instantiate(footPrefab, spawnPoint, rotation)).GetComponent<SliderJoint2D>();
 		newLeg.foot.connectedBody = newLeg.thigh.rigidbody2D;
+		newLeg.foot.name = footPrefab.name + " " + nameDecorator  + " -- (" + this.name + ")";
 		return newLeg;
 	}
 
 	void Start () {
 		if(legOne == null) {
-			legOne = spawnLeg(.3f);
+			legOne = spawnLeg(.4f, "One");
 		}
 		if(legTwo == null) {
-			legTwo = spawnLeg(-.3f);
+			legTwo = spawnLeg(-.4f, "Two");
 		}
 		if(fullManual) {
 			StartCoroutine(manualLegs());
@@ -81,6 +83,13 @@ public class SimpleWalker : MonoBehaviour {
 	{
 		legOne.lower();
 		legTwo.lower();
+		if(SimpleLeg.getXAxisDiff(legOne, legTwo) < 0f) {
+			legOne.advance();
+			legTwo.advanceOpposed();
+		}else{
+			legOne.advanceOpposed();
+			legTwo.advance();
+		}
 		yield return new WaitForFixedUpdate();
 	}
 	public IEnumerator crouch (SimpleLeg legOne, SimpleLeg legTwo)
@@ -167,7 +176,7 @@ public class SimpleWalker : MonoBehaviour {
 		 */
 
 	public void checkFeet() {
-		float heightDiff = SimpleLeg.getHigher(legOne, legTwo);
+		float heightDiff = SimpleLeg.getYAxisDiff(legOne, legTwo);
 		SimpleLeg highLeg = legOne;
 		SimpleLeg lowLeg = legTwo;
 		if(left) {

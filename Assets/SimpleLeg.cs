@@ -82,11 +82,6 @@ public class SimpleLeg : MonoBehaviour {
 		foot.motor = advanceMotor;
 		foot.useMotor = true;
 	}
-
-	//TODO: this will likely go all screwy on inclines
-	public static float getHigher(SimpleLeg first, SimpleLeg other) {
-		return first.thigh.transform.localPosition.y - other.thigh.transform.localPosition.y;
-	}
 	
 	public void advanceOpposed () {
 		foot.motor = retractMotor;
@@ -113,5 +108,16 @@ public class SimpleLeg : MonoBehaviour {
 		advanceMotor.motorSpeed = legData.maxFootAdvanceSpeed * footAdvanceFactor;
 		retractMotor.maxMotorTorque = legData.maxFootAdvanceForce;
 		retractMotor.motorSpeed = -legData.maxFootAdvanceSpeed * footAdvanceFactor;
+	}
+
+	
+	//TODO: this will likely go all screwy on inclines
+	public static float getYAxisDiff(SimpleLeg first, SimpleLeg other) {
+		return first.thigh.transform.localPosition.y - other.thigh.transform.localPosition.y;
+	}
+
+	//TODO: this will likely go all screwy on inclines
+	public static float getXAxisDiff(SimpleLeg first, SimpleLeg other) {
+		return first.foot.transform.localPosition.x - other.foot.transform.localPosition.x;
 	}
 }
