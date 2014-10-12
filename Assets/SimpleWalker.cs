@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public enum LEGS_INTENT { NONE, STAND, WALK, CROUCH, RUN, JUMP }
+public enum LegsIntent { NONE, STAND, WALK, CROUCH, RUN, JUMP }
+public delegate LegsIntent IntentionGetter();
+public delegate IEnumerator LegsFunction(SimpleLeg legOne, SimpleLeg legTwo);
 public class SimpleWalker : MonoBehaviour {
 	public GameObject legPrefab;
 	public GameObject footPrefab;
@@ -16,115 +19,68 @@ public class SimpleWalker : MonoBehaviour {
 	public bool left;
 	public bool tryInputs = false;
 	public bool fullManual;
-	public LEGS_INTENT currentLegsIntent = LEGS_INTENT.STAND;
+	public LegsFunction currentLegs;
 
-	SimpleLeg spawnLeg(float footXOffset, string nameDecorator) {
-		Vector3 spawnPoint = this.transform.position;
-		Quaternion rotation = this.transform.rotation;
-		SimpleLeg newLeg;
-		spawnPoint.y = spawnPoint.y - 0.5f;
-		newLeg = ((GameObject)GameObject.Instantiate(legPrefab, spawnPoint, rotation)).GetComponent<SimpleLeg>();
-		newLeg.name = legPrefab.name + " " + nameDecorator + " -- (" + this.name + ")";
-		newLeg.legData = legData;
-		newLeg.thigh = newLeg.GetComponent<SliderJoint2D>();
-		newLeg.thigh.connectedBody = this.rigidbody2D;
-		spawnPoint.x = spawnPoint.x + footXOffset;
-		spawnPoint.y = spawnPoint.y - .25f;
-		newLeg.foot = ((GameObject)GameObject.Instantiate(footPrefab, spawnPoint, rotation)).GetComponent<SliderJoint2D>();
-		newLeg.foot.connectedBody = newLeg.thigh.rigidbody2D;
-		newLeg.foot.name = footPrefab.name + " " + nameDecorator  + " -- (" + this.name + ")";
-		return newLeg;
-	}
+	private IntentionGetter legIntentGetter;
+	private Dictionary<LegsIntent, LegsFunction> legIntentToFunction;
+
 
 	void Start () {
+		legIntentToFunction = new Dictionary<LegsIntent, LegsFunction>();
+		legIntentToFunction.Add(LegsIntent.STAND, MovementUtility.stand);
+		legIntentToFunction.Add(LegsIntent.CROUCH, MovementUtility.crouch);
+		if(delayJump) {
+			legIntentToFunction.Add(LegsIntent.JUMP, MovementUtility.delayJump);
+		} else {
+			legIntentToFunction.Add(LegsIntent.JUMP, MovementUtility.jump);
+		}
+		legIntentToFunction.Add(LegsIntent.WALK, MovementUtility.walkOneLeg);
+
 		if(legOne == null) {
-			legOne = spawnLeg(.4f, "One");
+			Vector3 position = this.transform.position;
+			position.y = position.y + 1f;
+			this.transform.position = position;
+			legOne = MovementUtility.spawnLeg(this.gameObject, legPrefab, footPrefab, legData, .4f, "One");
 		}
 		if(legTwo == null) {
-			legTwo = spawnLeg(-.4f, "Two");
+			legTwo = MovementUtility.spawnLeg(this.gameObject, legPrefab, footPrefab, legData, -.4f, "Two");
 		}
+
 		if(fullManual) {
 			StartCoroutine(manualLegs());
 		} else {
-			StartCoroutine(doLegs());
+			legIntentGetter = autoIntent;
 			if(tryInputs) {
-				StartCoroutine(checkInputs());
+				legIntentGetter = getIntentFromInputs;
 			}
+			StartCoroutine(doLegs());
 		}
 	}
-	
-	public IEnumerator checkInputs ()
-	{
-		while(true) {
-			walking = false;
-			crouching = false;
-			jumping = false;
-			if(Input.GetKey(KeyCode.LeftArrow)) {
-				left = true;
-				walking = true;
-			}
-			if(Input.GetKey(KeyCode.RightArrow)) {
-				left = false;
-				walking = true;
-			}
-			if(Input.GetKey(KeyCode.LeftControl)) {
-				crouching = true;
-			}
-			if(Input.GetKey(KeyCode.Space)) {
-				jumping = true;
-			}
-			yield return new WaitForFixedUpdate();
+	public LegsIntent autoIntent() {
+		if(left) {
+			legOne.footAdvanceFactor = -1f;
+			legTwo.footAdvanceFactor = -1f;
 		}
+		if(walking) { return LegsIntent.WALK; }
+		if(crouching) { return LegsIntent.CROUCH; }
+		if(jumping) { return LegsIntent.JUMP; }
+		return LegsIntent.STAND;
+	}
+	public LegsIntent getIntentFromInputs ()
+	{
+		float xAxis = Input.GetAxis("Horizontal");
+		legOne.footAdvanceFactor = xAxis;
+		legTwo.footAdvanceFactor = xAxis;
+		if(Input.GetKey(KeyCode.LeftControl)) { return LegsIntent.CROUCH; }
+		if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick2Button0)) { return LegsIntent.JUMP; }
+		if(!(Mathf.Approximately(xAxis, 0f))) { return LegsIntent.WALK; }
+		return LegsIntent.STAND;
 	}
 
-	public delegate IEnumerator LegsFunction(SimpleLeg legOne, SimpleLeg legTwo);
-	public LegsFunction currentLegs;
-	public IEnumerator stand (SimpleLeg legOne, SimpleLeg legTwo)
-	{
-		legOne.lower();
-		legTwo.lower();
-		if(SimpleLeg.getXAxisDiff(legOne, legTwo) < 0f) {
-			legOne.advance();
-			legTwo.advanceOpposed();
-		}else{
-			legOne.advanceOpposed();
-			legTwo.advance();
-		}
-		yield return new WaitForFixedUpdate();
-	}
-	public IEnumerator crouch (SimpleLeg legOne, SimpleLeg legTwo)
-	{
-		legOne.lift();
-		legTwo.lift();
-		yield return new WaitForFixedUpdate();
-	}
-	public IEnumerator jump (SimpleLeg legOne, SimpleLeg legTwo)
-	{
-		if(delayJump) {
-			legOne.lift();
-			legTwo.lift();
-			legOne.advance();
-			legTwo.advance();
-			while(jumping) {
-				yield return new WaitForFixedUpdate();
-			}
-		}
-
-		legOne.jump();
-		legTwo.jump();
-		while(!(legOne.isFullyLowered() || legTwo.isFullyLowered())) {
-			yield return new WaitForFixedUpdate();
-		}
-
-		//legOne.relaxThigh();
-		//legTwo.relaxThigh();
-		yield return new WaitForFixedUpdate();
-	}
 	public IEnumerator manualLegs () {
 		while(true) {
 			if(Input.GetKeyDown(KeyCode.Joystick1Button0)) {
-				Debug.Log("Key-oop");
-				yield return StartCoroutine(jump (legOne, legTwo));
+				yield return StartCoroutine(MovementUtility.jump (legOne, legTwo));
 			} else {
 				legOne.footAdvanceFactor = Input.GetAxis("Horizontal");
 				legTwo.footAdvanceFactor = Input.GetAxis("Right Stick X Axis");
@@ -134,24 +90,17 @@ public class SimpleWalker : MonoBehaviour {
 				legTwo.lift();
 				legOne.advanceOpposed();
 				legTwo.advanceOpposed();
-				//Debug.Log("1: " + foot1 + ", " + leg1 + "  |  2: " + foot2 + ", " + leg2);
-				yield return null;
 			}
+			yield return null;
 		}
 	}
 	public IEnumerator doLegs ()
 	{
 		while(true) {
-			currentLegs = stand;
-			if(jumping) {
-				currentLegs = jump;
-			}else if(crouching) {
-				currentLegs = crouch;
-			}else if(walking) {
-				currentLegs = walkOneLeg;
-			}
+			LegsIntent li = legIntentGetter();
+			currentLegs = legIntentToFunction[li];
 			yield return StartCoroutine(currentLegs(legOne, legTwo));
-			if(walking) {
+			if(li == LegsIntent.WALK) {
 				yield return StartCoroutine(currentLegs(legTwo, legOne));
 			}
 		}
@@ -163,45 +112,5 @@ public class SimpleWalker : MonoBehaviour {
 		float difference = desiredSpeed - currentSpeed;
 		return difference / desiredSpeed;
 	}
-	
-		/* 
-		 * if we are standing still
-		 * * lift one leg (Lf)
-		 * * apply forward motion to foot on Lf
-		 * * lower other leg (Ls)
-		 * * apply backwards motion to foot on Ls
-		 * 
-		 * 
-		 * 
-		 */
 
-	public void checkFeet() {
-		float heightDiff = SimpleLeg.getYAxisDiff(legOne, legTwo);
-		SimpleLeg highLeg = legOne;
-		SimpleLeg lowLeg = legTwo;
-		if(left) {
-			heightDiff = -heightDiff;
-		}
-
-		if(heightDiff < 0f) {
-			lowLeg = legOne;
-			highLeg = legTwo;
-		}
-
-		highLeg.advanceOpposed();
-		lowLeg.advance();
-	}
-
-	public IEnumerator walkOneLeg (SimpleLeg leg1, SimpleLeg leg2) {
-		checkFeet();
-		leg1.lower();
-		leg2.lift();
-		while(!leg1.isFullyLowered()) {
-			leg1.lower();
-			leg2.lift();
-			checkFeet();
-			yield return new WaitForFixedUpdate();
-		}
-		yield return null;
-	}
 }

@@ -87,7 +87,7 @@ MonoBehaviour:
   legTwo: {fileID: 0}
   walking: 0
   jumping: 0
-  delayJump: 0
+  delayJump: 1
   crouching: 0
   left: 0
   tryInputs: 1
