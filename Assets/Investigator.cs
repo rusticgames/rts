@@ -65,7 +65,7 @@ public class Investigator : MonoBehaviour {
 			bodyState.inertia = body.inertia;
 			bodyState.centerOfMass = body.centerOfMass;
 			bodyState.worldCenterOfMass = body.worldCenterOfMass;
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForEndOfFrame();
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class Investigator : MonoBehaviour {
 			hingeState.jointSpeed = hinge.jointSpeed;
 			hingeState.limitState = hinge.limitState;
 			hingeState.referenceAngle = hinge.referenceAngle;
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForEndOfFrame();
 		}
 	}
 	
@@ -89,7 +89,7 @@ public class Investigator : MonoBehaviour {
 			sliderState.jointSpeed = slider.jointSpeed;
 			sliderState.limitState = slider.limitState;
 			sliderState.referenceAngle = slider.referenceAngle;
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForEndOfFrame();
 		}
 	}
 

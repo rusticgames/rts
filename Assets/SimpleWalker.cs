@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public enum LegsIntent { NONE, STAND, WALK, CROUCH, RUN, JUMP }
-public delegate LegsIntent IntentionGetter();
+public delegate IEnumerator IntentionSetter();
 public delegate IEnumerator LegsFunction(SimpleLeg legOne, SimpleLeg legTwo);
 public class SimpleWalker : MonoBehaviour {
 	public GameObject legPrefab;
@@ -19,14 +19,18 @@ public class SimpleWalker : MonoBehaviour {
 	public bool left;
 	public bool tryInputs = false;
 	public bool fullManual;
+	public LegsIntent currentLegsIntent;
 	public LegsFunction currentLegs;
+	public Vector2 lastGravity = Vector2.zero;
+	public Vector2 currentGravity;
 
-	private IntentionGetter legIntentGetter;
+	private IntentionSetter legIntentSetter;
 	private Dictionary<LegsIntent, LegsFunction> legIntentToFunction;
 
 
 	void Start () {
 		legIntentToFunction = new Dictionary<LegsIntent, LegsFunction>();
+		legIntentToFunction.Add(LegsIntent.NONE, MovementUtility.relax);
 		legIntentToFunction.Add(LegsIntent.STAND, MovementUtility.stand);
 		legIntentToFunction.Add(LegsIntent.CROUCH, MovementUtility.crouch);
 		if(delayJump) {
@@ -45,36 +49,59 @@ public class SimpleWalker : MonoBehaviour {
 		if(legTwo == null) {
 			legTwo = MovementUtility.spawnLeg(this.gameObject, legPrefab, footPrefab, legData, -.4f, "Two");
 		}
-
-		if(fullManual) {
-			StartCoroutine(manualLegs());
-		} else {
-			legIntentGetter = autoIntent;
+		
+		legIntentSetter = manualLegs;
+		if(!fullManual) {
+			legIntentSetter = autoIntent;
 			if(tryInputs) {
-				legIntentGetter = getIntentFromInputs;
+				legIntentSetter = getIntentFromInputs;
 			}
 			StartCoroutine(doLegs());
 		}
+		StartCoroutine(legIntentSetter());
 	}
-	public LegsIntent autoIntent() {
-		if(left) {
-			legOne.footAdvanceFactor = -1f;
-			legTwo.footAdvanceFactor = -1f;
+	public IEnumerator autoIntent() {
+		yield return null;
+		while(true) {
+			if(left) {
+				legOne.footAdvanceFactor = -1f;
+				legTwo.footAdvanceFactor = -1f;
+			}
+			currentLegsIntent = LegsIntent.STAND;
+			if(walking) { currentLegsIntent = LegsIntent.WALK; }
+			if(crouching) { currentLegsIntent = LegsIntent.CROUCH; }
+			if(jumping) { currentLegsIntent = LegsIntent.JUMP; }
+			yield return new WaitForEndOfFrame();
 		}
-		if(walking) { return LegsIntent.WALK; }
-		if(crouching) { return LegsIntent.CROUCH; }
-		if(jumping) { return LegsIntent.JUMP; }
-		return LegsIntent.STAND;
 	}
-	public LegsIntent getIntentFromInputs ()
+	public IEnumerator getIntentFromInputs ()
 	{
-		float xAxis = Input.GetAxis("Horizontal");
-		legOne.footAdvanceFactor = xAxis;
-		legTwo.footAdvanceFactor = xAxis;
-		if(Input.GetKey(KeyCode.LeftControl)) { return LegsIntent.CROUCH; }
-		if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick2Button0)) { return LegsIntent.JUMP; }
-		if(!(Mathf.Approximately(xAxis, 0f))) { return LegsIntent.WALK; }
-		return LegsIntent.STAND;
+		yield return null;
+		while(true) {
+			float xAxis = Input.GetAxis("Horizontal");
+			legOne.footAdvanceFactor = xAxis;
+			legTwo.footAdvanceFactor = xAxis;
+			if(Input.GetKeyDown(KeyCode.G)) 
+			{
+				currentGravity = lastGravity;
+				lastGravity = Physics2D.gravity;
+				Physics2D.gravity = currentGravity;
+			}
+			if(Input.GetKeyDown(KeyCode.D)) { 
+				delayJump = !delayJump; 
+				if(delayJump) {
+					legIntentToFunction[LegsIntent.JUMP] = MovementUtility.delayJump;
+				} else {
+					legIntentToFunction[LegsIntent.JUMP] = MovementUtility.jump;
+				}
+			}
+
+			currentLegsIntent = LegsIntent.STAND;
+			if(Input.GetKey(KeyCode.LeftControl)) { currentLegsIntent = LegsIntent.CROUCH; } else
+			if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick2Button0)) { currentLegsIntent = LegsIntent.JUMP; } else
+			if(!(Mathf.Approximately(xAxis, 0f))) { currentLegsIntent = LegsIntent.WALK; }
+			yield return null;
+		}
 	}
 
 	public IEnumerator manualLegs () {
@@ -97,12 +124,10 @@ public class SimpleWalker : MonoBehaviour {
 	public IEnumerator doLegs ()
 	{
 		while(true) {
-			LegsIntent li = legIntentGetter();
-			currentLegs = legIntentToFunction[li];
+			currentLegs = legIntentToFunction[currentLegsIntent];
 			yield return StartCoroutine(currentLegs(legOne, legTwo));
-			if(li == LegsIntent.WALK) {
-				yield return StartCoroutine(currentLegs(legTwo, legOne));
-			}
+			currentLegs = legIntentToFunction[currentLegsIntent];
+			yield return StartCoroutine(currentLegs(legTwo, legOne));
 		}
 	}
 

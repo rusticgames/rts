@@ -40,30 +40,46 @@ public class MovementUtility {
 		}
 		yield return new WaitForFixedUpdate();
 	}
+
+	public delegate bool keyChecker(KeyCode key);
+	public static bool jumpKeyPressed(bool firstPressedThisFrame) {
+		keyChecker jumpCheck = Input.GetKey;
+		if (firstPressedThisFrame) {
+			jumpCheck = Input.GetKeyDown;
+		}
+		return jumpCheck(KeyCode.Space) || jumpCheck(KeyCode.Joystick1Button0) || jumpCheck(KeyCode.Alpha5);
+	}
+
 	public static IEnumerator jump (SimpleLeg legOne, SimpleLeg legTwo)
 	{
+		Debug.Log("jump");
 		legOne.jump();
 		legTwo.jump();
 		while(!(legOne.isFullyLowered() || legTwo.isFullyLowered())) {
 			yield return new WaitForFixedUpdate();
 		}
-		
-		yield return new WaitForFixedUpdate();
+		legOne.relaxThigh();
+		legTwo.relaxThigh();
+		yield return new WaitForSeconds(0.5f);
 	}
+
 	public static IEnumerator delayJump (SimpleLeg legOne, SimpleLeg legTwo)
 	{
+		Debug.Log("Delay");
 		legOne.lift();
 		legTwo.lift();
-		legOne.advance();
-		legTwo.advance();
-		yield return new WaitForSeconds(0.2f);
-
-		legOne.jump();
-		legTwo.jump();
-		while(!(legOne.isFullyLowered() || legTwo.isFullyLowered())) {
+		while(jumpKeyPressed(false)) 
+		{
 			yield return new WaitForFixedUpdate();
 		}
-		
+		yield return legOne.StartCoroutine(MovementUtility.jump(legOne, legTwo));
+	}
+	public static IEnumerator relax (SimpleLeg legOne, SimpleLeg legTwo)
+	{
+		legOne.relaxFoot();
+		legOne.relaxThigh();
+		legTwo.relaxFoot();
+		legTwo.relaxThigh();
 		yield return new WaitForFixedUpdate();
 	}
 	public static IEnumerator crouch (SimpleLeg legOne, SimpleLeg legTwo)
@@ -92,6 +108,7 @@ public class MovementUtility {
 		leg1.lower();
 		leg2.lift();
 		while(!leg1.isFullyLowered()) {
+			Debug.DrawLine(leg1.thigh.transform.position, leg1.thigh.transform.position, Color.cyan);
 			leg1.lower();
 			leg2.lift();
 			MovementUtility.checkFeet(leg1, leg2);
