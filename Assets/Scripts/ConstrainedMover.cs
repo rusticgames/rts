@@ -16,14 +16,7 @@ public class ConstrainedMover : MonoBehaviour {
 		Vector3 newPosition = constraintCenter;
 		newPosition.x += Input.GetAxis("Horizontal") * constraintRadius;
 		newPosition.y += Input.GetAxis("Vertical") * constraintRadius;
-
 		transform.position = newPosition;
-
-
-		Debug.Log (Input.GetAxis("Horizontal") + " (" + newPosition.x + ")" + ", " + Input.GetAxis("Vertical") + " (" + newPosition.y + ")");
-		
-		// Vector3 normalizedPosition = Vector3.Normalize(newPosition);
-		// transform.position = normalizedPosition;
 	}
 
 	void OnDrawGizmosSelected() {
