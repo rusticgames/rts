@@ -8,10 +8,12 @@ public class Shooter : MonoBehaviour {
 	public float attackPeriodSeconds = 0.5f;
 	public KeyboardTargeter targeter;
 	public KeyboardConfiguration keyboardConfig;
+	public History history;
 	
 	void Reset() {
 		targeter = this.GetComponent<KeyboardTargeter>();
 		keyboardConfig = this.GetComponent<KeyboardConfiguration>();
+		history = this.GetComponent<History>();
 	}
 
 	void Start () {
@@ -20,16 +22,15 @@ public class Shooter : MonoBehaviour {
 
 	IEnumerator Shoot() {
 		while (true) {
-			if (Input.GetKeyDown(keyboardConfig.shoot)) {
-				Debug.Log("shoot");
+			if (Input.GetKey(keyboardConfig.shoot)) {
 				Vector3 heading = targeter.newTargetOffset;
 				Vector3 startPosition = this.transform.position + heading;
 				GameObject o = (GameObject)Instantiate(projectilePrefab, startPosition, this.transform.rotation);
 				o.rigidbody.AddForce(heading * projectileSpeed, ForceMode.Force);
+				history.addChild(o);
 				yield return new WaitForSeconds(attackPeriodSeconds);
 			}
-			Debug.Log("tryshoot");
-			yield return new WaitForFixedUpdate();
+			yield return null;
 		}
 	}
 }

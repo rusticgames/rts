@@ -16,6 +16,7 @@ GameObject:
   - 114: {fileID: 11410820}
   - 114: {fileID: 11410822}
   - 114: {fileID: 11409392}
+  - 114: {fileID: 11438568}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -127,6 +128,7 @@ MonoBehaviour:
   attackPeriodSeconds: .5
   targeter: {fileID: 11410822}
   keyboardConfig: {fileID: 11409392}
+  history: {fileID: 11438568}
 --- !u!114 &11410822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,6 +143,19 @@ MonoBehaviour:
   moveTarget: {x: 0, y: 0, z: 0}
   newTargetOffset: {x: 0, y: 0, z: 0}
   keyboardConfig: {fileID: 11409392}
+--- !u!114 &11438568
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe173a378eb826488dcfd5fdae680cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialPosition: {x: 0, y: 0, z: 0}
+  destroyableChildren: []
 --- !u!135 &13505748
 SphereCollider:
   m_ObjectHideFlags: 1
