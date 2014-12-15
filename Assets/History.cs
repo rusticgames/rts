@@ -8,13 +8,26 @@ public class History : MonoBehaviour {
 	private Vector3 initialAngularVelocity;
 	private Quaternion initialRotation;
 
-
+	public delegate void PositionTrackingAction(Vector3 position, float timestamp);
+	public event PositionTrackingAction OnPositionSampled;
+	public float positionSampleRate = 0.5f;
 	public List<GameObject> destroyableChildren = new List<GameObject>();
+
 	void Start () {
 		initialPosition = this.transform.position;
 		initialLinearVelocity = this.rigidbody.velocity;
 		initialAngularVelocity = this.rigidbody.angularVelocity;
 		initialRotation = this.transform.rotation;
+		StartCoroutine(samplePosition());
+	}
+	
+	IEnumerator samplePosition() {
+		while(true) {
+			if(OnPositionSampled != null) {
+				OnPositionSampled(this.transform.position, UnityEngine.Time.timeSinceLevelLoad);
+			}
+			yield return new WaitForSeconds(positionSampleRate);
+		}
 	}
 
 	public void ResetToInitial() {

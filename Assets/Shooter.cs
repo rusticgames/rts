@@ -22,7 +22,7 @@ public class Shooter : MonoBehaviour {
 
 	IEnumerator Shoot() {
 		while (true) {
-			if (Input.GetKey(keyboardConfig.shoot)) {
+			if (Input.GetKeyDown(keyboardConfig.shoot)) {
 				Vector3 heading = targeter.newTargetOffset;
 				Vector3 startPosition = this.transform.position + heading;
 				GameObject o = (GameObject)Instantiate(projectilePrefab, startPosition, this.transform.rotation);
