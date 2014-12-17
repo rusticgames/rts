@@ -10,6 +10,7 @@ public class PhysicalProperties : MonoBehaviour {
 	// Update methods is called the first time.
 	void Start () {
 		this.rigidbody.mass = propertiesTemplate.mass;
+		this.GetComponent<MeshRenderer>().material = propertiesTemplate.renderMaterial;
 	}
 	
 }

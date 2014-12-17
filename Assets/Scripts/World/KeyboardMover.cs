@@ -39,6 +39,7 @@ public class KeyboardMover : MonoBehaviour {
 	Vector3 GetDesiredVelocity (Vector3 distance)
 	{		
 		if(overrideLinear) return linear;
+		distance.y = 0f;
 		Vector3 desiredVelocity = new Vector3 (0, 0, 0);
 		if (distance.sqrMagnitude > (followDistance * followDistance)) {
 			desiredVelocity = distance.normalized * maximumVelocity;

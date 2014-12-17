@@ -40,6 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 3
+  renderMaterial: {fileID: 2100000, guid: 06893cec523208643a91b7a393737700, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
