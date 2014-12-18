@@ -1,5 +1,5 @@
-RTS
-===
+Rustic Tool Set
+===============
 
 Here’s a set of project-agnostic tools that can be used to create video games (or whatever) with the [Unity](http://unity3d.com/) game engine.
 
