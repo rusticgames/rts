@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1724222cae7e5410d884460ed7cebd26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  template: {fileID: 11462200, guid: 98a8f665b6a594b92863e6cd816ca8ec, type: 2}
+  template: {fileID: 11414352, guid: c45f3cc43788247c6bb1a3f12a29e784, type: 2}
 --- !u!23 &338979604
 Renderer:
   m_ObjectHideFlags: 0
@@ -1136,7 +1136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1724222cae7e5410d884460ed7cebd26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  template: {fileID: 11462200, guid: 98a8f665b6a594b92863e6cd816ca8ec, type: 2}
+  template: {fileID: 11414352, guid: c45f3cc43788247c6bb1a3f12a29e784, type: 2}
 --- !u!23 &699503102
 Renderer:
   m_ObjectHideFlags: 0
@@ -1584,6 +1584,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 4.90999985
       objectReference: {fileID: 0}
+    - target: {fileID: 11459268, guid: 48017d9abecbf4312b4e75bd3450df49, type: 2}
+      propertyPath: template
+      value: 
+      objectReference: {fileID: 11414352, guid: c45f3cc43788247c6bb1a3f12a29e784,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 48017d9abecbf4312b4e75bd3450df49, type: 2}
   m_RootGameObject: {fileID: 338979601}
@@ -1695,7 +1700,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 412946, guid: 90eb4cf52de1546b28c1a0050f14d359, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2312946, guid: 90eb4cf52de1546b28c1a0050f14d359, type: 2}
       propertyPath: m_Materials.Array.data[0]
@@ -1982,6 +1987,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 16.0300007
       objectReference: {fileID: 0}
+    - target: {fileID: 11459268, guid: 48017d9abecbf4312b4e75bd3450df49, type: 2}
+      propertyPath: template
+      value: 
+      objectReference: {fileID: 11414352, guid: c45f3cc43788247c6bb1a3f12a29e784,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 48017d9abecbf4312b4e75bd3450df49, type: 2}
   m_RootGameObject: {fileID: 699503099}
