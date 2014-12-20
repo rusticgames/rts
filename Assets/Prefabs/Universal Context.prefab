@@ -74,6 +74,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseCamera: {fileID: 0}
+  canvas: {fileID: 0}
+  panelPrefab: {fileID: 0}
+  ppm: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

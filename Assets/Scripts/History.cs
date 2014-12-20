@@ -11,7 +11,7 @@ public class History : MonoBehaviour {
 	public delegate void PositionTrackingAction(Vector3 position, float timestamp);
 	public event PositionTrackingAction OnPositionSampled;
 	public float positionSampleRate = 0.5f;
-	public List<GameObject> destroyableChildren = new List<GameObject>();
+	public List<Object> destroyableChildren = new List<Object>();
 
 	void Start () {
 		initialPosition = this.transform.position;
@@ -31,17 +31,17 @@ public class History : MonoBehaviour {
 	}
 
 	public void ResetToInitial() {
-		List<GameObject> cl = destroyableChildren;
-		destroyableChildren = new List<GameObject>();
+		List<Object> cl = destroyableChildren;
+		destroyableChildren = new List<Object>();
 		this.transform.position = initialPosition;
 		this.rigidbody.velocity = initialLinearVelocity;
 		this.rigidbody.angularVelocity = initialAngularVelocity;
 		this.transform.rotation = initialRotation;
-		cl.ForEach(x => GameObject.Destroy(x));
+		cl.ForEach(x => Object.Destroy(x));
 		cl.Clear();
 	}
 
-	public void addChild (GameObject o)
+	public void addChild (Object o)
 	{
 		destroyableChildren.Add (o);
 	}
