@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460ac3d8dcd9e4ab88e9fe5d398047bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usePeriodSeconds: .5
+  usePeriodSeconds: 0
   targeter: {fileID: 206302568}
   keyboardConfig: {fileID: 206302576}
   history: {fileID: 206302577}
@@ -862,6 +862,7 @@ GameObject:
   - 23: {fileID: 489432530}
   - 54: {fileID: 489432528}
   - 114: {fileID: 489432529}
+  - 114: {fileID: 489432534}
   m_Layer: 0
   m_Name: Sturdy Block
   m_TagString: Untagged
@@ -952,6 +953,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &489432534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 489432527}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 118c80524d9a94deb9327b8c613b4c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replicationInterval: 1
+  replicationAxes: {x: 0, y: 0, z: 1}
+  replicate: 1
 --- !u!1 &498942659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,6 +1097,10 @@ Prefab:
     - target: {fileID: 105748, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
       propertyPath: m_Name
       value: Player One
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414974, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
+      propertyPath: usePeriodSeconds
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
@@ -1359,6 +1378,7 @@ GameObject:
   - 33: {fileID: 778963148}
   - 64: {fileID: 778963147}
   - 23: {fileID: 778963146}
+  - 114: {fileID: 778963150}
   m_Layer: 0
   m_Name: Level Plane
   m_TagString: Untagged
@@ -1421,6 +1441,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &778963150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 778963145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9694a80e3fc56ea459a197e45d86ec1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationRates: {x: 0, y: 0, z: 4}
+  timeInterval: .25
+  keepOnKeepingOn: 1
 --- !u!1001 &927339257
 Prefab:
   m_ObjectHideFlags: 0
