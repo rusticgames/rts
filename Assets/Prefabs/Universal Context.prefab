@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11406010}
   - 114: {fileID: 11406008}
   - 114: {fileID: 11406012}
+  - 114: {fileID: 11494008}
   m_Layer: 0
   m_Name: Universal Context
   m_TagString: Untagged
@@ -75,8 +76,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseCamera: {fileID: 0}
   canvas: {fileID: 0}
-  panelPrefab: {fileID: 0}
-  ppm: {fileID: 0}
+  panelPrefab: {fileID: 182432, guid: 56fe440d5012646319edadef77ffcc35, type: 2}
+  rmaterialManager: {fileID: 11494008}
+--- !u!114 &11494008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d921409d9d6b74e4fb5439c392b9790d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  templates:
+  - {fileID: 11414352, guid: c45f3cc43788247c6bb1a3f12a29e784, type: 2}
+  - {fileID: 11462200, guid: 98a8f665b6a594b92863e6cd816ca8ec, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

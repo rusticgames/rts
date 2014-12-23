@@ -8,8 +8,6 @@ public class MouseInput : MonoBehaviour {
 	public GameObject panelPrefab;
 	public RMaterialManager rmaterialManager;
 
-	private GameObject lastClicked;
-
 	void Start () {
 		StartCoroutine(checkInput());
 	}
@@ -27,7 +25,6 @@ public class MouseInput : MonoBehaviour {
 						b.manager = rmaterialManager;
 						b.transform.SetParent(canvas.transform, false);
 					}
-					this.lastClicked = hit.collider.gameObject;
 				}
 			}
 			yield return null;

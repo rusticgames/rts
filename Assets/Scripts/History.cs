@@ -8,9 +8,10 @@ public class History : MonoBehaviour {
 	private Vector3 initialAngularVelocity;
 	private Quaternion initialRotation;
 
-	public delegate void PositionTrackingAction(Vector3 position, float timestamp);
-	public event PositionTrackingAction OnPositionSampled;
-	public float positionSampleRate = 0.5f;
+	[System.Serializable]
+	public class HistoryTrackingAction : UnityEngine.Events.UnityEvent<History, float>{};
+	public HistoryTrackingAction OnStateSample = new HistoryTrackingAction();
+	public float stateSampleRate = 0.5f;
 	public List<Object> destroyableChildren = new List<Object>();
 
 	void Start () {
@@ -18,15 +19,15 @@ public class History : MonoBehaviour {
 		initialLinearVelocity = this.rigidbody.velocity;
 		initialAngularVelocity = this.rigidbody.angularVelocity;
 		initialRotation = this.transform.rotation;
-		StartCoroutine(samplePosition());
+		StartCoroutine(sampleState());
 	}
 	
-	IEnumerator samplePosition() {
+	IEnumerator sampleState() {
 		while(true) {
-			if(OnPositionSampled != null) {
-				OnPositionSampled(this.transform.position, UnityEngine.Time.timeSinceLevelLoad);
+			if(OnStateSample != null) {
+				OnStateSample.Invoke(this, UnityEngine.Time.timeSinceLevelLoad);
 			}
-			yield return new WaitForSeconds(positionSampleRate);
+			yield return new WaitForSeconds(stateSampleRate);
 		}
 	}
 

@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Replicator : MonoBehaviour {
 
 	public float replicationInterval = 1.0f;
-	public Vector3 replicationAxes;
+	public List<Vector3> replicationAxes = new List<Vector3>();
 	public bool replicate = false;
-	
+	public bool childrenShouldReplicate = false;
+	public float childrenReplicationIntervalRepeatFactor = 1.0f;
+
 	void Start() {
 		StartCoroutine(Replicate());
 	}
@@ -14,10 +17,13 @@ public class Replicator : MonoBehaviour {
 	IEnumerator Replicate() {
 		while(true) {
 			yield return new WaitForSeconds(replicationInterval);
-			if (replicate) {
-				Vector3 newPosition = transform.position + replicationAxes;
-				GameObject o = (GameObject)Instantiate(gameObject, newPosition, transform.rotation);
-				o.GetComponent<Replicator>().replicate = false;
+			if(replicate) {
+				replicationAxes.ForEach(axis => {
+					Vector3 newPosition = transform.position + axis;
+					GameObject o = (GameObject)Instantiate(gameObject, newPosition, transform.rotation);
+					o.GetComponent<Replicator>().replicate = childrenShouldReplicate;
+					o.GetComponent<Replicator>().replicationInterval	= replicationInterval * childrenReplicationIntervalRepeatFactor;
+				});
 			}
 		}
 	}
