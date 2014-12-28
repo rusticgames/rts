@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 496614}
-  - 114: {fileID: 11462200}
+  - 114: {fileID: 11495696}
   m_Layer: 0
   m_Name: Steel
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11462200
+--- !u!114 &11495696
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -36,11 +36,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 196614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98d72a0ac4fff44edbf53bea2c42c322, type: 3}
+  m_Script: {fileID: 11500000, guid: 1724222cae7e5410d884460ed7cebd26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 4
-  renderMaterial: {fileID: 2100000, guid: 023c449578c660041a7b61be18cd5092, type: 2}
+  properties:
+    mass: 2
+    renderMaterial: {fileID: 2100000, guid: 023c449578c660041a7b61be18cd5092, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

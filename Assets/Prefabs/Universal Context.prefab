@@ -47,7 +47,7 @@ MonoBehaviour:
   players:
   - {fileID: 0}
   - {fileID: 0}
-  offOfLevelTimeoutSeconds: 2
+  checkInterval: 2
 --- !u!114 &11406010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,9 +89,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d921409d9d6b74e4fb5439c392b9790d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  templates:
+  prefabsToCanonize:
   - {fileID: 11414352, guid: c45f3cc43788247c6bb1a3f12a29e784, type: 2}
-  - {fileID: 11462200, guid: 98a8f665b6a594b92863e6cd816ca8ec, type: 2}
+  - {fileID: 11495696, guid: 98a8f665b6a594b92863e6cd816ca8ec, type: 2}
+  templates:
+  - materialName: Testium
+    materialTemplate:
+      mass: 9.99999972e-10
+      renderMaterial: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - materialName: Strongon
+    materialTemplate:
+      mass: 10
+      renderMaterial: {fileID: 2100000, guid: ff3431e6341aa594fb6f7366070f506c, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

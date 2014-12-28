@@ -6,19 +6,21 @@ public class ButtonMaker : MonoBehaviour {
 	public GameObject panel;
 	public GameObject buttonPrefab;
 	public RMaterialManager manager;
-	public RMaterialTemplate template;
+	public RMaterial template;
 	public RMaterial objectToModify;
 	
-	void Start () {
-		manager.templates.ForEach(t => {
-			GameObject btn = (GameObject)GameObject.Instantiate(buttonPrefab);
-			btn.transform.SetParent(panel.transform, false);
-			UnityEngine.UI.Text btnText = btn.GetComponentInChildren<UnityEngine.UI.Text>();
-			btnText.text = t.name;
-			btn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => {
-				RMaterialManager.ApplyTemplate(objectToModify, t);
-				GameObject.Destroy(this.gameObject);
-			});
+	void makeButtonsFromMaterial (RMaterialManager.CanonicalRMaterial t)
+	{
+		GameObject btn = (GameObject)Object.Instantiate (buttonPrefab);
+		btn.transform.SetParent (panel.transform, false);
+		UnityEngine.UI.Text btnText = btn.GetComponentInChildren<UnityEngine.UI.Text> ();
+		btnText.text = t.materialName;
+		btn.GetComponent<UnityEngine.UI.Button> ().onClick.AddListener (() => {
+			objectToModify.update(t.materialTemplate);
+			Object.Destroy (this.gameObject);
 		});
+	}
+	void Start () {
+		manager.templates.ForEach (makeButtonsFromMaterial);
 	}
 }

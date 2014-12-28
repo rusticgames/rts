@@ -12,10 +12,10 @@ GameObject:
   - 65: {fileID: 6505064}
   - 23: {fileID: 2305064}
   - 54: {fileID: 5405064}
-  - 114: {fileID: 11405066}
   - 114: {fileID: 11405064}
   - 114: {fileID: 11422280}
   - 114: {fileID: 11489436}
+  - 114: {fileID: 11448870}
   m_Layer: 0
   m_Name: Replicator
   m_TagString: Untagged
@@ -109,18 +109,6 @@ MonoBehaviour:
   replicate: 0
   childrenShouldReplicate: 1
   childrenReplicationIntervalRepeatFactor: 3
---- !u!114 &11405066
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 105064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1724222cae7e5410d884460ed7cebd26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  template: {fileID: 11462200, guid: 98a8f665b6a594b92863e6cd816ca8ec, type: 2}
 --- !u!114 &11422280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,6 +139,18 @@ MonoBehaviour:
       PublicKeyToken=null
   stateSampleRate: .5
   destroyableChildren: []
+--- !u!114 &11448870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc663bae65082d4da9d00aed3f830fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 196614, guid: 98a8f665b6a594b92863e6cd816ca8ec, type: 2}
 --- !u!114 &11489436
 MonoBehaviour:
   m_ObjectHideFlags: 1

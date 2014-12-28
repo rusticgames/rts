@@ -36,11 +36,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 172486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98d72a0ac4fff44edbf53bea2c42c322, type: 3}
+  m_Script: {fileID: 11500000, guid: 1724222cae7e5410d884460ed7cebd26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: .0500000007
-  renderMaterial: {fileID: 2100000, guid: 31c0772007c0f424c94695157985a7b3, type: 2}
+  properties:
+    mass: .00999999978
+    renderMaterial: {fileID: 2100000, guid: 1f71c6f6c999a4231882bd2c718edbf7, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

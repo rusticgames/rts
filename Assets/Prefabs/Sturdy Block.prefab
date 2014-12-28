@@ -12,7 +12,7 @@ GameObject:
   - 65: {fileID: 6506994}
   - 23: {fileID: 2306994}
   - 54: {fileID: 5475452}
-  - 114: {fileID: 11459268}
+  - 114: {fileID: 11426914}
   m_Layer: 0
   m_Name: Sturdy Block
   m_TagString: Untagged
@@ -86,7 +86,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &11459268
+--- !u!114 &11426914
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -94,10 +94,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 106994}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1724222cae7e5410d884460ed7cebd26, type: 3}
+  m_Script: {fileID: 11500000, guid: 2fc663bae65082d4da9d00aed3f830fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  template: {fileID: 11462200, guid: 98a8f665b6a594b92863e6cd816ca8ec, type: 2}
+  source: {fileID: 172486, guid: c45f3cc43788247c6bb1a3f12a29e784, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
