@@ -292,7 +292,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnStateSample:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: History+HistoryTrackingAction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   stateSampleRate: .5
@@ -309,11 +320,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460ac3d8dcd9e4ab88e9fe5d398047bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usePeriodSeconds: 0
+  usePeriodSeconds: .5
   targeter: {fileID: 206302568}
   keyboardConfig: {fileID: 206302576}
   history: {fileID: 206302577}
-  currentTool: {fileID: 206302575}
+  OnToolUsed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 206302575}
+        m_MethodName: use
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ToolUsedAction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnToolUseStopped:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ToolUsedAction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &210121172
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,6 +364,7 @@ GameObject:
   - 114: {fileID: 210121181}
   - 114: {fileID: 210121182}
   - 114: {fileID: 210121183}
+  - 114: {fileID: 210121184}
   m_Layer: 0
   m_Name: Player Two
   m_TagString: Untagged
@@ -488,7 +521,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnStateSample:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: History+HistoryTrackingAction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   stateSampleRate: .5
@@ -509,7 +553,41 @@ MonoBehaviour:
   targeter: {fileID: 210121179}
   keyboardConfig: {fileID: 210121181}
   history: {fileID: 210121182}
-  currentTool: {fileID: 210121180}
+  OnToolUsed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 210121184}
+        m_MethodName: use
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ToolUsedAction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnToolUseStopped:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ToolUsedAction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &210121184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 210121172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2290f6bf54c9d4d88fcbe2627b784b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabee: {fileID: 0}
+  grip: {fileID: 0}
 --- !u!1 &333603508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,10 +1205,6 @@ Prefab:
       propertyPath: m_Name
       value: Player One
       objectReference: {fileID: 0}
-    - target: {fileID: 11414974, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
-      propertyPath: usePeriodSeconds
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 11438568, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
       propertyPath: OnPositionSampled.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -1535,6 +1609,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11438568, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
+      propertyPath: OnStateSample.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 405748, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -1595,6 +1673,18 @@ Prefab:
       propertyPath: shoot
       value: 305
       objectReference: {fileID: 0}
+    - target: {fileID: 11438568, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
+      propertyPath: OnStateSample.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11438568, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
+      propertyPath: OnStateSample.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414974, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
+      propertyPath: OnToolUsed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 210121184}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10affaa5f7eea4ad6b89dc32dc0750cb, type: 2}
   m_RootGameObject: {fileID: 210121172}
