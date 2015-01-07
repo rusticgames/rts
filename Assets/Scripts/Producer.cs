@@ -14,6 +14,11 @@ public class Producer : MonoBehaviour {
 	public Color finalColor;
 	public float upkeepFactor = 1f;
 	public float growthFactor = 0.5f;
+	public GameObject seedTemplate;
+	public int seedCount;
+	public float seedStartingEnergy = 100f;
+	public float seedCreateCost = 1f;
+	public GameObject selfPrefab;
 	
 	void Start () {
 		StartCoroutine(Live());
@@ -40,16 +45,35 @@ public class Producer : MonoBehaviour {
 		return desiredSize;
 	}
 
+	void SeedAction (SproutActionData d) {
+		Debug.Log ("SeedAction");
+		GameObject o = (GameObject)Instantiate(selfPrefab, d.seed.transform.position, d.seed.transform.rotation);
+		// o.GetComponent<Producer>().energy = seedStartingEnergy;
+		o.GetComponent<Producer>().Reset();
+		GameObject.Destroy(d.seed);
+	}
+
 	IEnumerator Live () {
 		while (energy > 0) {
 			energy += environment.ReleaseEnergy(desiredEnergyAmount);
+
 			currentSize = GetDesiredSize();
 			energy = energy - (GetUpkeepCost(currentSize) + GetGrowthCost(this.transform.localScale, currentSize));
 			this.transform.localScale = currentSize;
+
+			energy = energy - (seedStartingEnergy + seedCreateCost);
+			seedCount++;
+
 			yield return new WaitForSeconds(growthInterval);
 		}
+
+		//for (int i = 0; seedCount > 0; i++) {
+
+    GameObject o = (GameObject)Instantiate(seedTemplate, transform.position, transform.rotation);
+			o.gameObject.GetComponent<Seed>().sproutAction.AddListener(SeedAction);
+		Debug.Log ("Seed created");
+		//}
+
 		this.gameObject.renderer.material.color = finalColor;
 	}
-
-
 }
