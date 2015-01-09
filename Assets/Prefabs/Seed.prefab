@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11442612}
   - 54: {fileID: 5442612}
   m_Layer: 0
-  m_Name: "\x10Seed"
+  m_Name: Seed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

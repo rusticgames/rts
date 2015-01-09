@@ -20,16 +20,12 @@ public class Seed : MonoBehaviour {
 	public SproutAction sproutAction = new SproutAction();
 	public float sproutInterval = 2.0f;
 
-	private bool hasSprouted = false;
-
 	void Start () {
-		Debug.Log("Start Seed");
 		StartCoroutine(Sprout());
 	}
 
 	IEnumerator Sprout() {
 		yield return new WaitForSeconds(sproutInterval);
-		Debug.Log("Invoke Seed");
 		sproutAction.Invoke(new SproutActionData(this.gameObject));
 	}
 }

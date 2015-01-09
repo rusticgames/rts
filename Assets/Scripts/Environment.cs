@@ -2,9 +2,10 @@
 using System.Collections;
 
 public class Environment : MonoBehaviour {
-
-	public float ReleaseEnergy (float desiredEnergyAmount) {
-		return desiredEnergyAmount;
+	public float ambientEnergyFactor = 10f;
+	public float ReleaseEnergy (float surfaceArea) {
+		//Debug.Log ("energy intook: " + (surfaceArea * ambientEnergyFactor).ToString());
+		return surfaceArea * ambientEnergyFactor;
 	}
 
 	// Use this for initialization
