@@ -23,30 +23,37 @@ public struct ProducerData {
 	public Color color;
 	public float seedCount;
 	public ProducerSize size;
-	
+	public float expectedEnergyIntake;
+	public float reproductionPeriod;
+	public float horizontalGrowthRate;
 }
 
 public class Producer : MonoBehaviour {
 	public Environment environment;
-	public float horizontalGrowthRate = 1.01f;
-	public float verticalGrowthRate = 1.001f;
 	public float growthInterval = 0.2f;
 	public Color deathColor;
-	public float upkeepFactor = 1f;
-	public float growthFactor = 0.5f;
+	public float upkeepFactor = 2f;
+	public float growthFactor = 10f;
 	public GameObject seedTemplate;
-	public float seedCreateCost = 1f;
+	public float seedCreateCost = 100f;
 	public ProducerData initialData;
 	public ProducerData currentData;
+	public float lastEnergy;
+	public float reproduceThreshold = 1f;
+	public AnimationCurve growthCurve;
+	public float growthBase = 3f;
+
 
 	void Start () {
 		this.currentData = this.initialData;
+		this.lastEnergy = this.currentData.energy;
 		StartCoroutine(Live());
 	}
 
 	public void refresh() {
 		this.transform.localScale = new Vector3(currentData.size.radius, currentData.size.height, currentData.size.radius);
 		this.renderer.material.color = currentData.color;
+		this.lastEnergy = this.currentData.energy;
 	}
 	
 	float GetGrowthCost (ProducerSize oldSize, ProducerSize newSize) {
@@ -59,13 +66,11 @@ public class Producer : MonoBehaviour {
 	
 	ProducerSize GetDesiredSize () {
 		ProducerSize desiredSize = currentData.size;
-		desiredSize.radius *= horizontalGrowthRate;
-		desiredSize.height *= verticalGrowthRate;
+		desiredSize.radius *= (1 + (currentData.horizontalGrowthRate / 100f));
 		return desiredSize;
 	}
 
 	public void SeedAction (SproutActionData d) {
-		Debug.Log ("SeedAction");
 		Instantiate(this.gameObject, d.seed.transform.position, d.seed.transform.rotation);
 		Object.Destroy(d.seed);
 	}
@@ -111,10 +116,12 @@ public class Producer : MonoBehaviour {
 
 	void Reproduce ()
 	{
-		this.currentData.energy -= GetReproduceCost ();
-		this.currentData.seedCount++;
+		if(this.currentData.horizontalGrowthRate > this.reproduceThreshold) {
+			this.currentData.energy -= (GetReproduceCost () / this.currentData.reproductionPeriod);
+			this.currentData.seedCount += 1f / this.currentData.reproductionPeriod;
+		}
 	}
-
+	
 	void Grow ()
 	{
 		ProducerSize oldSize = this.currentData.size;
@@ -122,18 +129,25 @@ public class Producer : MonoBehaviour {
 		this.currentData.energy -= GetGrowthCost (oldSize, this.currentData.size);
 	}
 
+	private float lastEnergyIntake, intakeRatio;
+	void Think ()
+	{
+		lastEnergyIntake = this.currentData.energy - this.lastEnergy;
+		intakeRatio = lastEnergyIntake / this.currentData.expectedEnergyIntake;
+		this.currentData.horizontalGrowthRate = growthBase * growthCurve.Evaluate(intakeRatio);
+	}
+
 	IEnumerator Live () {
 		while (this.currentData.energy > 0) {
-			Debug.Log ("starting energy this frame: " + this.currentData.energy);
-			Debug.Log ("intake: " + GetIntakeAmount ().ToString());
 			this.currentData.energy += GetIntakeAmount ();
 			Grow ();
-			this.currentData.energy -= GetUpkeepCost(this.currentData.size);
-		 Reproduce ();
 
-			Debug.Log ("upkeep: -" + GetUpkeepCost(this.currentData.size).ToString() + ", reproduce: -" + GetReproduceCost ().ToString());
-			Debug.Log ("new energy: " + this.currentData.energy);
+			this.currentData.energy -= GetUpkeepCost(this.currentData.size);
+			Reproduce ();
+
+			Think();
 			refresh();
+
 			yield return new WaitForSeconds(growthInterval);
 		}
 

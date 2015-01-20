@@ -1,43 +1,43 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &118462
+--- !u!1 &102326
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 418462}
-  - 33: {fileID: 3318462}
-  - 64: {fileID: 6418462}
-  - 23: {fileID: 2318462}
-  - 114: {fileID: 11418462}
-  - 54: {fileID: 5418462}
+  - 4: {fileID: 402326}
+  - 33: {fileID: 3302326}
+  - 64: {fileID: 6402326}
+  - 23: {fileID: 2302326}
+  - 114: {fileID: 11402326}
+  - 54: {fileID: 5402326}
   m_Layer: 0
-  m_Name: Plant
+  m_Name: Producer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &418462
+--- !u!4 &402326
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118462}
+  m_GameObject: {fileID: 102326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.72000003, y: -.219999999, z: -8.02999973}
   m_LocalScale: {x: 1, y: .100000001, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2318462
+--- !u!23 &2302326
 Renderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118462}
+  m_GameObject: {fileID: 102326}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -52,19 +52,19 @@ Renderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3318462
+--- !u!33 &3302326
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118462}
+  m_GameObject: {fileID: 102326}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &5418462
+--- !u!54 &5402326
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118462}
+  m_GameObject: {fileID: 102326}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -74,12 +74,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &6418462
+--- !u!64 &6402326
 MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118462}
+  m_GameObject: {fileID: 102326}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -87,26 +87,24 @@ MeshCollider:
   m_SmoothSphereCollisions: 0
   m_Convex: 1
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11418462
+--- !u!114 &11402326
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118462}
+  m_GameObject: {fileID: 102326}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28bb1aa11774b4945acd4822dd8f0708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   environment: {fileID: 0}
-  horizontalGrowthRate: 1.00999999
-  verticalGrowthRate: 1.00100005
   growthInterval: .200000003
   deathColor: {r: 0, g: 0, b: 0, a: 0}
-  upkeepFactor: 1
-  growthFactor: .5
+  upkeepFactor: 2
+  growthFactor: 10
   seedTemplate: {fileID: 142612, guid: 67ed536e06df64eb89e33092cff930ca, type: 2}
-  seedCreateCost: 10
+  seedCreateCost: 200
   initialData:
     energy: 100
     color: {r: 1, g: 1, b: 1, a: 1}
@@ -114,6 +112,9 @@ MonoBehaviour:
     size:
       radius: 1
       height: .100000001
+    expectedEnergyIntake: 20
+    reproductionPeriod: 10
+    horizontalGrowthRate: 1
   currentData:
     energy: 100
     color: {r: 1, g: 1, b: 1, a: 1}
@@ -121,6 +122,27 @@ MonoBehaviour:
     size:
       radius: 1
       height: .100000001
+    expectedEnergyIntake: 0
+    reproductionPeriod: 0
+    horizontalGrowthRate: 0
+  lastEnergy: 0
+  reproduceThreshold: 1
+  growthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: -1
+      value: -1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  growthBase: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -130,6 +152,6 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 118462}
+  m_RootGameObject: {fileID: 102326}
   m_IsPrefabParent: 1
   m_IsExploded: 1
